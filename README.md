@@ -1,6 +1,6 @@
 # Disk Doctor Pro
 
-<p align="center"> <img src="public/disk-doctor-pro.png" width="1200" alt="Disk Doctor Pro" /> </p>
+<p align="center"> <img src="public/Screenshot 2026-08-27 190603.png" width="1200" alt="Disk Doctor Pro" /> </p>
 
 <p align="center"> Disk cleanup, storage analysis, and system optimization for macOS and Windows </p>
 ## What Disk Doctor Pro Can Do
