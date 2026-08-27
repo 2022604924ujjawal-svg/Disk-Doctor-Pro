@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="public/mangodisk.svg" width="40" alt="Disk Doctor application icon"> Disk Doctor Pro 
+   Disk Doctor Pro 
 </h1>
 
 <p align="center">Disk cleanup, storage analysis, and system optimization for macOS and Windows</p>
