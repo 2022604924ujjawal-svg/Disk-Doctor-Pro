@@ -1,0 +1,38 @@
+# ChatGPT cleanup is limited to its standard macOS bundle cache. Application
+# Support is excluded, so conversations, sign-in state, and local runtime data
+# are preserved.
+id = "app.chatgpt-cache"
+schema_version = 3
+rule_version = 3
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["ChatGPT"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.openai.chat", "com.openai.codex", "ChatGPT"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.openai.chat"
+
+[[roots]]
+template = "${user_library}/Caches/Codex"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only the ChatGPT and Codex application directories under Library/Caches, which Apple designates for discardable files; conversations, credentials, settings, and logs remain outside the roots"
+verified_at = "2026-07-20"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/url/cachesdirectory"]

@@ -1,0 +1,35 @@
+# Thunderbird profiles contain mail, credentials, preferences, and indexes.
+# This rule uses only the separate macOS bundle cache and never scans profile
+# contents.
+id = "app.thunderbird-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Thunderbird"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["org.mozilla.thunderbird", "Mozilla Thunderbird", "Thunderbird"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/org.mozilla.thunderbird"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only Thunderbird's bundle directory under Library/Caches, which Apple designates for discardable files; mail profiles, indexes, sessions, credentials, and preferences remain outside the root"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/url/cachesdirectory"]

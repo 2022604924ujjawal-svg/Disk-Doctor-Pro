@@ -1,0 +1,35 @@
+# Older LM Studio releases may store models and sessions under
+# ~/.cache/lm-studio, so that directory must never be cleaned. This rule only
+# uses the standard macOS bundle cache.
+id = "app.lm-studio-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["LM Studio"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.lmstudio.lmstudio", "LM Studio"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.lmstudio.lmstudio"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only LM Studio's bundle directory under Library/Caches, which Apple designates for discardable files; model files, conversations, configuration, and legacy model-data locations remain outside the root"
+verified_at = "2026-07-17"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/url/cachesdirectory"]

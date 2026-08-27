@@ -1,0 +1,38 @@
+id = "dev.pnpm-cache"
+schema_version = 3
+rule_version = 3
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["pnpm"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/pnpm/store"
+verified_rebuildable = true
+
+[[roots]]
+template = "${user_library}/Caches/pnpm"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "pnpm documents its store as content-addressable package data and provides store path, status, and prune operations; project manifests and configuration remain outside the selected roots"
+verified_at = "2026-07-20"
+verified_platform = "macos"
+references = ["https://pnpm.io/cli/store"]

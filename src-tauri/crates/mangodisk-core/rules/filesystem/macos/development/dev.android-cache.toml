@@ -1,0 +1,41 @@
+id = "dev.android-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["Android Studio"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+# Keep installed platforms, build tools, emulator images, and licenses. Only
+# SDK Manager staging and download caches are selected.
+[[roots]]
+template = "${user_library}/Android/sdk/.temp"
+verified_rebuildable = true
+
+[[roots]]
+template = "${user_library}/Android/sdk/temp"
+verified_rebuildable = true
+
+[[roots]]
+template = "${user_library}/Android/sdk/cache"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Android SDK Manager keeps installed components separate from its temporary download and extraction directories"
+verified_at = "2026-07-30"
+verified_platform = "macos"
+references = [
+  "https://developer.android.com/tools/sdkmanager",
+]

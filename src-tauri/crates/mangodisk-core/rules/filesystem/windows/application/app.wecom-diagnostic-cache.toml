@@ -1,0 +1,36 @@
+# WeCom keeps account, message, applet, and configuration data outside its
+# dedicated diagnostic-log root. The client must be closed so active encrypted
+# logs are not raced during cleanup.
+id = "app.wecom-diagnostic-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["WXWork.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["WeCom", "WXWork", "企业微信"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/Tencent/WXWork/Log"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Tencent-signed WeCom 5.0.9.6063 reproduced an isolated Log root containing encrypted diagnostics, critical, DNS, mobile-framework, VoIP, and installer logs. Account, message, applet, configuration, and application data remain outside the selected root"
+verified_at = "2026-08-11"
+verified_platform = "windows"
+references = ["https://work.weixin.qq.com/"]

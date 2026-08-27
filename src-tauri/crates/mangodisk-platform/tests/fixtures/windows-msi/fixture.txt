@@ -1,0 +1,1 @@
+MangoDisk owns this file. It exists only to validate current-user MSI uninstall behavior.

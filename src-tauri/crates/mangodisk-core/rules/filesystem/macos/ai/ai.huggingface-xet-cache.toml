@@ -1,0 +1,34 @@
+# Models, datasets, and weights under the Hugging Face Hub are user content and
+# are never included. Xet staging data supports resumable uploads and is also
+# preserved; only documented transfer caches and logs are eligible.
+id = "ai.huggingface-xet-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "ai"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${home}/.cache/huggingface/xet"
+
+[matcher]
+kind = "allOf"
+items = [
+  { kind = "pathSegmentIn", values = ["chunk_cache", "shard_cache", "logs"] },
+  { kind = "not", item = { kind = "pathSegmentIn", values = ["staging"] } },
+]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Hugging Face documents Xet chunk and shard caches as removable transfer optimizations; hub content and upload staging are explicitly excluded"
+verified_at = "2026-07-18"
+verified_platform = "macos"

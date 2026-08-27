@@ -1,0 +1,33 @@
+id = "dev.go-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["go.exe"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/go-build"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The Go command documents go-build under the operating-system user cache as build outputs that go clean -cache can remove and later builds can regenerate"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://go.dev/cmd/go/#hdr-Build_and_test_caching"]

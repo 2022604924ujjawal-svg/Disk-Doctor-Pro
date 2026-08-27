@@ -1,0 +1,32 @@
+id = "dev.sccache-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["sccache.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["sccache.exe", "sccache"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Mozilla/sccache/cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "sccache derives the disk artifact cache from the Windows local cache directory while storing configuration under roaming AppData"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://github.com/mozilla/sccache/blob/main/docs/Configuration.md"]

@@ -1,0 +1,26 @@
+id = "project.rust-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["Cargo.toml"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "target"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".xwin-cache"
+
+[verification]
+lifecycle = "verified"
+evidence = [
+  "https://doc.rust-lang.org/cargo/reference/build-cache.html",
+  "https://github.com/Jake-Shadle/xwin#environment-variables",
+]
+verified_at = "2026-07-31"

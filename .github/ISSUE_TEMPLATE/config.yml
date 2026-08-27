@@ -1,0 +1,6 @@
+# Keep blank issues available for reports that do not fit a predefined form.
+blank_issues_enabled: true
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/harry0703/MangoDisk/security/advisories/new
+    about: Report security vulnerabilities privately instead of opening a public issue.

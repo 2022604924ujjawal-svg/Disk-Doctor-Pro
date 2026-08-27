@@ -1,0 +1,41 @@
+id = "dev.uv-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["uv"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["uv"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${home}/.cache/uv"
+verified_rebuildable = true
+
+[[roots]]
+template = "${user_library}/Caches/uv"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "uv documents its Unix cache directory as disposable data and provides cache clean and cache prune commands; persistent tools, managed Python installations, configuration, and project environments outside the cache remain excluded"
+verified_at = "2026-08-03"
+verified_platform = "macos"
+references = [
+  "https://docs.astral.sh/uv/reference/storage/#cache-directory",
+  "https://docs.astral.sh/uv/concepts/cache/#clearing-the-cache",
+]

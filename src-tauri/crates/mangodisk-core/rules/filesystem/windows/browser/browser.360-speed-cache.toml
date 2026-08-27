@@ -1,0 +1,52 @@
+# 360 Extreme Browser X keeps Chromium profile state beside renderer caches.
+# Whole-profile roots are excluded so browsing and account data remain outside
+# the cleanup boundary.
+id = "browser.360-speed-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["360ChromeX.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["360 Extreme Browser X", "360极速浏览器X", "360ChromeX"] },
+  { kind = "executableAvailable", names = ["360ChromeX.exe"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/360ChromeX/Chrome/User Data/ShaderCache64"
+
+[[roots]]
+template = "${local_app_data}/360ChromeX/Chrome/User Data/GrShaderCache64"
+
+[[roots]]
+template = "${local_app_data}/360ChromeX/Chrome/User Data/GraphiteDawnCache"
+
+[[roots]]
+template = "${local_app_data}/360ChromeX/Chrome/User Data"
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["Cache", "Code Cache", "GPUCache64", "DawnGraphiteCache", "DawnWebGPUCache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed 360 Extreme Browser X 23.1.1253.64 on Windows 11 reproduced fixed response, code, GPU, and shader caches; real cleanup preserved credentials, cookies, history, extensions, sessions, local storage, downloads, and settings"
+verified_at = "2026-08-15"
+verified_platform = "windows"
+references = [
+  "https://browser.360.cn/",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

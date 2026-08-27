@@ -1,0 +1,66 @@
+# Xmind's Electron profile contains a large `vana` document-recovery area and
+# browser state beside these fixed rendering caches. The recovery area, local
+# storage, cookies, databases, preferences, and sessions remain excluded.
+id = "app.xmind-rendering-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Xmind", "Xmind Helper"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["net.xmind.vana.app", "Xmind"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${application_support}/Xmind/Electron v3/Cache"
+
+[[roots]]
+template = "${application_support}/Xmind/Electron v3/Code Cache"
+
+[[roots]]
+template = "${application_support}/Xmind/Electron v3/GPUCache"
+
+[[roots]]
+template = "${application_support}/Xmind/Electron v3/DawnCache"
+
+[[roots]]
+template = "${application_support}/Xmind/Electron v3/DawnGraphiteCache"
+
+[[roots]]
+template = "${application_support}/Xmind/Electron v3/DawnWebGPUCache"
+
+[[roots]]
+template = "${application_support}/Xmind/Electron v3/GrShaderCache"
+
+[[roots]]
+template = "${application_support}/Xmind/Electron v3/GraphiteDawnCache"
+
+[[roots]]
+template = "${application_support}/Xmind/Electron v3/Shared Dictionary/cache"
+
+[[roots]]
+template = "${application_support}/Xmind/Electron v3/Crashpad/reports"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed Xmind 25.01.01061 reproduced fixed Electron rendering caches. Its 273 MiB vana document-recovery area, cookies, databases, Local Storage, preferences, sessions, and WebStorage are excluded"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://xmind.cn/user-guide/file-cache-new",
+  "https://www.electronjs.org/docs/latest/api/app#appgetpathname",
+]

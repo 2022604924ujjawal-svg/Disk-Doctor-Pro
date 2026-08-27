@@ -1,0 +1,32 @@
+id = "system.darwin-user-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "system"
+risk = "safe"
+default_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${darwin_user_cache}"
+
+[matcher]
+kind = "allOf"
+items = [
+  { kind = "olderThan", days = 7 },
+  { kind = "not", item = { kind = "extensionIn", values = ["db", "sqlite", "sqlite3", "plist"] } },
+]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The root is the operating system-resolved per-user Darwin cache rather than a hard-coded path; the matcher preserves recent entries with a three-day age gate"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/using-the-file-system-effectively"]

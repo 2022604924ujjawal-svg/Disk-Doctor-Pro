@@ -1,0 +1,30 @@
+id = "project.unreal-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_suffixes_any = [".uproject"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "Binaries"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "Intermediate"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "DerivedDataCache"
+
+[verification]
+lifecycle = "verified"
+evidence = [
+  "https://dev.epicgames.com/documentation/unreal-engine/unreal-engine-directory-structure",
+  "https://dev.epicgames.com/documentation/en-us/unreal-engine/derived-data-cache",
+]
+verified_at = "2026-07-31"

@@ -1,0 +1,30 @@
+id = "dev.homebrew-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${user_library}/Caches/Homebrew"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Homebrew documents its cache as downloaded artifacts and provides cleanup options that prune cache entries; installed formulae, casks, and configuration remain outside the root"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://docs.brew.sh/Manpage#cleanup-options-formulacask-"]

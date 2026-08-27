@@ -1,0 +1,34 @@
+id = "dev.npm-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["node", "npm"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${home}/.npm/_cacache"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "npm documents _cacache as a self-healing content-addressable cache whose entries are integrity-checked and can be redownloaded; npm configuration and credentials remain outside the root"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://docs.npmjs.com/cli/cache/"]

@@ -1,0 +1,35 @@
+id = "browser.firefox-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["firefox"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["org.mozilla.firefox", "Mozilla Firefox", "Firefox"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/Firefox/Profiles"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Firefox stores its macOS disk cache under Library/Caches/Firefox/Profiles, separate from the Application Support profile that contains bookmarks, credentials, history, and settings"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = [
+  "https://support.mozilla.org/en-US/kb/how-clear-firefox-cache",
+  "https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data",
+]

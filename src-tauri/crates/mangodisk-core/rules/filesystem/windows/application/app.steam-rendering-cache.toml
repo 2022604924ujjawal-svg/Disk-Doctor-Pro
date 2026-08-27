@@ -1,0 +1,65 @@
+# Steam's htmlcache directory is a complete Chromium profile rather than a
+# disposable cache root. Select only the renderer-owned leaves reproduced by
+# the current client so cookies, login databases, history, preferences, local
+# storage, and web session state remain outside the cleanup boundary.
+id = "app.steam-rendering-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["steam.exe", "steamwebhelper.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Steam", "Valve.Steam"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Steam/htmlcache/Default/Cache"
+
+[[roots]]
+template = "${local_app_data}/Steam/htmlcache/Default/Code Cache"
+
+[[roots]]
+template = "${local_app_data}/Steam/htmlcache/Default/GPUCache"
+
+[[roots]]
+template = "${local_app_data}/Steam/htmlcache/Default/DawnGraphiteCache"
+
+[[roots]]
+template = "${local_app_data}/Steam/htmlcache/Default/DawnWebGPUCache"
+
+[[roots]]
+template = "${local_app_data}/Steam/htmlcache/Default/Shared Dictionary/cache"
+
+[[roots]]
+template = "${local_app_data}/Steam/htmlcache/GraphiteDawnCache"
+
+[[roots]]
+template = "${local_app_data}/Steam/htmlcache/GrShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Steam/htmlcache/ShaderCache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Valve documents Steam's embedded Chromium views and cached browser content. Steam 2.10.91.91 reproduced the selected rendering leaves; login data, cookies, history, preferences, storage, games, downloads, and game shader caches are excluded"
+verified_at = "2026-08-10"
+verified_platform = "windows"
+references = [
+  "https://store.steampowered.com/news/101607/",
+  "https://store.steampowered.com/news/4186/",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

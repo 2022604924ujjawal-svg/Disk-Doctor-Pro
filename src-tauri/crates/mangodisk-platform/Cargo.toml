@@ -1,0 +1,33 @@
+[package]
+name = "mangodisk-platform"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+blake3 = "1"
+dirs = "6"
+log = "0.4.33"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+dispatch2 = { version = "0.3.1", default-features = false, features = ["std"] }
+libc = "0.2"
+objc2 = "0.6.4"
+objc2-app-kit = { version = "0.3.2", default-features = false, features = ["libc", "NSBitmapImageRep", "NSImage", "NSImageRep", "NSRunningApplication", "NSWorkspace", "objc2-uniform-type-identifiers"] }
+objc2-core-foundation = { version = "0.3.2", default-features = false, features = ["std", "CFArray", "CFDate", "CFString", "CFUUID"] }
+objc2-core-services = { version = "0.3.2", default-features = false, features = ["std", "dispatch2", "FSEvents", "libc"] }
+objc2-foundation = { version = "0.3.2", default-features = false, features = ["std", "NSData", "NSDictionary", "NSString", "NSURL"] }
+objc2-uniform-type-identifiers = { version = "0.3.2", default-features = false, features = ["std", "UTCoreTypes", "UTType"] }
+plist = "1.7"
+
+[target.'cfg(windows)'.dependencies]
+png = "0.18"
+winreg = "0.55"
+windows = { version = "0.61.3", features = ["Win32_Foundation", "Win32_Security_Cryptography", "Win32_Security_WinTrust", "Win32_Storage_FileSystem", "Win32_System_Com", "Win32_System_Ole", "Win32_System_Registry", "Win32_System_Services", "Win32_System_SystemInformation", "Win32_System_TaskScheduler", "Win32_System_Variant", "Win32_UI_LegacyWindowsEnvironmentFeatures", "Win32_UI_Shell"] }
+windows-core = "0.61.2"
+windows-sys = { version = "0.61", features = ["Win32_Foundation", "Win32_Graphics_Gdi", "Win32_Security", "Win32_Security_Authorization", "Win32_Storage_FileSystem", "Win32_System_ApplicationInstallationAndServicing", "Win32_System_Com", "Win32_System_Diagnostics_ToolHelp", "Win32_System_Environment", "Win32_System_IO", "Win32_System_Ioctl", "Win32_System_Registry", "Win32_System_SystemInformation", "Win32_System_SystemServices", "Win32_System_Threading", "Win32_UI_Shell", "Win32_UI_WindowsAndMessaging"] }
+
+[target.'cfg(windows)'.dev-dependencies]
+windows-sys = { version = "0.61", features = ["Win32_System_ProcessStatus", "Win32_System_Threading"] }

@@ -1,0 +1,35 @@
+# Browsers and download managers leave incomplete files in Downloads. This rule
+# only matches explicit temporary extensions older than seven days, preserves
+# recent resumable downloads, and is not selected by default.
+id = "system.stale-partial-downloads"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "system"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${home}/Downloads"
+
+[matcher]
+kind = "allOf"
+items = [
+  { kind = "olderThan", days = 7 },
+  { kind = "extensionIn", values = ["crdownload", "download", "partial", "part"] },
+  { kind = "maxDepth", depth = 3 },
+]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The matcher selects only files ending in crdownload, download, partial, or part within three levels of Downloads and applies MangoDisk's seven-day age gate; completed downloads and recent partial transfers are excluded"
+verified_at = "2026-07-17"
+verified_platform = "macos"

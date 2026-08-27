@@ -1,0 +1,43 @@
+# Figma bundle caches and Electron rendering caches are rebuildable. Local
+# drafts, account state, and exported design files are excluded.
+id = "app.figma-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Figma"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.figma.Desktop", "Figma"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.figma.Desktop"
+
+[[roots]]
+template = "${application_support}/Figma/Cache"
+
+[[roots]]
+template = "${application_support}/Figma/Code Cache"
+
+[[roots]]
+template = "${application_support}/Figma/GPUCache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only Figma's Library/Caches bundle directory and Electron Cache, Code Cache, and GPUCache paths; drafts, accounts, Local Storage, IndexedDB, and exported files are excluded"
+verified_at = "2026-07-17"
+verified_platform = "macos"
+references = ["https://www.electronjs.org/docs/latest/api/app#appgetpathname"]

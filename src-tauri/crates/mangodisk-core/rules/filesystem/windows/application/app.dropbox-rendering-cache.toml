@@ -1,0 +1,68 @@
+# Dropbox's signed Windows client stores a Chromium profile under Roaming
+# AppData. The root and each dynamic partition mix disposable renderer data
+# with account-scoped databases, browser storage, preferences, and sessions.
+# Select only fixed cache leaves; synchronized content and `.dropbox.cache`
+# remain owned by the dedicated Dropbox cleaner.
+id = "app.dropbox-rendering-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Dropbox.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Dropbox", "Dropbox.Dropbox"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/Dropbox/Cache"
+
+[[roots]]
+template = "${roaming_app_data}/Dropbox/Code Cache"
+
+[[roots]]
+template = "${roaming_app_data}/Dropbox/GPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/Dropbox/DawnGraphiteCache"
+
+[[roots]]
+template = "${roaming_app_data}/Dropbox/DawnWebGPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/Dropbox/GrShaderCache"
+
+[[roots]]
+template = "${roaming_app_data}/Dropbox/GraphiteDawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/Dropbox/Shared Dictionary/cache"
+
+[[roots]]
+template = "${roaming_app_data}/Dropbox/Partitions"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed Dropbox 264.4.3385 reproduced the fixed Chromium leaves in its root profile and three dynamic partitions. Account state, IndexedDB, preferences, sessions, browser storage, synchronized files, and Dropbox's sync recovery cache are excluded"
+verified_at = "2026-08-10"
+verified_platform = "windows"
+references = [
+  "https://help.dropbox.com/installs/desktop-application-overview",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

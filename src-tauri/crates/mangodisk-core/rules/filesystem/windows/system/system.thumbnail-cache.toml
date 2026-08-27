@@ -1,0 +1,29 @@
+id = "system.thumbnail-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "system"
+risk = "safe"
+default_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${local_app_data}/Microsoft/Windows/Explorer"
+
+[matcher]
+kind = "nameGlob"
+values = ["thumbcache_*.db", "iconcache_*.db"]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Windows exposes a shared thumbnail cache whose entries are regenerated from source Shell items; the matcher selects only thumbcache and iconcache database files under the Explorer cache directory"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://learn.microsoft.com/en-us/windows/win32/api/thumbcache/nn-thumbcache-ithumbnailcache"]

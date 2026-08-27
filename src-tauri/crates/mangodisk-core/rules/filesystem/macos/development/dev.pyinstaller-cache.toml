@@ -1,0 +1,36 @@
+# PyInstaller derives every binary-processing cache directory from a `bincache`
+# prefix and then separates macOS output by target architecture, code-signing
+# identity, and entitlements. Expand only the architecture layer so unrelated
+# future siblings under Application Support/pyinstaller remain outside scope.
+id = "dev.pyinstaller-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${application_support}/pyinstaller"
+kind = "childDirectories"
+child_prefixes = ["bincache"]
+suffixes = ["arm64", "x86_64", "universal2"]
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "PyInstaller source derives bincache directories from build flags, Python, architecture, signing, and entitlements, and recommends --clean for corruption. Only macOS architecture leaves are selected; projects, spec files, and output are excluded"
+verified_at = "2026-08-21"
+verified_platform = "macos"
+references = ["https://github.com/pyinstaller/pyinstaller/blob/develop/PyInstaller/building/utils.py"]

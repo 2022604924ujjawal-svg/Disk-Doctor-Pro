@@ -1,0 +1,33 @@
+id = "dev.copilot-cli-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["copilot.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["copilot.exe", "copilot"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/copilot"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "GitHub documents this directory as ephemeral Copilot CLI marketplace and auto-update cache, separate from configuration and session history"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference#changing-the-location-of-the-configuration-directory"]

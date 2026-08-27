@@ -1,0 +1,36 @@
+# Epic officially documents this exact macOS webcache directory as disposable.
+# Launcher configuration, account state, manifests, downloaded games, patch
+# state, and installer content remain outside the selected root.
+id = "app.game-launcher-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["EpicGamesLauncher", "EpicWebHelper"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.epicgames.EpicGamesLauncher", "Epic Games Launcher"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.epicgames.EpicGamesLauncher/webcache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Epic officially instructs macOS users to remove the webcache directory inside Library/Caches after closing the launcher; accounts, launcher configuration, games, downloads, manifests, patch state, and installers are excluded"
+verified_at = "2026-08-10"
+verified_platform = "macos"
+references = ["https://www.epicgames.com/help/c-1/a202300000013316"]

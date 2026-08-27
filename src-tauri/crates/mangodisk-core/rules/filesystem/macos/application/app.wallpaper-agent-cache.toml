@@ -1,0 +1,28 @@
+id = "app.wallpaper-agent-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${user_library}/Containers/com.apple.wallpaper.agent/Data/Library/Caches"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule is confined to the wallpaper agent container's Library/Caches directory; Apple defines container cache files as discardable, while wallpaper resources remain outside the root"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/using-the-file-system-effectively"]

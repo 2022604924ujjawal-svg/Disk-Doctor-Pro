@@ -1,0 +1,40 @@
+# Pages, Numbers, and Keynote caches can be regenerated. Autosave data,
+# templates, iCloud documents, and exported files are outside these roots.
+id = "app.iwork-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Pages", "Numbers", "Keynote"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.apple.iWork.Pages", "com.apple.iWork.Numbers", "com.apple.iWork.Keynote"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.apple.iWork.Pages"
+
+[[roots]]
+template = "${user_library}/Caches/com.apple.iWork.Numbers"
+
+[[roots]]
+template = "${user_library}/Caches/com.apple.iWork.Keynote"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only the Pages, Numbers, and Keynote bundle directories under Library/Caches, which Apple designates for discardable files; autosave data, templates, and documents remain outside the roots"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/url/cachesdirectory"]

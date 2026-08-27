@@ -1,0 +1,57 @@
+id = "browser.chromium-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Chromium", "chromium.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["org.chromium.Chromium", "Chromium"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Chromium/User Data/ShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Chromium/User Data/GrShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Chromium/User Data/GraphiteDawnCache"
+
+[[roots]]
+template = "${local_app_data}/Chromium/User Data/DawnGraphiteCache"
+
+[[roots]]
+template = "${local_app_data}/Chromium/User Data/DawnWebGPUCache"
+
+[[roots]]
+template = "${local_app_data}/Chromium/User Data/component_crx_cache"
+
+[[roots]]
+template = "${local_app_data}/Chromium/User Data/extensions_crx_cache"
+
+[[roots]]
+template = "${local_app_data}/Chromium/User Data"
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Media Cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only named renderer, shader, media, and extension-package cache directories from Chromium's documented user-data profiles; persistent browser profile data is excluded"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md"]

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/prettierrc",
+  "semi": true,
+  "tabWidth": 2,
+  "singleQuote": true,
+  "printWidth": 120,
+  "arrowParens": "avoid",
+  "trailingComma": "es5",
+  "htmlWhitespaceSensitivity": "css",
+  "vueIndentScriptAndStyle": false,
+  "singleAttributePerLine": false,
+  "overrides": [
+    {
+      "files": ["AGENTS.md", "**/AGENTS.md"],
+      "options": {
+        "proseWrap": "never"
+      }
+    }
+  ]
+}

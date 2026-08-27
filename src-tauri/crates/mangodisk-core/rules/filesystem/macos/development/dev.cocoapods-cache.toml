@@ -1,0 +1,28 @@
+id = "dev.cocoapods-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${user_library}/Caches/CocoaPods"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "CocoaPods exposes pod cache list and pod cache clean for the selected Library/Caches/CocoaPods download cache"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://guides.cocoapods.org/terminal/commands.html#pod_cache"]

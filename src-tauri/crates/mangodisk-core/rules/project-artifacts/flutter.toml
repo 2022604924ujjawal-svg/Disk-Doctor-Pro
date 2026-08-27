@@ -1,0 +1,31 @@
+id = "project.flutter-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["pubspec.yaml"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "build"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".dart_tool"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "linux/flutter/ephemeral"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "windows/flutter/ephemeral"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://docs.flutter.dev/reference/flutter-cli#commands"]
+verified_at = "2026-07-31"

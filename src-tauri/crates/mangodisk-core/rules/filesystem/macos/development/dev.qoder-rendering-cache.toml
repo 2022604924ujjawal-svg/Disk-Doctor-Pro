@@ -1,0 +1,49 @@
+# Qoder and Qoder CN are VS Code/Electron applications. Only generated code,
+# extension-package, renderer, shader, log, and Crashpad leaves are selected;
+# User, Backups, storage, cookies, preferences, and workspace state are excluded.
+id = "dev.qoder-rendering-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Qoder", "Qoder Helper", "QoderCN", "Qoder CN Helper"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.qoder.ide", "com.aliyun.lingma.ide", "Qoder", "Qoder CN"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${application_support}"
+kind = "childDirectories"
+child_names = ["Qoder", "QoderCN"]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache", "logs", "Crashpad/reports", "CachedData", "CachedExtensionVSIXs"]
+
+[[roots]]
+template = "${application_support}/QoderCN/Partitions"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed Qoder 1.16.0 and Qoder CN 1.8.0 reproduced VS Code generated-data roots and fixed Chromium caches. User, Backups, storage, cookies, preferences, workspace data, SharedClientCache, and language services are excluded"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://docs.qoder.com/troubleshooting/common-issue",
+  "https://www.electronjs.org/docs/latest/api/app#appgetpathname",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

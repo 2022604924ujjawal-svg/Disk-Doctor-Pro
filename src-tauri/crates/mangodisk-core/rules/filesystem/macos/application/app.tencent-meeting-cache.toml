@@ -1,0 +1,38 @@
+# Tencent Meeting stores HSTS, CacheStorage, transport state, accounts,
+# meeting databases, downloads, and large dynamic resources beside its
+# disposable WebKit network responses. Select only the fixed NetworkCache.
+id = "app.tencent-meeting-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["TencentMeeting"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.tencent.meeting", "TencentMeeting", "Tencent Meeting"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.tencent.meeting/WebKit/NetworkCache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Notarized Tencent Meeting 3.41.11 reproduced the WebKit NetworkCache. HSTS, CacheStorage, transport state, accounts, meetings, downloads, databases, preferences, dynamic resources, and the sandbox container remain excluded"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://meeting.tencent.com/download/",
+  "https://developer.apple.com/documentation/foundation/url/cachesdirectory",
+]

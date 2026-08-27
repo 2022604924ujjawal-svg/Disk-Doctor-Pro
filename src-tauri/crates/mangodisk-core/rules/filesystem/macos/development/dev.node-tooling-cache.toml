@@ -1,0 +1,49 @@
+id = "dev.node-tooling-cache"
+schema_version = 3
+rule_version = 3
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["node", "corepack"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${home}/.cache/node/corepack"
+verified_rebuildable = true
+
+[[roots]]
+template = "${user_library}/Caches/electron"
+verified_rebuildable = true
+
+[[roots]]
+template = "${home}/.cache/electron"
+verified_rebuildable = true
+
+[[roots]]
+template = "${home}/.nvm/.cache"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Corepack and Electron store downloaded package-manager and runtime archives in dedicated cache directories, while nvm exposes a cache-clear command for downloaded Node.js archives; installed runtimes remain outside the cleanup roots"
+verified_at = "2026-08-03"
+verified_platform = "macos"
+references = [
+  "https://github.com/nodejs/corepack#environment-variables",
+  "https://github.com/electron/get#how-it-works",
+  "https://github.com/nvm-sh/nvm#problems",
+]

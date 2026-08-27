@@ -1,0 +1,26 @@
+id = "project.swift-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["Package.swift"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".build"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".swiftpm"
+
+[verification]
+lifecycle = "verified"
+evidence = [
+  "https://docs.swift.org/swiftpm/documentation/packagemanagerdocs/gettingstarted/",
+  "https://github.com/swiftlang/swift-package-manager",
+]
+verified_at = "2026-07-31"

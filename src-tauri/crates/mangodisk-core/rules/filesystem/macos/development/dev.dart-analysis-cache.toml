@@ -1,0 +1,36 @@
+id = "dev.dart-analysis-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["dart", "flutter"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["dart", "flutter"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${home}/.dartServer"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The Flutter repository identifies .dartServer as cached analysis results and removes it before analyzer benchmarks; projects, SDKs, packages, and editor configuration remain outside the cleanup root"
+verified_at = "2026-08-03"
+verified_platform = "macos"
+references = [
+  "https://github.com/flutter/flutter/blob/master/dev/devicelab/lib/tasks/analysis.dart",
+]

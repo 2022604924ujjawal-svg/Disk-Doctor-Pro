@@ -1,0 +1,20 @@
+id = "project.jupyter-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_suffixes_any = [".ipynb"]
+
+[[artifacts]]
+kind = "descendantDirectory"
+name = ".ipynb_checkpoints"
+max_depth = 32
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://github.com/jupyter-server/jupyter_server/blob/main/jupyter_server/services/contents/filecheckpoints.py"]
+verified_at = "2026-07-31"

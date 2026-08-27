@@ -1,0 +1,35 @@
+id = "dev.npm-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["node.exe", "npm.cmd"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/npm-cache"
+
+[[roots]]
+template = "${local_app_data}/npm/cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "npm documents its configured cache as self-healing downloaded package data that can be integrity-checked or cleaned; npm configuration, credentials, global packages, and project manifests remain outside the roots"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://docs.npmjs.com/cli/cache/"]

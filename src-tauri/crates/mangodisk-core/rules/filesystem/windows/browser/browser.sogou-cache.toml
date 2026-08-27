@@ -1,0 +1,52 @@
+# Sogou Explorer keeps Chromium profile state beside renderer caches. Only
+# fixed cache leaves are selected; the complete profile and installation stay
+# outside the cleanup boundary.
+id = "browser.sogou-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["SogouExplorer.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Sogou Explorer", "搜狗高速浏览器", "SogouExplorer"] },
+  { kind = "executableAvailable", names = ["SogouExplorer.exe"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Sogou/SogouExplorer/User Data/ShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Sogou/SogouExplorer/User Data/GrShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Sogou/SogouExplorer/User Data/GraphiteDawnCache"
+
+[[roots]]
+template = "${local_app_data}/Sogou/SogouExplorer/User Data"
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed Sogou Explorer 13.9.6121.400 on Windows 11 reproduced fixed response, code, GPU, Dawn, and shader caches; real cleanup preserved credentials, cookies, history, extensions, sessions, IndexedDB, local storage, downloads, and settings"
+verified_at = "2026-08-15"
+verified_platform = "windows"
+references = [
+  "https://ie.sogou.com/",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

@@ -1,0 +1,39 @@
+# VLC maps both cover artwork and Breakpad reports to its standard macOS cache
+# directory. Preferences, playlists, the media library, and source media use
+# separate roots and never enter this cleanup boundary.
+id = "app.vlc-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["VLC"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["org.videolan.vlc", "VLC"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/org.videolan.vlc"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "VLC 3.0.23 source maps artwork and Breakpad dumps to Library/Caches/org.videolan.vlc. Generated embedded artwork reproduced the cache; preferences, playlists, media-library data, and source media are excluded"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://developer.apple.com/documentation/foundation/url/cachesdirectory",
+  "https://github.com/videolan/vlc/tree/3.0.23",
+]

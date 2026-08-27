@@ -1,0 +1,19 @@
+id = "project.pants-workdir"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["pants.toml"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".pants.d"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://www.pantsbuild.org/stable/docs/using-pants/troubleshooting-common-issues"]
+verified_at = "2026-07-18"

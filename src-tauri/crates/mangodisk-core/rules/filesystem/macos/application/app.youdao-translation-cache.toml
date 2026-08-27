@@ -1,0 +1,35 @@
+# The Mac App Store client uses its sandbox Library/Caches directory for
+# disposable translation, image, WebKit, and crash-report data.
+id = "app.youdao-translation-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["网易有道翻译"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.youdao.YoudaoDict", "YoudaoDict", "网易有道翻译"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Containers/com.youdao.YoudaoDict/Data/Library/Caches"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed Mac App Store Youdao 11.2.9 reproduced translation, image, WebKit, and crash caches only under its sandbox Library/Caches. Preferences, dictionaries, history, documents, and account state remain outside the root"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/using-the-file-system-effectively"]

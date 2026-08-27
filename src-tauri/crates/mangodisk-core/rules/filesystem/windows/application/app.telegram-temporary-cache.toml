@@ -1,0 +1,40 @@
+# Telegram stores account keys, settings, and local message state beside these
+# roots. Keep the rule static and narrow so no hashed tdata entry can be added by
+# directory expansion or a broad matcher.
+id = "app.telegram-temporary-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Telegram.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Telegram Desktop", "Telegram.TelegramDesktop"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/Telegram Desktop/tdata/temp"
+
+[[roots]]
+template = "${roaming_app_data}/Telegram Desktop/tdata/dumps"
+
+[matcher]
+kind = "extensionIn"
+values = ["dmp", "tmp", "png", "ico", "ics"]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Telegram Desktop 7.0.9 source assigns notification images, tray icons, calendar exports, and crash dumps to fixed tdata/temp and tdata/dumps roots. A signed Windows ARM64 launch reproduced both; account, settings, media, and emoji data are excluded"
+verified_at = "2026-08-10"
+verified_platform = "windows"
+references = ["https://github.com/telegramdesktop/tdesktop/tree/v7.0.9"]

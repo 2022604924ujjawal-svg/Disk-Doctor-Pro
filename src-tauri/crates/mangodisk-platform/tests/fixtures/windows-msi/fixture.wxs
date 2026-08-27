@@ -1,0 +1,22 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package
+    Name="MangoDisk Uninstall Fixture"
+    Manufacturer="MangoDisk Test"
+    Version="1.0.0"
+    ProductCode="{9627E855-337D-45EC-A2D9-CBB92B447399}"
+    UpgradeCode="{21162DC3-FE08-4662-ADBA-1C0F0D10FE32}"
+    Scope="perUser"
+    InstallerVersion="500">
+    <MajorUpgrade DowngradeErrorMessage="A newer fixture is already installed." />
+    <StandardDirectory Id="LocalAppDataFolder">
+      <Directory Id="INSTALLFOLDER" Name="MangoDisk Uninstall Fixture">
+        <Component Id="FixtureComponent" Guid="{7DAA4702-E489-4B8C-BF3C-3402C9E66B8B}">
+          <File Id="FixtureFile" Source="fixture.txt" KeyPath="yes" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+    <Feature Id="Main" Title="MangoDisk Uninstall Fixture" Level="1">
+      <ComponentRef Id="FixtureComponent" />
+    </Feature>
+  </Package>
+</Wix>

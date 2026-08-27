@@ -1,0 +1,2791 @@
+{
+  "navigation": {
+    "system-optimization": "System Optimization",
+    "cleanup": "Deep Cleanup",
+    "analysis": "Disk Space Analysis",
+    "large-files": "Large File Cleanup",
+    "duplicate-files": "Duplicate Cleanup",
+    "application-uninstall": "App Uninstaller",
+    "startup": "Startup Items",
+    "history": "Operation History",
+    "settings": "Settings"
+  },
+  "navigationGroups": {
+    "storage": "Storage",
+    "system": "System Tools"
+  },
+  "systemOptimization": {
+    "title": "System Optimization",
+    "scanning": "Checking system settings",
+    "scanningDescription": "The scan only reads supported settings and never changes the system",
+    "applyChanges": "Apply {count} Changes",
+    "pendingSummary": "Pending changes",
+    "noChanges": "No Changes to Apply",
+    "optimizing": "Optimizing…",
+    "checking": "Checking settings…",
+    "rescan": "Check Again",
+    "filterCategory": "Filter optimization categories",
+    "pendingEmpty": {
+      "title": "No pending changes",
+      "description": "Choose a preset or adjust switches to collect changes here"
+    },
+    "categories": {
+      "pending": "Pending",
+      "all": "All",
+      "performance": "Performance",
+      "productivity": "Productivity",
+      "privacy": "Privacy & Distractions",
+      "storage": "Storage",
+      "gaming": "Gaming",
+      "appearance": "Appearance"
+    },
+    "modes": {
+      "label": "Recommended preset",
+      "smart": { "name": "Smart recommended" },
+      "performance": { "name": "Performance" },
+      "privacy": { "name": "Privacy" },
+      "manual": { "name": "Custom" }
+    },
+    "statuses": {
+      "pendingEnable": "Will enable",
+      "pendingDisable": "Will disable",
+      "requiresElevation": "Administrator",
+      "authorizationRequired": "Administrator authorization is required to apply the selected changes",
+      "requiresRestart": "Requires reopening related system components or signing in again",
+      "caution": "Caution",
+      "highImpact": "High impact",
+      "riskDescriptions": {
+        "caution": "This setting has a clear trade-off; make sure it fits your needs",
+        "high": "This setting may reduce security, recovery, or update protection"
+      }
+    },
+    "riskDialog": {
+      "title": "Confirm high-impact settings",
+      "description": "These settings may reduce system security, recovery, or update protection. Continue only if you understand the impact",
+      "note": "Smart recommended never selects these settings automatically; only your manually enabled items will be applied",
+      "confirm": "Continue Anyway"
+    },
+    "feedback": {
+      "nothingToApply": "The selected items are already in the requested state",
+      "alreadyOptimized": "There are no pending setting changes",
+      "draftNotice": "Changes take effect after you click Apply Changes at the bottom",
+      "completed": "Applied {count} system setting changes",
+      "completedRestart": "Applied {count} changes; some require reopening related system components or signing in again",
+      "cancelled": "Administrator authorization was cancelled after {changed} changes completed",
+      "cancelledRestart": "Administrator authorization was cancelled; some of the {changed} completed changes require reopening related system components or signing in again",
+      "partial": "Completed {changed} items; {failed} could not be applied",
+      "partialRestart": "Completed {changed} items; {failed} could not be applied. Some changes require reopening related system components or signing in again"
+    },
+    "items": {
+      "macos_finder_show-file-extensions": {
+        "name": "Show all file extensions",
+        "description": "Identify real file types and reduce mistakes"
+      },
+      "macos_finder_show-path-bar": {
+        "name": "Show Finder path bar",
+        "description": "Display the full folder hierarchy at the bottom of Finder"
+      },
+      "macos_finder_show-status-bar": {
+        "name": "Show Finder status bar",
+        "description": "Display item counts and available disk space"
+      },
+      "macos_finder_show-hidden-files": {
+        "name": "Show hidden files",
+        "description": "View hidden items directly in Finder"
+      },
+      "macos_finder_show-posix-path": {
+        "name": "Show full path in title",
+        "description": "Display the current directory path in Finder titles"
+      },
+      "macos_finder_disable-animations": {
+        "name": "Reduce Finder animations",
+        "description": "Reduce window animations for more immediate file operations"
+      },
+      "macos_finder_keep-folders-on-top": {
+        "name": "Keep folders on top",
+        "description": "Place folders before files when sorting by name"
+      },
+      "macos_finder_search-current-folder": {
+        "name": "Search the current folder by default",
+        "description": "Limit new Finder searches to the current location"
+      },
+      "macos_finder_disable-extension-warning": {
+        "name": "Skip extension-change warnings",
+        "description": "Do not ask again when renaming a file extension"
+      },
+      "macos_panels_expand-save": {
+        "name": "Expand file save panels",
+        "description": "Show the complete folder picker when saving files"
+      },
+      "macos_panels_expand-print": {
+        "name": "Expand print panels",
+        "description": "Show complete printing options immediately"
+      },
+      "macos_desktop_prevent-network-ds-store": {
+        "name": "Avoid .DS_Store on network drives",
+        "description": "Reduce macOS metadata files in shared folders"
+      },
+      "macos_desktop_prevent-usb-ds-store": {
+        "name": "Avoid .DS_Store on USB drives",
+        "description": "Reduce macOS metadata files on removable drives"
+      },
+      "macos_dock_auto-hide": {
+        "name": "Automatically hide the Dock",
+        "description": "Show the Dock when needed and reclaim desktop space"
+      },
+      "macos_dock_minimize-to-application": {
+        "name": "Minimize windows into app icons",
+        "description": "Avoid adding separate window thumbnails to the Dock"
+      },
+      "macos_dock_use-scale-effect": {
+        "name": "Use the faster scale effect",
+        "description": "Replace the Genie effect with a simpler scale animation"
+      },
+      "macos_mission-control_keep-space-order": {
+        "name": "Keep Spaces in order",
+        "description": "Prevent automatic desktop reordering based on recent use"
+      },
+      "macos_dock_hide-recent-apps": {
+        "name": "Hide recent Dock apps",
+        "description": "Do not show recently opened apps at the end of the Dock"
+      },
+      "macos_screenshots_disable-shadow": {
+        "name": "Remove screenshot window shadows",
+        "description": "Create tighter window captures that are usually smaller"
+      },
+      "macos_screenshots_use-png": {
+        "name": "Use PNG for screenshots",
+        "description": "Preserve lossless quality and transparency"
+      },
+      "macos_screenshots_disable-thumbnail": {
+        "name": "Disable floating screenshot thumbnail",
+        "description": "Save screenshots immediately without waiting for the preview"
+      },
+      "macos_keyboard_full-navigation": {
+        "name": "Enable full keyboard navigation",
+        "description": "Use Tab to move between more interface controls"
+      },
+      "macos_keyboard_fast-key-repeat": {
+        "name": "Faster key repeat",
+        "description": "Repeat characters faster while holding a key"
+      },
+      "macos_keyboard_short-repeat-delay": {
+        "name": "Shorter key repeat delay",
+        "description": "Start repeating characters sooner after holding a key"
+      },
+      "macos_text_disable-auto-correct": {
+        "name": "Turn off auto-correction",
+        "description": "Prevent the system from rewriting typed text"
+      },
+      "macos_text_disable-smart-quotes": {
+        "name": "Turn off smart quotes",
+        "description": "Keep straight quotes while typing"
+      },
+      "macos_text_disable-smart-dashes": {
+        "name": "Turn off smart dashes",
+        "description": "Do not replace consecutive hyphens automatically"
+      },
+      "macos_text_disable-auto-capitalization": {
+        "name": "Turn off automatic capitalization",
+        "description": "Prevent automatic changes to English sentence capitalization"
+      },
+      "macos_text_disable-period-substitution": {
+        "name": "Turn off double-space periods",
+        "description": "Do not insert a period after typing two spaces"
+      },
+      "windows_explorer_show-file-extensions": {
+        "name": "Show file extensions",
+        "description": "Identify real file types and reduce mistakes"
+      },
+      "windows_explorer_show-hidden-files": {
+        "name": "Show hidden files",
+        "description": "Display ordinary hidden items in File Explorer"
+      },
+      "windows_explorer_launch-this-pc": {
+        "name": "Open File Explorer to This PC",
+        "description": "Start new windows with drives and common locations"
+      },
+      "windows_explorer_compact-mode": {
+        "name": "Use compact file spacing",
+        "description": "Fit more files in the same Explorer window"
+      },
+      "windows_explorer_show-full-path": {
+        "name": "Show full paths in title bars",
+        "description": "Identify the current folder location more clearly"
+      },
+      "windows_explorer_show-item-checkboxes": {
+        "name": "Show item check boxes",
+        "description": "Select multiple files with visible check boxes"
+      },
+      "windows_explorer_hide-recent-files": {
+        "name": "Hide recent files",
+        "description": "Do not show recently opened files on Explorer Home"
+      },
+      "windows_explorer_hide-frequent-folders": {
+        "name": "Hide frequent folders",
+        "description": "Do not show frequently visited folders on Explorer Home"
+      },
+      "windows_taskbar_show-seconds": {
+        "name": "Show seconds in the taskbar clock",
+        "description": "Add seconds to the system clock"
+      },
+      "windows_taskbar_hide-task-view": {
+        "name": "Hide the Task View button",
+        "description": "Remove a taskbar button you may not use"
+      },
+      "windows_taskbar_hide-widgets": {
+        "name": "Turn off Windows Widgets",
+        "description": "Remove the taskbar entry and prevent the Widgets board from opening"
+      },
+      "windows_taskbar_disable-widgets-board": {
+        "name": "Turn off Windows Widgets",
+        "description": "Remove the entry and disable the Widgets board on newer Windows 11 builds"
+      },
+      "windows_taskbar_enable-end-task": {
+        "name": "Enable taskbar End Task",
+        "description": "End an unresponsive process from its taskbar menu"
+      },
+      "windows_taskbar_hide-search": {
+        "name": "Hide taskbar search",
+        "description": "Free taskbar space while keeping Start menu search available"
+      },
+      "windows_taskbar_align-left": {
+        "name": "Align taskbar icons left",
+        "description": "Move Start and application icons to the left"
+      },
+      "windows_taskbar_disable-animations": {
+        "name": "Turn off taskbar animations",
+        "description": "Reduce taskbar transition effects for faster responses"
+      },
+      "windows_desktop_prefer-performance-effects": {
+        "name": "Prioritize system responsiveness",
+        "description": "Reduce nonessential visual effects to improve interface response"
+      },
+      "windows_personalization_dark-apps": {
+        "name": "Use dark mode for apps",
+        "description": "Use dark surfaces in supported applications"
+      },
+      "windows_personalization_dark-system": {
+        "name": "Use dark mode for Windows",
+        "description": "Use a dark taskbar and system interface"
+      },
+      "windows_gaming_enable-game-mode": {
+        "name": "Enable Game Mode",
+        "description": "Prioritize system resources while a game is running"
+      },
+      "windows_gaming_disable-capture": {
+        "name": "Turn off background game capture",
+        "description": "Reduce capture overhead when recording is not needed"
+      },
+      "windows_gaming_optimize-windowed-games": {
+        "name": "Optimize windowed games",
+        "description": "Enable a lower-latency presentation mode for compatible games"
+      },
+      "windows_performance_disable-background-store-apps": {
+        "name": "Limit background Store apps",
+        "description": "Reduce CPU and memory use by Store apps that are not in use"
+      },
+      "windows_privacy_disable-advertising-id": {
+        "name": "Turn off the advertising ID",
+        "description": "Prevent apps from using an ID for personalized ads"
+      },
+      "windows_privacy_disable-tailored-experiences": {
+        "name": "Turn off tailored experiences",
+        "description": "Do not use diagnostic data for personalized tips"
+      },
+      "windows_privacy_disable-activity-publishing": {
+        "name": "Turn off activity sharing",
+        "description": "Do not publish this user's activities to other devices"
+      },
+      "windows_privacy_disable-activity-upload": {
+        "name": "Turn off activity history upload",
+        "description": "Do not upload this user's activity history to the cloud"
+      },
+      "windows_content_disable-silent-app-installs": {
+        "name": "Block silent suggested apps",
+        "description": "Reduce suggested apps automatically added by Windows"
+      },
+      "windows_content_disable-suggestions": {
+        "name": "Turn off system suggestions",
+        "description": "Reduce promotional suggestions in Start and Windows"
+      },
+      "windows_content_disable-lock-screen-tips": {
+        "name": "Turn off lock-screen tips",
+        "description": "Reduce tips and recommendations on the lock screen"
+      },
+      "windows_content_disable-welcome-experience": {
+        "name": "Turn off the post-update welcome experience",
+        "description": "Skip feature promotion pages after updates or sign-in"
+      },
+      "windows_content_disable-usage-tips": {
+        "name": "Turn off usage tips",
+        "description": "Reduce tips and recommendations shown while using Windows"
+      },
+      "windows_content_disable-notification-suggestions": {
+        "name": "Turn off notification suggestions",
+        "description": "Do not show system recommendations in Notification Center"
+      },
+      "windows_content_disable-device-setup-suggestions": {
+        "name": "Turn off device setup suggestions",
+        "description": "Stop prompts to finish setup or enable additional services"
+      },
+      "windows_search_disable-web-suggestions": {
+        "name": "Turn off web search suggestions",
+        "description": "Keep Start menu search focused on local results"
+      },
+      "windows_storage_enable-storage-sense": {
+        "name": "Enable Storage Sense",
+        "description": "Let Windows maintain temporary-file storage automatically"
+      },
+      "windows_desktop_reduce-menu-delay": {
+        "name": "Reduce menu response delay",
+        "description": "Make system menus respond faster to pointer hover"
+      },
+      "windows_explorer_enable-auto-suggest": {
+        "name": "Enable Explorer input suggestions",
+        "description": "Show matching suggestions while typing paths and commands"
+      },
+      "windows_explorer_disable-aero-shake": {
+        "name": "Turn off shake-to-minimize",
+        "description": "Avoid minimizing other windows when dragging a window"
+      },
+      "windows_explorer_show-operation-details": {
+        "name": "Expand file operation details",
+        "description": "Show speed and remaining time while copying or moving files"
+      },
+      "windows_explorer_hide-sync-notifications": {
+        "name": "Turn off Explorer sync promotions",
+        "description": "Hide cloud-service recommendations in File Explorer"
+      },
+      "windows_explorer_classic-context-menu": {
+        "name": "Use the classic context menu",
+        "description": "Show the full context menu directly on Windows 11"
+      },
+      "windows_explorer_remove-cast-to-device": {
+        "name": "Remove Cast to device",
+        "description": "Hide the legacy media-casting entry from file context menus"
+      },
+      "windows_taskbar_show-all-tray-icons": {
+        "name": "Show all tray icons",
+        "description": "Keep app icons visible in the notification area"
+      },
+      "windows_taskbar_hide-weather": {
+        "name": "Hide taskbar weather",
+        "description": "Remove the weather and news entry on Windows 10"
+      },
+      "windows_taskbar_hide-search-policy": {
+        "name": "Hide taskbar search",
+        "description": "Hide the taskbar search entry on Windows 11 24H2 and later"
+      },
+      "windows_taskbar_hide-chat": {
+        "name": "Hide the taskbar chat button",
+        "description": "Remove unused chat or meeting shortcuts"
+      },
+      "windows_taskbar_hide-copilot": {
+        "name": "Hide taskbar Copilot",
+        "description": "Remove the Copilot entry from the taskbar"
+      },
+      "windows_windowing_disable-snap-assist": {
+        "name": "Turn off Snap Assist suggestions",
+        "description": "Do not show snap layouts while dragging or hovering windows"
+      },
+      "windows_gaming_disable-game-dvr": {
+        "name": "Turn off Game DVR",
+        "description": "Reduce background capture activity when recording is not needed"
+      },
+      "windows_privacy_disable-input-personalization": {
+        "name": "Turn off typing personalization",
+        "description": "Do not use typed content to train personalized input"
+      },
+      "windows_privacy_disable-ink-personalization": {
+        "name": "Turn off handwriting personalization",
+        "description": "Do not use handwriting to train personalized recognition"
+      },
+      "windows_privacy_disable-feedback-requests": {
+        "name": "Turn off feedback requests",
+        "description": "Reduce Windows experience surveys and feedback prompts"
+      },
+      "windows_privacy_disable-nearby-sharing": {
+        "name": "Turn off Nearby Sharing",
+        "description": "Disable nearby discovery and sharing when it is not needed"
+      },
+      "windows_privacy_disable-cross-device-experiences": {
+        "name": "Turn off cross-device experiences",
+        "description": "Prevent apps from continuing activities on other devices"
+      },
+      "windows_privacy_disable-language-list-sharing": {
+        "name": "Stop sharing the language list",
+        "description": "Do not send preferred languages to websites for personalization"
+      },
+      "windows_clipboard_disable-history": {
+        "name": "Turn off clipboard history",
+        "description": "Do not retain multiple copied items in Windows"
+      },
+      "windows_content_disable-spotlight": {
+        "name": "Turn off lock-screen Spotlight",
+        "description": "Stop rotating recommended images and content on the lock screen"
+      },
+      "windows_content_disable-phone-link-suggestions": {
+        "name": "Turn off Phone Link suggestions",
+        "description": "Reduce prompts to connect a phone to Windows"
+      },
+      "windows_content_disable-service-suggestions": {
+        "name": "Turn off Microsoft service suggestions",
+        "description": "Hide system notifications promoting Microsoft services"
+      },
+      "windows_content_disable-preinstalled-app-suggestions": {
+        "name": "Turn off preinstalled app suggestions",
+        "description": "Reduce recommended apps prepared for the current user"
+      },
+      "windows_edge_disable-sidebar": {
+        "name": "Turn off the Edge sidebar",
+        "description": "Hide the sidebar and Discover entry in Microsoft Edge"
+      },
+      "windows_edge_disable-personalization": {
+        "name": "Turn off Edge personalization",
+        "description": "Do not use browsing data to personalize Microsoft services"
+      },
+      "windows_edge_disable-recommendations": {
+        "name": "Turn off Edge recommendations",
+        "description": "Reduce feature promotions and recommended experiences in Edge"
+      },
+      "windows_edge_disable-web-widget": {
+        "name": "Turn off Edge web widgets",
+        "description": "Prevent Edge from providing news and search widgets on the desktop"
+      },
+      "windows_office_disable-optional-telemetry": {
+        "name": "Turn off optional Office diagnostics",
+        "description": "Do not send optional client diagnostic data from Microsoft 365 apps"
+      },
+      "windows_firefox_disable-telemetry": {
+        "name": "Turn off Firefox telemetry",
+        "description": "Prevent Firefox from uploading telemetry and retaining local telemetry archives"
+      },
+      "windows_ai_disable-recall-snapshots": {
+        "name": "Turn off Recall snapshot analysis",
+        "description": "Prevent Windows AI from saving and analyzing screen snapshots"
+      },
+      "windows_ai_disable-copilot": {
+        "name": "Turn off Windows Copilot",
+        "description": "Disable the system Copilot entry when it is not used"
+      },
+      "windows_typing_disable-autocorrect": {
+        "name": "Turn off typing autocorrect",
+        "description": "Prevent Windows from automatically changing typed words"
+      },
+      "windows_typing_disable-spellcheck": {
+        "name": "Turn off typing spellcheck",
+        "description": "Do not mark spelling issues in Windows input surfaces"
+      },
+      "windows_typing_disable-text-prediction": {
+        "name": "Turn off text prediction",
+        "description": "Do not show predicted text suggestions while typing"
+      },
+      "windows_typing_disable-double-space-period": {
+        "name": "Turn off double-space period",
+        "description": "Do not insert a period after pressing Space twice"
+      },
+      "windows_accessibility_disable-sticky-keys-shortcut": {
+        "name": "Turn off the Sticky Keys shortcut",
+        "description": "Avoid opening Sticky Keys after repeatedly pressing Shift"
+      },
+      "windows_accessibility_disable-filter-keys-shortcut": {
+        "name": "Turn off the Filter Keys shortcut",
+        "description": "Avoid enabling Filter Keys after holding Shift"
+      },
+      "windows_accessibility_disable-toggle-keys-shortcut": {
+        "name": "Turn off the Toggle Keys shortcut",
+        "description": "Avoid enabling Toggle Keys after holding Num Lock"
+      },
+      "windows_desktop_reduce-hover-delay": {
+        "name": "Reduce pointer hover delay",
+        "description": "Make system controls that use pointer hover respond faster"
+      },
+      "windows_performance_reduce-crash-dump": {
+        "name": "Use smaller crash dumps",
+        "description": "Save disk space with minidumps, at the cost of less diagnostic detail"
+      },
+      "windows_privacy_disable-remote-assistance": {
+        "name": "Turn off Remote Assistance",
+        "description": "Prevent other people from connecting through Windows Remote Assistance"
+      },
+      "windows_performance_reduce-service-shutdown-timeout": {
+        "name": "Reduce service shutdown timeout",
+        "description": "Wait less for background services during shutdown; stalled services may be terminated sooner"
+      },
+      "windows_performance_disable-network-throttling": {
+        "name": "Turn off multimedia network throttling",
+        "description": "Remove Windows multimedia throughput throttling for latency-sensitive networking"
+      },
+      "windows_performance_remove-reserved-bandwidth": {
+        "name": "Remove QoS reserved bandwidth",
+        "description": "Set the system limit for non-best-effort traffic to zero"
+      },
+      "windows_performance_multimedia-responsiveness": {
+        "name": "Prioritize multimedia responsiveness",
+        "description": "Reserve less CPU for background work, which may affect background workloads"
+      },
+      "windows_performance_multimedia-no-lazy-mode": {
+        "name": "Disable lazy multimedia scheduling",
+        "description": "Schedule multimedia work more aggressively, which may increase power use"
+      },
+      "windows_performance_multimedia-always-on": {
+        "name": "Keep multimedia scheduling active",
+        "description": "Keep multimedia scheduling optimizations active, with some idle overhead"
+      },
+      "windows_gaming_enable-hardware-gpu-scheduling": {
+        "name": "Enable hardware-accelerated GPU scheduling",
+        "description": "Move more scheduling to the GPU; results depend on the graphics driver and require a restart"
+      },
+      "windows_compatibility_disable-camera-frame-server": {
+        "name": "Disable camera frame server mode",
+        "description": "Help some legacy camera apps, but reduce multi-app camera sharing"
+      },
+      "windows_services_print-spooler-manual": {
+        "name": "Set Print Spooler to manual",
+        "description": "Reduce an always-on service when not printing; printing features may be affected"
+      },
+      "windows_services_disable-sysmain": {
+        "name": "Disable SysMain preloading",
+        "description": "Reduce background preloading and disk activity, but cold app launches may be slower"
+      },
+      "windows_services_disable-compatibility-assistant": {
+        "name": "Disable Program Compatibility Assistant",
+        "description": "Stop compatibility detection and prompts for older applications"
+      },
+      "windows_services_disable-search-indexing": {
+        "name": "Disable Windows Search indexing",
+        "description": "Reduce background indexing, but make file and mail searches much slower"
+      },
+      "windows_services_disable-diagnostic-tracking": {
+        "name": "Disable diagnostic tracking",
+        "description": "Reduce Windows diagnostic data collection and some troubleshooting capability"
+      },
+      "windows_services_disable-error-reporting": {
+        "name": "Disable Windows Error Reporting",
+        "description": "Stop collecting and sending crash reports, reducing available diagnostics"
+      },
+      "windows_services_disable-sensors": {
+        "name": "Disable sensor services",
+        "description": "Turn off location and orientation sensors; convertible-device features may be affected"
+      },
+      "windows_services_disable-insider": {
+        "name": "Disable Windows Insider service",
+        "description": "Turn off Insider support when preview builds are not used"
+      },
+      "windows_services_disable-xbox-auth": {
+        "name": "Disable Xbox Live authentication",
+        "description": "Reduce Xbox background services; Game Pass and Xbox sign-in may stop working"
+      },
+      "windows_services_disable-fax": {
+        "name": "Disable the Fax service",
+        "description": "Stop the service from starting when Windows Fax is not used"
+      },
+      "windows_services_disable-media-player-sharing": {
+        "name": "Disable media player sharing",
+        "description": "Stop the background service when local-network media sharing is not used"
+      },
+      "windows_security_disable-system-restore": {
+        "name": "Disable System Restore",
+        "description": "Prevent new restore points; System Restore cannot be used after a failure"
+      },
+      "windows_security_disable-defender": {
+        "name": "Disable Microsoft Defender antivirus policy",
+        "description": "Substantially reduce malware protection; select only with another security solution"
+      },
+      "windows_security_disable-smartscreen": {
+        "name": "Disable Windows SmartScreen",
+        "description": "Stop reputation checks for unknown apps and downloads, reducing malicious-file protection"
+      },
+      "windows_network_disable-smb1": {
+        "name": "Disable SMB 1.0",
+        "description": "Turn off the legacy sharing protocol; older NAS devices may stop connecting"
+      },
+      "windows_network_disable-smb2": {
+        "name": "Disable SMB 2/3",
+        "description": "Break modern Windows file and printer sharing; use only when SMB is not needed"
+      },
+      "windows_security_disable-vbs": {
+        "name": "Disable virtualization-based security",
+        "description": "May improve some game performance but reduces credential and kernel isolation"
+      },
+      "windows_storage_disable-ntfs-last-access": {
+        "name": "Disable NTFS last-access updates",
+        "description": "Reduce metadata writes; software that relies on access times may be affected"
+      },
+      "windows_update_notify-before-download": {
+        "name": "Notify before downloading Windows updates",
+        "description": "Require action before downloads; security updates must be handled manually"
+      },
+      "windows_update_disable-peer-sharing": {
+        "name": "Turn off update sharing between devices",
+        "description": "Download from update servers without exchanging Windows updates with other PCs"
+      },
+      "windows_update_disable-preview-builds": {
+        "name": "Turn off Windows preview builds",
+        "description": "Stay on the public release channel instead of receiving Insider builds"
+      },
+      "windows_update_prevent-restart-when-logged-on": {
+        "name": "Do not auto-restart while signed in",
+        "description": "Prevent scheduled updates from restarting the PC while a user is signed in"
+      },
+      "windows_update_disable-automatic-updates": {
+        "name": "Turn off automatic Windows updates",
+        "description": "Only fetch updates after a manual check, which can delay important security fixes"
+      },
+      "windows_privacy_limit-diagnostic-data": {
+        "name": "Limit Windows diagnostic data",
+        "description": "Send only diagnostic data required for security, updates, and reliability"
+      },
+      "windows_update_exclude-driver-updates": {
+        "name": "Exclude drivers from Windows Update",
+        "description": "Prevent automatic driver replacement and maintain drivers manually"
+      },
+      "windows_update_disable-store-auto-updates": {
+        "name": "Disable Microsoft Store auto-updates",
+        "description": "Require manual installation of app updates and security fixes"
+      },
+      "windows_cloud_disable-onedrive-sync": {
+        "name": "Disable OneDrive file sync policy",
+        "description": "Block OneDrive sync without uninstalling the client or deleting existing files"
+      },
+      "windows_search_disable-cortana-policy": {
+        "name": "Disable Cortana policy",
+        "description": "Disable Cortana; some search features on older Windows versions may be affected"
+      },
+      "windows_input_disable-windows-ink": {
+        "name": "Disable Windows Ink Workspace",
+        "description": "Reduce pen features; not recommended for stylus and handwriting users"
+      },
+      "windows_clipboard_disable-cross-device-policy": {
+        "name": "Disable cross-device clipboard policy",
+        "description": "Prevent clipboard content from syncing between Microsoft account devices"
+      },
+      "windows_filesystem_enable-long-paths": {
+        "name": "Enable Win32 long paths",
+        "description": "Let compatible applications access paths longer than 260 characters"
+      },
+      "windows_setup_bypass-hardware-checks": {
+        "name": "Allow bypassing Windows 11 hardware checks",
+        "description": "Allow upgrades on unsupported CPU or TPM hardware, potentially losing official support"
+      },
+      "windows_time_use-utc-hardware-clock": {
+        "name": "Use UTC for the hardware clock",
+        "description": "Useful for Windows and Linux dual boot; usually unnecessary on Windows-only systems"
+      },
+      "windows_power_disable-modern-standby": {
+        "name": "Disable Modern Standby",
+        "description": "Use legacy sleep behavior; unsupported devices may experience sleep problems"
+      },
+      "windows_power_disable-hibernation": {
+        "name": "Disable hibernation",
+        "description": "Reduce hibernation-related disk use, but hibernation and Fast Startup may be unavailable"
+      },
+      "windows_recovery_enable-registry-backups": {
+        "name": "Enable periodic registry backups",
+        "description": "Let Windows create registry backups using a small amount of system-drive space"
+      },
+      "windows_login_enable-verbose-status": {
+        "name": "Show verbose sign-in status",
+        "description": "Show system steps during sign-in and shutdown to help diagnose delays"
+      },
+      "macos_finder_show-hard-drives-on-desktop": {
+        "name": "Show internal drives on the desktop",
+        "description": "Open the Mac's internal drives directly from the desktop"
+      },
+      "macos_finder_show-external-drives-on-desktop": {
+        "name": "Show external drives on the desktop",
+        "description": "Add a desktop icon when an external drive is connected"
+      },
+      "macos_finder_show-removable-media-on-desktop": {
+        "name": "Show removable media on the desktop",
+        "description": "Show USB drives, discs, and other removable devices on the desktop"
+      },
+      "macos_dock_disable-launch-animation": {
+        "name": "Turn off Dock launch animations",
+        "description": "Reduce bouncing icon animations while applications launch"
+      },
+      "macos_dock_show-only-open-apps": {
+        "name": "Show only open apps in the Dock",
+        "description": "Hide pinned apps that are not running for a simpler Dock"
+      },
+      "macos_dock_dim-hidden-apps": {
+        "name": "Dim hidden app icons",
+        "description": "Use translucent icons to distinguish currently hidden applications"
+      },
+      "macos_mission-control_group-windows-by-app": {
+        "name": "Group Mission Control windows by app",
+        "description": "Keep windows from the same application together in Mission Control"
+      },
+      "macos_keyboard_disable-press-and-hold": {
+        "name": "Repeat keys when held",
+        "description": "Replace the accent character panel with continuous letter input"
+      },
+      "macos_documents_save-locally": {
+        "name": "Save new documents locally",
+        "description": "Prefer the Mac instead of iCloud when saving a new document"
+      },
+      "macos_printing_quit-after-finish": {
+        "name": "Quit the print queue when finished",
+        "description": "Close the print queue automatically when no jobs remain"
+      },
+      "macos_finder_default-list-view": {
+        "name": "Use list view by default in Finder",
+        "description": "Use list layout for folders without a saved view preference"
+      },
+      "macos_finder_folders-first-on-desktop": {
+        "name": "Keep desktop folders on top",
+        "description": "Show folders before files when sorting the desktop"
+      },
+      "macos_finder_enable-quit-menu": {
+        "name": "Show the Quit Finder menu",
+        "description": "Allow Finder to be fully quit and reopened when needed"
+      },
+      "macos_finder_remove-old-trash-items": {
+        "name": "Remove old Trash items automatically",
+        "description": "Delete items after 30 days in the Trash; they cannot be restored from the Trash afterward"
+      },
+      "macos_dock_remove-auto-hide-delay": {
+        "name": "Remove the Dock auto-hide delay",
+        "description": "Show the Dock immediately when the pointer reaches it"
+      },
+      "macos_dock_enable-magnification": {
+        "name": "Enable Dock magnification",
+        "description": "Enlarge nearby application icons as the pointer moves over the Dock"
+      },
+      "macos_window_disable-animations": {
+        "name": "Reduce window animations",
+        "description": "Disable some opening and closing animations for more immediate feedback"
+      },
+      "macos_window_close-app-windows": {
+        "name": "Close windows when quitting apps",
+        "description": "Do not reopen retained windows the next time an application starts"
+      },
+      "macos_window_double-click-titlebar-minimize": {
+        "name": "Minimize on title-bar double-click",
+        "description": "Minimize a window instead of zooming it when its title bar is double-clicked"
+      },
+      "macos_keyboard_use-standard-function-keys": {
+        "name": "Use F1–F12 as standard function keys",
+        "description": "Hold Fn to control brightness and volume instead"
+      },
+      "macos_safari_show-full-url": {
+        "name": "Show full website addresses in Safari",
+        "description": "Always show the complete address of the current page"
+      },
+      "macos_safari_disable-safe-download-auto-open": {
+        "name": "Stop Safari auto-opening downloads",
+        "description": "Do not automatically open files that macOS considers safe after download"
+      },
+      "macos_safari_show-status-bar": {
+        "name": "Show the Safari status bar",
+        "description": "Display a link's destination at the bottom of the window when hovering"
+      },
+      "macos_safari_enable-develop-menu": {
+        "name": "Enable the Safari Develop menu",
+        "description": "Show tools for inspecting pages, debugging, and controlling caches"
+      },
+      "macos_textedit_plain-text-default": {
+        "name": "Use plain text by default in TextEdit",
+        "description": "Create new TextEdit documents without rich-text formatting"
+      },
+      "macos_photos_disable-auto-open": {
+        "name": "Do not open Photos when devices connect",
+        "description": "Do not launch photo applications when a camera, iPhone, or memory card connects"
+      },
+      "macos_privacy_disable-personalized-ads": {
+        "name": "Disable personalized Apple ads",
+        "description": "Do not let Apple personalize ads from account and usage information"
+      },
+      "macos_sharing_disable-airdrop": {
+        "name": "Disable AirDrop receiving",
+        "description": "Stop discovering and receiving content sent from nearby devices"
+      },
+      "macos_activity-monitor_show-all-processes": {
+        "name": "Show all processes in Activity Monitor",
+        "description": "Display processes run by the current user and the system by default"
+      },
+      "macos_app-store_enable-auto-updates": {
+        "name": "Update App Store apps automatically",
+        "description": "Allow the App Store to install available updates for purchased applications"
+      },
+      "windows_explorer_show-status-bar": {
+        "name": "Show the File Explorer status bar",
+        "description": "Display item counts and selected file information at the bottom"
+      },
+      "windows_explorer_separate-process": {
+        "name": "Run folder windows in a separate process",
+        "description": "Limit the impact of one window crashing at a small memory cost"
+      },
+      "windows_explorer_restore-folders-at-login": {
+        "name": "Restore folder windows after sign-in",
+        "description": "Reopen File Explorer windows that were left open before sign-out"
+      },
+      "windows_explorer_disable-sharing-wizard": {
+        "name": "Turn off the File Explorer sharing wizard",
+        "description": "Manage sharing through the advanced permissions interface"
+      },
+      "windows_taskbar_hide-badges": {
+        "name": "Hide taskbar app badges",
+        "description": "Do not show unread counts or alert marks on application icons"
+      },
+      "windows_taskbar_disable-flashing": {
+        "name": "Turn off taskbar flashing",
+        "description": "Do not flash taskbar icons when an application requests attention"
+      },
+      "windows_taskbar_hide-window-sharing": {
+        "name": "Hide taskbar window sharing",
+        "description": "Do not offer direct window sharing from the taskbar during calls"
+      },
+      "windows_taskbar_show-desktop-corner": {
+        "name": "Enable the taskbar Show Desktop corner",
+        "description": "Click the far-right taskbar corner to show the desktop quickly"
+      },
+      "windows_personalization_disable-transparency": {
+        "name": "Turn off transparency effects",
+        "description": "Reduce translucent rendering in Start, the taskbar, and system surfaces"
+      },
+      "windows_search_disable-highlights": {
+        "name": "Turn off search highlights",
+        "description": "Remove trending content and suggestions from Windows Search"
+      },
+      "windows_start_disable-recommendations": {
+        "name": "Turn off Start menu recommendations",
+        "description": "Reduce tips, shortcuts, and application suggestions in Start"
+      },
+      "windows_start_disable-account-notifications": {
+        "name": "Turn off Start account notifications",
+        "description": "Hide Microsoft account and sync suggestions from Start"
+      },
+      "macos_finder_warn-before-empty-trash": {
+        "name": "Confirm before emptying Trash",
+        "description": "Reduce the chance of permanently deleting files by mistake"
+      },
+      "macos_dock_enable-spring-loading": {
+        "name": "Open targets while dragging",
+        "description": "Expand Dock folders or apps automatically when dragging over them"
+      },
+      "macos_dock_scroll-to-expose": {
+        "name": "Scroll Dock icons to show windows",
+        "description": "Scroll up on an app icon to view all of its windows"
+      },
+      "macos_dock_fast-auto-hide-animation": {
+        "name": "Speed up Dock auto-hide",
+        "description": "Reduce the animation delay when showing or hiding the Dock"
+      },
+      "macos_safari_disable-search-suggestions": {
+        "name": "Turn off Safari search suggestions",
+        "description": "Send less typed content to search suggestion services"
+      },
+      "macos_safari_disable-top-hit-preload": {
+        "name": "Turn off Safari Top Hit preloading",
+        "description": "Do not load the first search result before you confirm it"
+      },
+      "macos_text_disable-text-completion": {
+        "name": "Turn off text completion",
+        "description": "Prevent the system from completing text as you type"
+      },
+      "macos_text_disable-inline-predictions": {
+        "name": "Turn off inline predictions",
+        "description": "Do not show predicted text after the cursor"
+      },
+      "macos_sound_disable-volume-feedback": {
+        "name": "Turn off volume feedback sounds",
+        "description": "Do not play a sound when adjusting the volume"
+      },
+      "macos_time-machine_hide-new-disk-prompts": {
+        "name": "Hide new disk backup prompts",
+        "description": "Do not suggest using newly connected disks with Time Machine"
+      },
+      "macos_security_require-password-after-sleep": {
+        "name": "Require a password after sleep",
+        "description": "Prevent access to the Mac immediately after it wakes"
+      },
+      "macos_security_lock-immediately-after-sleep": {
+        "name": "Lock immediately after sleep",
+        "description": "Require authentication as soon as the Mac wakes"
+      },
+      "windows_explorer_confirm-file-delete": {
+        "name": "Confirm before deleting files",
+        "description": "Show a confirmation before moving items to the Recycle Bin"
+      },
+      "windows_explorer_use-manual-default-printer": {
+        "name": "Keep the selected default printer",
+        "description": "Stop Windows from changing it based on the most recently used printer"
+      },
+      "windows_taskbar_show-on-all-displays": {
+        "name": "Show the taskbar on all displays",
+        "description": "Keep the taskbar available on every screen in multi-display setups"
+      },
+      "windows_gaming_disable-game-bar-controller": {
+        "name": "Do not open Game Bar from a controller",
+        "description": "Prevent controller buttons from opening Game Bar accidentally"
+      },
+      "windows_gaming_disable-game-bar-tips": {
+        "name": "Turn off Game Bar tips",
+        "description": "Hide Game Bar feature and recording suggestions"
+      },
+      "windows_gaming_disable-dynamic-lighting": {
+        "name": "Turn off Windows Dynamic Lighting",
+        "description": "Reduce lighting control and background activity when RGB is not needed"
+      },
+      "windows_gaming_disable-app-lighting-control": {
+        "name": "Stop apps controlling Dynamic Lighting",
+        "description": "Prevent foreground apps from taking over device lighting"
+      },
+      "windows_start_hide-recently-added-apps": {
+        "name": "Hide recently added apps",
+        "description": "Do not highlight newly installed apps in Start"
+      },
+      "windows_start_hide-most-used-apps": {
+        "name": "Hide most-used apps",
+        "description": "Do not expose app usage patterns in Start"
+      },
+      "windows_start_hide-recent-items": {
+        "name": "Hide recently opened items",
+        "description": "Do not show recent files in Start or jump lists"
+      },
+      "windows_edge_limit-diagnostic-data": {
+        "name": "Send only required Edge diagnostics",
+        "description": "Do not send optional browser usage and website diagnostic data"
+      },
+      "windows_security_disable-autorun": {
+        "name": "Turn off AutoRun for all drives",
+        "description": "Prevent programs from running automatically when media is inserted"
+      },
+      "windows_network_disable-llmnr": {
+        "name": "Turn off LLMNR name resolution",
+        "description": "Reduce local network spoofing and credential exposure risks"
+      },
+      "windows_update_enable-microsoft-product-updates": {
+        "name": "Update other Microsoft products",
+        "description": "Get updates for Office and other products through Windows Update"
+      },
+      "windows_update_enable-restart-notifications": {
+        "name": "Notify when updates need a restart",
+        "description": "Show a clear reminder when a restart is required to finish updating"
+      }
+    }
+  },
+  "applicationClose": {
+    "title": "Close running apps (optional)",
+    "selectAll": "Select all",
+    "clearAll": "Clear all",
+    "processCount": "{count} related process | {count} related processes",
+    "closing": "Waiting for the selected apps to close…",
+    "closeSelectedAndContinue": "Close {count} app and continue | Close {count} apps and continue",
+    "skipAndContinue": "Skip and continue",
+    "normalCloseFailed": "Some apps are still running after waiting",
+    "forceWarning": "Force quitting may discard unsaved documents or edits. Confirm that your work is saved before continuing",
+    "forceAndContinue": "Force quit and continue"
+  },
+  "startup": {
+    "title": "Startup Items",
+    "scan": "Scan Startup Items",
+    "rescan": "Scan Again",
+    "scanning": "Finding startup items",
+    "scanningDescription": "Finding apps and services that start automatically. This scan will not change any settings",
+    "cancelling": "Cancelling…",
+    "emptyTitle": "Manage apps that start automatically",
+    "emptyDescription": "See what starts automatically and turn items on or off as needed",
+    "noMatchesTitle": "No matching startup items",
+    "noMatchesDescription": "Try a different search or filter",
+    "searchPlaceholderCompact": "Search programs or publishers",
+    "filterLabel": "Filter startup items by state",
+    "itemCount": "{count} items",
+    "remainingResults": "{count} more results",
+    "valueSeparator": ", ",
+    "viewDetails": "View startup details for {name}",
+    "showLocation": "Show in folder",
+    "showNamedLocation": "Show {name} in its folder",
+    "copyToClipboard": "Copy to clipboard",
+    "copyConfiguration": "Copy the startup configuration for {name}",
+    "copyCommand": "Copy what {name} runs",
+    "copiedToClipboard": "Copied to clipboard",
+    "noManageableTitle": "No manageable startup items",
+    "noManageableDescription": "No programs that can be turned on or off were found",
+    "summary": {
+      "programs": "{count} apps start automatically",
+      "permissionRequired": "Some startup items are hidden—Full Disk Access is required",
+      "openPrivacySettings": "Open Full Disk Access settings",
+      "enabled": "Enabled"
+    },
+    "permission": {
+      "title": "Some startup items are not shown",
+      "description": "Enable Full Disk Access to scan more startup items",
+      "instructions": "Allow MangoDisk in System Settings, then return and scan again",
+      "skip": "Not Now",
+      "openSettings": "Open System Settings"
+    },
+    "filters": { "all": "All", "enabled": "Enabled", "disabled": "Disabled" },
+    "sourceKinds": {
+      "registryRun": "Registry startup",
+      "startupFolder": "Startup folder",
+      "scheduledTask": "Scheduled task",
+      "service": "System service",
+      "packagedStartupTask": "Store app task",
+      "launchAgent": "User background item",
+      "launchDaemon": "System background item",
+      "loginItem": "App opened at sign-in",
+      "backgroundTask": "Background login item",
+      "embeddedItem": "App-provided startup item",
+      "advancedAutoRun": "Advanced autorun"
+    },
+    "configuredStates": {
+      "mixed": "Partially enabled",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "removed": "Removed",
+      "unknown": "State unknown",
+      "notApplicable": "Not applicable"
+    },
+    "runtimeStates": {
+      "running": "Running",
+      "stopped": "Stopped",
+      "loaded": "Loaded",
+      "unloaded": "Not loaded",
+      "unknown": "Unknown"
+    },
+    "trustStates": {
+      "system": "System component",
+      "verified": "Valid signature",
+      "invalid": "Invalid signature",
+      "unsigned": "Unsigned",
+      "unknown": "Unknown"
+    },
+    "scopes": {
+      "currentUser": "Current user",
+      "user": "User",
+      "allUsers": "All users",
+      "machine": "Machine",
+      "system": "System"
+    },
+    "diagnostics": {
+      "accessDenied": "Access denied",
+      "invalidData": "Invalid configuration data",
+      "missingIdentity": "Program identity is missing",
+      "missingTarget": "Target file is missing",
+      "stateUnavailable": "Current state is unavailable",
+      "unsupportedFormat": "This configuration format is not supported"
+    },
+    "change": {
+      "title": "Confirm changes",
+      "checking": "Checking startup items…",
+      "descriptions": {
+        "enabled": "Turn on {count} startup items",
+        "disabled": "Turn off {count} startup items",
+        "removed": "Remove {count} leftover startup items"
+      },
+      "enableNamedGroup": "Enable {name}",
+      "disableNamedGroup": "Disable {name}",
+      "futureOnly": "Turning off automatic startup does not stop programs or services that are already running",
+      "requiresElevation": "Administrator permission required",
+      "authorizationPromptMacos": "MangoDisk needs administrator permission to change startup settings",
+      "confirm": "Confirm",
+      "applying": "Applying…",
+      "refreshFailedResult": "The operation finished, but the list could not be updated. Scan again",
+      "enableSuccessResult": "Turned on automatic startup for “{name}”",
+      "disableSuccessResult": "Turned off automatic startup for “{name}”",
+      "partialEnableResult": "Enabled {changed} items for “{name}”; {failed} failed",
+      "partialDisableResult": "Disabled {changed} items for “{name}”; {failed} failed",
+      "warnings": {
+        "affectsOtherTriggers": "This scheduled task also has non-startup triggers; disabling it affects the entire task",
+        "itemCurrentlyRunning": "The item is currently running; this change will not stop it"
+      },
+      "skipReasons": {
+        "alreadyInDesiredState": "Already in the requested state",
+        "catalogExpired": "The scan session expired; scan again",
+        "itemChanged": "System configuration changed after the scan",
+        "itemMissing": "The item no longer exists",
+        "stateUnknown": "The configured state cannot be verified",
+        "unsupportedCapability": "This source is view-only or system-managed",
+        "requiresElevation": "Administrator access is required",
+        "targetUnavailable": "The program is missing or its startup configuration is invalid"
+      }
+    },
+    "cleanup": {
+      "action": "Remove Leftover",
+      "title": "Remove Leftover Startup Items",
+      "guidance": "Only obsolete startup settings will be removed; other program files will not be deleted",
+      "confirm": "Remove",
+      "successResult": "Removed leftover startup items for “{name}”",
+      "partialResult": "Removed {changed} items for “{name}”; {failed} failed"
+    },
+    "detail": {
+      "timing": "When it starts",
+      "versionValue": "Version {version}",
+      "systemManaged": "This item is managed by the system. Change it in Login Items & Extensions in System Settings",
+      "viewOnly": "This item can be viewed but cannot be changed directly in MangoDisk",
+      "openLoginItemsSettings": "Open Login Items Settings",
+      "source": "Startup type",
+      "startTiming": {
+        "boot": "Runs after the computer starts",
+        "userLogon": "Runs after you sign in",
+        "background": "Keeps running in the background",
+        "automatic": "Runs automatically when needed"
+      },
+      "configuration": "Startup configuration",
+      "command": "Runs",
+      "runtime": "Current runtime state",
+      "trust": "Digital signature",
+      "modified": "Configuration modified",
+      "diagnostics": "Needs attention"
+    }
+  },
+  "common": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "open": "Open",
+    "showInFileManager": "Show in File Manager",
+    "deletePermanently": "Delete Permanently",
+    "minimize": "Minimize",
+    "maximize": "Maximize",
+    "restore": "Restore",
+    "expandSidebar": "Expand sidebar",
+    "collapseSidebar": "Collapse sidebar",
+    "safe": "Low risk",
+    "operationFailed": "Operation failed",
+    "loadMore": "Show more",
+    "filterFileCategory": "Filter by file type",
+    "estimatedRelease": "Space to free",
+    "limitedResults": "Showing the largest results; some matches are not listed",
+    "fileCount": "{count} file | {count} files",
+    "itemCount": "{count} item | {count} items",
+    "locationCount": "{count} location | {count} locations"
+  },
+  "errors": {
+    "operationBusy": "To avoid slowing down your disk, wait for the current task to finish, or cancel it and try again",
+    "invalidInput": "Invalid request. Review the selected items and try again",
+    "operationCancelled": "Operation cancelled",
+    "operationFailed": "The operation could not be completed. Try again",
+    "permissionDenied": "MangoDisk does not have permission to complete this operation",
+    "persistenceFailed": "MangoDisk could not save the operation data. Try again",
+    "taskJoinFailed": "A background task stopped unexpectedly. Try again"
+  },
+  "errorTitles": {
+    "invalidInput": "Review your selection",
+    "operationBusy": "Another disk task is running",
+    "operationCancelled": "Operation cancelled",
+    "operationFailed": "Operation failed",
+    "permissionDenied": "Permission required",
+    "persistenceFailed": "Data could not be saved",
+    "taskJoinFailed": "Background task stopped"
+  },
+  "errorReasons": {
+    "resourceBusy": {
+      "title": "Item is in use",
+      "message": "This item is open in File Explorer or another app. Close the related window or app and try again"
+    },
+    "accessDeniedOrBusy": {
+      "title": "Item cannot be accessed",
+      "message": "The system denied access. The item may be in use or require higher permissions; close related apps and try again"
+    },
+    "itemChanged": {
+      "title": "Item just changed",
+      "message": "This item changed while deletion was being prepared. MangoDisk stopped to avoid deleting the wrong contents; analyze it again"
+    }
+  },
+  "folderPicker": {
+    "commonFolders": "Common Folders",
+    "standardFolders": {
+      "downloads": "Downloads",
+      "documents": "Documents",
+      "pictures": "Pictures",
+      "videos": "Videos",
+      "music": "Music"
+    }
+  },
+  "scanScope": {
+    "label": "Analysis scope",
+    "chooseFolder": "Choose folder…",
+    "removeFolder": "Remove {name} from history"
+  },
+  "overview": {
+    "startScan": "Start Scan",
+    "rescan": "Scan Again"
+  },
+  "cleanup": {
+    "title": "Deep Cleanup",
+    "diskUsageSummary": "{available} available",
+    "diskUsageDetails": "{name}: {used} used, {available} available, {total} total",
+    "selected": "Selected",
+    "totalSize": "{size} total",
+    "selectAll": "Select all",
+    "selectRule": "Select cleanup item: {name}",
+    "categoryItemCount": "{count} item | {count} items",
+    "categoryTitles": {
+      "system": "System caches",
+      "userCache": "User cache files",
+      "application": "Application caches",
+      "browser": "Browser data",
+      "development": "Developer tools",
+      "project": "Project build artifacts",
+      "xcode": "Xcode data",
+      "applicationOptimization": "Application optimization",
+      "ai": "AI models and caches",
+      "container": "Container caches"
+    },
+    "categoryDescriptions": {
+      "system": "Temporary files, diagnostic data, and system caches",
+      "userCache": "App and developer tool caches in your user folder",
+      "application": "Caches and temporary content produced by applications",
+      "browser": "Temporary website data created by browsers",
+      "development": "Temporary downloads, indexes, and caches from developer tools",
+      "project": "Dependencies and build output that projects can recreate",
+      "xcode": "Device support, archives, and development data produced by Xcode",
+      "applicationOptimization": "Removes app code for processor architectures this Mac does not use, reducing storage use without affecting normal operation on this Mac",
+      "ai": "Downloaded AI models and temporary transfer files",
+      "container": "Unused build cache from container tools"
+    },
+    "selectSource": "Select cleanup location: {path}",
+    "selectionState": {
+      "all": "All subitems selected",
+      "partial": "Some subitems selected",
+      "none": "Not selected"
+    },
+    "selectionMode": {
+      "label": "Selection",
+      "smart": "Smart recommendation",
+      "all": "Select all",
+      "none": "Select none",
+      "manual": "Manual selection"
+    },
+    "estimated": "Space to free",
+    "selectedSummary": "Selected items",
+    "requiresClose": "Apps to close",
+    "clean": "Clean",
+    "scanFirst": "Find cleanable items",
+    "emptyDescription": "Scan system and app caches, logs, and temporary files to find space you can reclaim",
+    "planDialogTitle": "Confirm cleanup",
+    "adjustSelection": "Back to selection",
+    "execute": "Start cleanup",
+    "actualReleased": "Space freed",
+    "resultDescription": "Review the item outcomes and space changes",
+    "cancelledResultDescription": "Completed items remain cleaned; items not yet started were skipped",
+    "previewCompleted": "Check complete",
+    "previewPassed": "Checks complete. No files were deleted",
+    "completed": "Cleanup complete",
+    "completedWithWarnings": "Cleanup completed with warnings",
+    "completedDescription": "{count} item processed and {size} freed; {failed} skipped or failed | {count} items processed and {size} freed; {failed} skipped or failed",
+    "cancelled": "Cleanup cancelled",
+    "processedItems": "Items processed",
+    "failedItems": "Skipped or failed",
+    "cleanableFound": "Cleanable items",
+    "summaryCount": "Found {count} cleanable item | Found {count} cleanable items",
+    "summarySpace": "can reclaim up to",
+    "noCleanableInGroup": "This group was checked and no cleanable content was found",
+    "selectedItemCount": "{count} item selected | {count} items selected",
+    "appsToCloseCount": "{count} app to close | {count} apps to close",
+    "closeAppsBeforeCleanup": "Save your work first. Selected apps close before cleanup; items still in use are skipped",
+    "requiresCloseProcesses": "Apps to close: {processes}",
+    "applicationComponentCount": "No items available to optimize | {count} item available to optimize | {count} items available to optimize",
+    "sourceRequiresClose": "Close the app before cleanup",
+    "sourceAccessLimited": "Could not be fully read and is excluded",
+    "sourceFiles": "{count} files",
+    "sourceModified": "Last modified {time}",
+    "aggregateOnlyDetails": "Only the cleanup scope, item count, and total size are available; individual files cannot be listed",
+    "scanMode": {
+      "label": "Choose scan type",
+      "standard": "Standard Scan",
+      "standardDescription": "Check cleanup items and development projects for the current user",
+      "selectVolumes": "Choose Disks",
+      "selectVolumesDescription": "Find more development projects on other disks",
+      "volumeDialogTitle": "Choose disks to search",
+      "volumeDialogDescription": "The system disk is always scanned. Select other disks to find development projects and build files",
+      "systemVolume": "System · Always scanned",
+      "volumeCapacity": "{available} free / {total}",
+      "noVolumes": "No disks are available",
+      "selectedVolumeCount": "{count} disk selected | {count} disks selected",
+      "startSelectedScan": "Start Scan"
+    }
+  },
+  "analysis": {
+    "title": "Disk Space Analysis",
+    "pathLabel": "Current location",
+    "start": "Start Analysis",
+    "analyzing": "Scanning folders…",
+    "rescan": "Analyze Again",
+    "result": "Current folder",
+    "treemap": "Treemap",
+    "treemapRemainder": "Smaller item · {count} | Smaller items · {count}",
+    "treemapRemainderHint": "{count} smaller item uses {size} in total. Full details are available in the list | {count} smaller items use {size} in total. Full details are available in the list",
+    "details": "List",
+    "back": "Back",
+    "forward": "Forward",
+    "home": "Return to analysis root",
+    "localDisk": "Local disk",
+    "name": "Name",
+    "size": "Size",
+    "fileCount": "Files",
+    "modified": "Last modified",
+    "sortAscending": "Sort ascending",
+    "sortDescending": "Sort descending",
+    "sortColumn": "{column}: {direction}",
+    "deleteTitle": "Permanently delete this item?",
+    "deleteDescription": "The file or folder will be deleted immediately and cannot be recovered",
+    "deleteAction": "Delete Permanently",
+    "emptyTitle": "See what uses your disk space",
+    "emptyDescription": "Analyze how files and folders use space in the selected location",
+    "folderFileSummary": "{folders} folder · {files} file | {folders} folders · {files} files",
+    "folderSpaceSummary": "{folders} folder · {size} | {folders} folders · {size}"
+  },
+  "largeFiles": {
+    "title": "Large File Cleanup",
+    "start": "Start Scan",
+    "rescan": "Scan Again",
+    "emptyTitle": "Find large files",
+    "emptyDescription": "Scan the selected location for files at least {size}",
+    "fileName": "File name",
+    "location": "Path",
+    "size": "Size",
+    "minimumSize": "Minimum size",
+    "modified": "Modified",
+    "noResults": "No matching large files in this scope",
+    "noResultsDescription": "Lower the size threshold, switch file types, or choose another scan scope",
+    "summaryCount": "Found {count} file at least {size} | Found {count} files at least {size}",
+    "summarySpace": "using",
+    "scanning": "Scanning for large files…",
+    "scanHint": "Scans file information across the disk and skips protected folders",
+    "deleteConfirmTitle": "Permanently delete this file?",
+    "deleteConfirmDescription": "This cannot be undone",
+    "deleteConfirmAction": "Delete Permanently",
+    "selected": "Selected",
+    "selectAll": "Select all results",
+    "batchDelete": "Delete Permanently",
+    "batchDeleteTitle": "Permanently delete selected large files?",
+    "batchDeleteDescription": "The selected files cannot be recovered",
+    "deleteSafetyNote": "Files that changed or became unavailable are skipped automatically",
+    "deleteCompleted": "Large file cleanup complete",
+    "deleteCompletedWithWarnings": "Large file cleanup completed with warnings",
+    "deleteCompletedDescription": "Deleted {count} file and released {size}; {failed} failed | Deleted {count} files and released {size}; {failed} failed"
+  },
+  "fileCategories": {
+    "all": "All",
+    "video": "Video",
+    "audio": "Audio",
+    "document": "Documents",
+    "archive": "Archives",
+    "image": "Images",
+    "aiModel": "AI models",
+    "other": "Other"
+  },
+  "duplicateFiles": {
+    "title": "Duplicate File Cleanup",
+    "start": "Start Scan",
+    "rescan": "Scan Again",
+    "emptyTitle": "Find duplicate files",
+    "emptyDescription": "Scan the selected location for files at least {size} and find copies with identical content",
+    "scanning": "Finding duplicate files…",
+    "validatingCandidates": "Checking possible matches…",
+    "comparingContents": "Comparing file contents…",
+    "scanHint": "Files are compared by content. Large files are read fully only when needed",
+    "deleteCompleted": "Duplicate cleanup complete",
+    "deleteCompletedWithWarnings": "Duplicate cleanup completed with warnings",
+    "deleteCompletedDescription": "Deleted {count} duplicate and released {size}; {failed} failed | Deleted {count} duplicates and released {size}; {failed} failed",
+    "summaryCount": "Found {count} duplicate group | Found {count} duplicate groups",
+    "summaryReclaimable": "can reclaim up to",
+    "summaryReclaimableScanning": "can reclaim so far",
+    "minimumSize": "Minimum file",
+    "smartSelect": "Smart select",
+    "smartSelectMenuLabel": "Smart selection method",
+    "smartSelectSafetyHint": "At least one file remains in each group. Changing the method regenerates the selection",
+    "keeperRuleLabels": {
+      "shortestPath": "Keep the file with the shortest path",
+      "shortestName": "Keep the file with the shortest name",
+      "oldestModified": "Keep the earliest modified file",
+      "newestModified": "Keep the most recently modified file"
+    },
+    "clearSelection": "Clear selection",
+    "selected": "Selected",
+    "noResults": "No duplicate files matched the current conditions",
+    "noResultsDescription": "Switch file types, lower the minimum file size, or choose another location and scan again",
+    "selectGroup": "Select {count} copy | Select {count} copies",
+    "selectGroupHint": "Keep one file and select the other copies using your current setting",
+    "clearGroupSelectionHint": "Clear the selected copies in this group",
+    "groupSelectionApplied": "{count} selected",
+    "batchDelete": "Delete Permanently",
+    "deleteSingleTitle": "Permanently delete this copy?",
+    "deleteSingleDescription": "This cannot be undone",
+    "deleteTitle": "Permanently delete selected duplicate copies?",
+    "deleteDescription": "The selected copies cannot be recovered",
+    "deleteSafetyNote": "At least one file remains in each group. Changed or unavailable files are skipped automatically",
+    "copyCount": "{count} copy | {count} copies",
+    "groupCount": "{count} duplicate group | {count} duplicate groups",
+    "groupSummary": "{count} copy · {size} each · up to {reclaimable} reclaimable | {count} copies · {size} each · up to {reclaimable} reclaimable",
+    "directoryGroupSummary": "{count} identical folder · {files} in each · up to {reclaimable} reclaimable | {count} identical folders · {files} in each · up to {reclaimable} reclaimable"
+  },
+  "applicationLeftovers": {
+    "categoryTitle": "App leftovers",
+    "scanning": "Checking for data left by removed apps…",
+    "scanHint": "Only data clearly linked to an app that is no longer installed is shown. Scanning changes nothing",
+    "accessLimitedDescription": "Allow MangoDisk to access other app data in System Settings → Privacy & Security, then scan again",
+    "incompleteDescription": "To avoid mistakes, no leftovers are shown. Try again later",
+    "emptyTitle": "No verified application leftovers found",
+    "emptyDescription": "No app data that could be safely identified as leftover was found",
+    "planSummary": "{locations} leftover locations from {applications} apps",
+    "planImpact": "Selected app leftovers are deleted permanently and cannot be recovered",
+    "selectCandidate": "Select leftover data for {name}",
+    "selectLocation": "Select {name}",
+    "locationCount": "{count} leftover location | {count} leftover locations",
+    "executionSummary": "Deleted {count} items and released {size}; skipped {failed}",
+    "sources": {
+      "sandboxContainer": "Private app data",
+      "applicationSupport": "App support files",
+      "preferences": "Preferences",
+      "logs": "Application logs",
+      "savedState": "Saved window data",
+      "webData": "Website and network data",
+      "applicationScripts": "App scripts"
+    }
+  },
+  "applicationUninstall": {
+    "title": "App Uninstaller",
+    "startScan": "Start Scan",
+    "rescan": "Scan Again",
+    "scanning": "Scanning installed apps…",
+    "readingApplicationCatalog": "Reading installed apps",
+    "checkingProcesses": "Checking running applications",
+    "validatingApplications": "Checking for changes",
+    "inspectingApplication": "Checking app details",
+    "currentScanStage": "Current step",
+    "currentApplicationSource": "Current source",
+    "currentApplication": "Checking application",
+    "checkedApplications": "Apps checked",
+    "scannedApplicationData": "Data checked",
+    "scanHint": "Checks installed apps and related files without changing anything",
+    "searchPlaceholder": "Search apps or developers",
+    "all": "All",
+    "ready": "Ready",
+    "running": "Running",
+    "unavailable": "Unavailable",
+    "applicationName": "Application name",
+    "status": "Status",
+    "applicationSize": "Size",
+    "applicationSizeUnavailable": "Unknown",
+    "windowsAppPackageSizeHint": "Shared files are not included in this estimate",
+    "lastUsed": "Last used",
+    "lastUsedUnavailable": "No usage record",
+    "installedOrUpdated": "Installed or updated",
+    "installDateUnavailable": "Date unavailable",
+    "sortByName": "Sort by application name",
+    "sortByStatus": "Sort by application status",
+    "sortBySize": "Sort by application size",
+    "sortByDate": "Sort by date",
+    "summary": "{count} app found | {count} apps found",
+    "summarySpace": "using",
+    "selectVisible": "Select current results",
+    "selectApplication": "Select {name}",
+    "selectComponent": "Select {component} for {application}",
+    "showApplicationLocation": "Show {application} in folder",
+    "showComponentLocation": "Show {component} in folder",
+    "emptyTitle": "No matching applications",
+    "emptyDescription": "Clear the search or scan installed apps again",
+    "incompleteTitle": "Installed apps could not be read completely",
+    "incompleteDescription": "To avoid mistakes, uninstall is unavailable. Try again later",
+    "viewOnlyTitle": "Uninstall is unavailable on this system",
+    "viewOnlyDescription": "You can review installed apps, but MangoDisk cannot uninstall them here",
+    "applicationRunning": "Close app",
+    "closeBeforeUninstallTitle": "Close apps before uninstalling",
+    "closeBeforeUninstallDescription": "These apps are running. Select the apps MangoDisk should close normally; unselected apps will be skipped in this uninstall",
+    "requiresElevation": "Admin required",
+    "requiresElevationDescriptionMacos": "macOS will request administrator approval when this app is uninstalled. Cancelling approval will leave the app installed",
+    "authorizationPromptMacos": "MangoDisk needs administrator permission to uninstall this app",
+    "readyForReview": "Ready",
+    "viewOnly": "Uninstall unavailable",
+    "orphanedRegistration": "App files missing",
+    "version": "Version {version}",
+    "showLocation": "Show in folder",
+    "uninstallApplication": "Uninstall {application}",
+    "expandApplicationDetails": "Expand details for {application}",
+    "collapseApplicationDetails": "Collapse details for {application}",
+    "preflightFailed": "The app changed. Refresh the list and try again",
+    "batchPreflightFailedSummary": "Some apps changed. Refresh the list and try again",
+    "selectedApplicationsLabel": "Selected apps",
+    "selectedSizeLabel": "Space to free",
+    "clearSelection": "Clear selection",
+    "uninstallSelected": "Uninstall Selected",
+    "uninstallEntryUnavailableDescription": "Windows did not provide a working uninstall option for this app",
+    "orphanedRegistrationDescription": "Windows still lists this app, but its files and uninstaller are missing",
+    "possibleRelatedLocations": "Possibly related user data",
+    "possibleRelatedLocationsDescription": "These folders may belong to more than one app. They are shown for review only and will not be removed",
+    "showPossibleRelatedLocation": "Show a folder possibly related to {application}",
+    "confirmBatchTitle": "Uninstall the selected {count} apps?",
+    "confirmBatchDescription": "The selected apps and temporary data will be deleted permanently and cannot be recovered",
+    "confirmBatchWithDataDescription": "The selected apps and confirmed related data will be deleted permanently and cannot be recovered. This may include settings or local files",
+    "confirmNativeBatchTitle": "Uninstall the selected {count} apps?",
+    "confirmNativeBatchDescription": "Windows will uninstall each selected app. You may see additional confirmation or progress windows",
+    "preparingBatchSummary": "Checking selected apps",
+    "confirmBatchSummary": "{count} ready to uninstall",
+    "validatingBatch": "Validating the selected applications",
+    "finalizingBatch": "Finalizing uninstall results",
+    "uninstallingApplicationTitle": "Uninstalling {name}",
+    "executionProgressDescription": "Completed {completed} of {total} apps",
+    "cancellingBatch": "Stopping application uninstall…",
+    "cancellingBatchDescription": "The current system uninstall step may still finish; no other apps will be started",
+    "executionProgressValue": "{completed} / {total}",
+    "uninstallItemList": "Application uninstall progress",
+    "uninstallItemPending": "Waiting to uninstall",
+    "uninstallItemActive": "Uninstalling",
+    "uninstallItemInteractive": "Complete the steps in the application's uninstall window",
+    "uninstallItemCompleted": "Uninstall completed",
+    "uninstallItemCancelled": "Skipped before starting",
+    "uninstallItemFailed": "Did not finish",
+    "uninstallItemStatus": {
+      "pending": "Waiting",
+      "active": "Uninstalling",
+      "completed": "Done",
+      "cancelled": "Skipped",
+      "failed": "Incomplete"
+    },
+    "cancelExecutionAction": "Cancel uninstall",
+    "cancellingAction": "Cancelling…",
+    "cancelExecutionConfirmTitle": "Stop this application uninstall?",
+    "cancelExecutionConfirmDescription": "Apps that have not started will not be uninstalled. Apps already removed cannot be restored, and the current system uninstall window may still finish",
+    "stopExecutionAction": "Stop uninstall",
+    "executionCancelledTitle": "Application uninstall stopped",
+    "executionCancelledDescription": "Uninstalled {completed} apps; MangoDisk could not confirm {cancelled} others",
+    "unknownApplication": "Unknown application",
+    "confirmBatchAction": "Confirm Uninstall",
+    "cancelledTitle": "Uninstall cancelled",
+    "cancelledDescription": "No applications were uninstalled",
+    "completed": "Application uninstall completed",
+    "completedWithWarnings": "Uninstall did not finish completely",
+    "batchExecutionSummary": "Uninstalled {count} apps and released {size}; {failed} did not finish",
+    "batchExecutionEstimateSummary": "Uninstalled {count} apps. Estimated space: {size}. {failed} did not finish",
+    "restartRequired": "Windows reports that a restart is required to finish the change",
+    "componentKinds": {
+      "applicationBinary": "Application",
+      "nativeInstaller": "Windows uninstaller",
+      "windowsAppPackage": "Microsoft Store package",
+      "windowsMsiPackage": "Windows Installer package",
+      "windowsScoopPackage": "Scoop package",
+      "windowsChocolateyPackage": "Chocolatey package",
+      "windowsRegisteredUninstaller": "Registered uninstaller",
+      "cache": "Application cache",
+      "applicationSupport": "App support files",
+      "preferences": "Preferences",
+      "logs": "Application logs",
+      "savedState": "Saved window data",
+      "sandboxContainer": "Private app data",
+      "webData": "Website and network data"
+    },
+    "executionModes": {
+      "silent": "Usually requires no further action",
+      "interactive": "May show an uninstall window",
+      "externalClient": "Uses the package manager to uninstall"
+    },
+    "componentRisks": {
+      "required": "Required for uninstall",
+      "rebuildable": "Can be recreated",
+      "userData": "May contain user data"
+    },
+    "initialTitle": "Manage installed applications",
+    "initialDescription": "Review app storage and remove related files during uninstall"
+  },
+  "history": {
+    "title": "Operation History",
+    "clear": "Clear History",
+    "clearConfirmTitle": "Clear all operation history?",
+    "clearConfirmDescription": "All operation records will be removed permanently. This cannot be undone, but no files will be deleted",
+    "clearConfirmAction": "Clear History",
+    "emptyTitle": "No operation history yet",
+    "emptyDescription": "Completed cleanup and system management operations will appear here",
+    "categories": {
+      "deepCleanup": "Deep Cleanup",
+      "largeFileCleanup": "Large File Cleanup",
+      "duplicateFileCleanup": "Duplicate File Cleanup",
+      "applicationUninstall": "App Uninstaller",
+      "startupManagement": "Startup Management",
+      "systemOptimization": "System Optimization"
+    },
+    "operation": "Operation",
+    "planned": "Planned",
+    "expected": "Expected",
+    "estimated": "Estimated",
+    "actual": "Actual",
+    "notCounted": "Not included in cleaned space",
+    "resultSpace": "Result",
+    "statusWarnings": "Some items skipped",
+    "detailTitle": "Operation details",
+    "detailDescription": "Review this operation's items, space changes, and results",
+    "cleanupItems": "Cleanup items",
+    "uninstalledApplications": "Uninstalled applications",
+    "affectedItems": "Items processed",
+    "affectedApplications": "Apps uninstalled",
+    "failedItems": "Skipped or failed",
+    "failedApplications": "Apps incomplete",
+    "deleted": "Deleted permanently",
+    "deleteFailed": "Could not delete",
+    "moreItemsOmitted": "{count} more item not expanded | {count} more items not expanded",
+    "duration": "Duration",
+    "recordSummary": "{items} cleanup item · {files} processed | {items} cleanup items · {files} processed",
+    "uninstallRecordSummary": "{items} app selected · {files} uninstalled | {items} apps selected · {files} uninstalled",
+    "startupRecordSummary": "{selected} selected · {changed} changed",
+    "systemOptimizationRecordSummary": "{selected} selected · {changed} changed",
+    "selectedItems": "Items selected",
+    "changedItems": "Items changed",
+    "startupItems": "Startup items",
+    "systemSettings": "System settings",
+    "systemOptimizationApplied": "Optimization applied",
+    "systemOptimizationChangeFailed": "Change failed",
+    "systemOptimizationRestored": "Previous value restored",
+    "systemOptimizationStatuses": {
+      "changed": "Changed and verified",
+      "unchanged": "No change was needed",
+      "failed": "Change failed"
+    },
+    "systemOptimizationFailureReasons": {
+      "settingChanged": "The setting changed after confirmation and was not overwritten",
+      "permissionDenied": "Permission was denied",
+      "userCancelled": "The operation was cancelled",
+      "unsupported": "This setting is no longer supported",
+      "verificationFailed": "The resulting value could not be verified",
+      "platformFailure": "The system operation failed"
+    },
+    "startupStatuses": {
+      "changed": "Changed successfully",
+      "unchanged": "No change was needed",
+      "failed": "Change failed"
+    },
+    "startupFailureReasons": {
+      "itemChanged": "System configuration changed before the operation",
+      "permissionDenied": "Permission was denied",
+      "userCancelled": "Authorization was cancelled",
+      "unsupported": "This source does not support the operation",
+      "verificationFailed": "The resulting state could not be verified",
+      "platformFailure": "The system operation failed"
+    },
+    "applicationLeftoverStatuses": {
+      "previewed": "Checks complete; no files were deleted",
+      "completed": "Deleted permanently",
+      "cancelled": "Cancelled before processing",
+      "failed": "Not processed"
+    },
+    "applicationLeftoverReasons": {
+      "candidateChanged": "Contents changed after confirmation and were skipped",
+      "ownerReappeared": "The related app or installed app list changed, so the item was skipped",
+      "applicationRunning": "A related application is still running",
+      "permanentDeleteFailed": "Could not permanently delete the item"
+    },
+    "applicationUninstallStatuses": {
+      "previewed": "Checks complete; no files were deleted",
+      "completed": "Uninstall completed",
+      "cancelled": "Cancelled before uninstall started",
+      "failed": "Not processed"
+    },
+    "applicationUninstallReasons": {
+      "applicationUnavailable": "The application is unavailable",
+      "applicationRunning": "The application is still running",
+      "processStateUnavailable": "The running application state could not be verified",
+      "catalogChanged": "Installed apps changed; review them again",
+      "componentUnavailable": "An item selected for uninstall is unavailable",
+      "componentChanged": "An item selected for uninstall changed after review",
+      "unsupportedExecutor": "Uninstall is unavailable on this system",
+      "executionAborted": "A previous action failed, so remaining contents were not deleted",
+      "externalUninstallerContinuing": "The system uninstall window is still running; its result is not confirmed",
+      "permanentDeleteFailed": "Could not permanently delete the item",
+      "recoveryRequired": "Uninstall did not finish cleanly; inspect or restore the application before retrying",
+      "nativeInstallerFailed": "Windows Installer could not complete the uninstall",
+      "verificationFailed": "MangoDisk could not confirm the result"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "generalSection": "General",
+    "macosPermissionsSection": "macOS Permissions",
+    "supportSection": "Support",
+    "aboutSection": "About",
+    "languageTitle": "Language",
+    "languageDescription": "Choose the language used by MangoDisk",
+    "languageNames": {
+      "zhCN": "简体中文",
+      "zhTW": "繁體中文",
+      "jaJP": "日本語",
+      "enUS": "English"
+    },
+    "themeTitle": "Theme",
+    "themeDescription": "Use a light, dark, or system theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "Follow system",
+    "fullDiskAccessTitle": "Full Disk Access",
+    "fullDiskAccessDescription": "Lets MangoDisk scan protected system and app data for more complete cleanup results",
+    "openPrivacySettings": "System Settings",
+    "permissionStatus": {
+      "notChecked": "Not checked",
+      "available": "Access confirmed",
+      "limited": "Access limited"
+    },
+    "feedbackTitle": "Feedback",
+    "feedbackDescription": "Report issues or suggestions on GitHub",
+    "feedbackAction": "Submit Feedback",
+    "diagnosticLogsTitle": "Diagnostic Logs",
+    "diagnosticLogsDescription": "View MangoDisk runtime logs for troubleshooting",
+    "openLogFolderAction": "Open Folder",
+    "softwareUpdateTitle": "Software Updates",
+    "updateCheckAction": "Check for Updates",
+    "updateChecking": "Checking…",
+    "updateVersionAvailable": "Version {version} available",
+    "updateDownloading": "Downloading…",
+    "updateDownloadingProgress": "Downloading · {percent}%",
+    "updateReadyToInstall": "Ready to install",
+    "updateInstalling": "Installing…",
+    "updateRestartRequired": "Restart required",
+    "updateRestarting": "Restarting…",
+    "updateUpToDate": "Up to date",
+    "updateUpToDateWithVersion": "Version {version} · Up to date",
+    "updateRetry": "Try Again",
+    "updateCheckFailedTitle": "Couldn't check for updates",
+    "updateCheckUnknownError": "The update service returned an unknown error",
+    "versionUnknown": "Loading…",
+    "aboutTitle": "About MangoDisk",
+    "aboutDescription": "An open-source, lightweight, and safe cross-platform tool for disk cleanup and storage analysis",
+    "projectLinksLabel": "Project links",
+    "websiteAction": "Official Website",
+    "repositoryAction": "GitHub",
+    "licenseAction": "GPL-3.0 License",
+    "versionValue": "Version {version}"
+  },
+  "updates": {
+    "availableTitle": "MangoDisk {version} is available",
+    "currentVersionDescription": "Current version {version}",
+    "checkDescription": "Check for a newer version",
+    "checkingDescription": "Connecting to the update service…",
+    "upToDateDescription": "MangoDisk {version} is up to date",
+    "releaseNotes": "What's new",
+    "noReleaseNotes": "This update includes improvements and fixes",
+    "downloadUpdate": "Download Update",
+    "downloadPortable": "Download Portable Version",
+    "portableDescription": "This portable edition must be updated manually. Download the new file, close MangoDisk, then replace the current executable",
+    "continueInBackground": "Continue in Background",
+    "downloadedTitle": "MangoDisk {version} is ready",
+    "installedTitle": "MangoDisk {version} is installed",
+    "downloadComplete": "Download complete · MangoDisk will restart after installation",
+    "installAndRestart": "Install and Restart",
+    "restartRequired": "Installation complete · Restart MangoDisk to finish updating",
+    "restartNow": "Restart Now",
+    "restarting": "Restarting MangoDisk…",
+    "notNow": "Not Now",
+    "later": "Later",
+    "retry": "Try Again",
+    "downloading": "Downloading update…",
+    "downloadProgress": "Downloaded {downloaded} of {total}",
+    "installing": "Installing update…",
+    "downloadFailed": "Download failed",
+    "manualDownloadFailed": "Unable to open the download",
+    "installFailed": "Installation failed",
+    "restartFailed": "Unable to restart MangoDisk",
+    "navigationNotice": "A new version is available"
+  },
+  "loading": {
+    "starting": "Reading disk information…",
+    "scanning": "Analyzing reclaimable content…",
+    "cancelling": "Cancelling scan…",
+    "processing": "Processing",
+    "currentStage": "Analyzing",
+    "currentDirectory": "Scanning",
+    "preparingDirectory": "Preparing folders…",
+    "currentAnalysisDirectory": "Current item",
+    "preparingAnalysisDirectory": "Preparing analysis…",
+    "checkedItems": "files checked",
+    "accessibleRuleProgress": "{completed} of {total} checks complete, {checked} files scanned, {bytes} scanned",
+    "checkedChecks": "Check progress",
+    "traversedData": "Data scanned",
+    "elapsed": "Elapsed",
+    "cancelHint": "Scanning only reads file information; cancelling changes nothing",
+    "cleaning": "Cleaning selected items…",
+    "cleaningCurrentItem": "Cleaning {name}",
+    "cleaningApplicationLeftovers": "Cleaning selected application data…",
+    "cancelCleanupAction": "Cancel cleanup",
+    "cancelCleanupConfirmTitle": "Stop this cleanup?",
+    "cancelCleanupConfirmDescription": "Items that have not started will not be cleaned. Completed items cannot be restored, and the current system step may still finish",
+    "stopCleanupAction": "Stop cleanup",
+    "cancellingCleanupAction": "Cancelling…",
+    "cancellingCleanup": "Stopping cleanup…",
+    "cancellingCleanupHint": "The current system step may finish; items not yet started will not be cleaned",
+    "previewing": "Checking selected items…",
+    "previewingCurrentItem": "Checking {name}",
+    "validating": "Validating selected items…",
+    "finalizing": "Finalizing cleanup results…",
+    "cleaningSafetyHint": "Cleaning your selection; changed or in-use content is skipped to prevent accidental deletion",
+    "previewingSafetyHint": "Reviewing the selected items without deleting or changing anything",
+    "elapsedSeconds": "{count} sec | {count} sec",
+    "cleanupItemList": "Cleanup item progress",
+    "cleanupItemWaiting": "Waiting to be cleaned",
+    "cleanupItemValidating": "Checking the current cleanup scope",
+    "cleanupItemSystemProcessing": "The system is processing this item",
+    "cleanupItemCompleted": "{count} processed, {size} released",
+    "cleanupItemChecked": "Check complete; no content was changed",
+    "cleanupItemPartial": "{count} processed and {size} released; some content was skipped",
+    "cleanupItemSkipped": "This item was not processed; see the result for details",
+    "cleanupItemDone": "Done",
+    "cleanupItemSkippedLabel": "Skipped",
+    "cleanupItemActive": "Processing",
+    "cleanupItemPending": "Waiting",
+    "ruleProgress": "Item progress",
+    "ruleProgressValue": "{completed} / {total}",
+    "cleanupProgressSummary": "{completed} of {total} complete",
+    "processedItems": "Processed",
+    "releasedSpace": "Space released",
+    "checkedData": "Data checked",
+    "stepMayTakeMinutes": "May take several minutes"
+  },
+  "cleanupRules": {
+    "categories": {
+      "ai": "AI models and caches",
+      "system": "System",
+      "browser": "Browsers",
+      "container": "Containers",
+      "dev": "Developer tools",
+      "app": "Applications"
+    },
+    "entries": {
+      "system.user-temp": {
+        "name": "Old temporary files",
+        "description": "Temporary working files created by the operating system and applications.",
+        "impact": "Files in use are skipped. Applications recreate temporary content when needed."
+      },
+      "system.darwin-user-cache": {
+        "name": "Inactive system cache",
+        "description": "Per-user system cache files not updated for more than seven days.",
+        "impact": "Settings and personal files are kept. macOS recreates cache data when needed."
+      },
+      "system.old-diagnostic-logs": {
+        "name": "Old diagnostic logs",
+        "description": "User-level application logs and crash reports older than seven days.",
+        "impact": "Recent logs remain available, but removed historical diagnostics cannot be used later."
+      },
+      "system.quicklook-cache": {
+        "name": "Quick Look cache",
+        "description": "Thumbnails and temporary previews generated by Quick Look.",
+        "impact": "Original files are kept. The first new preview may take a moment to regenerate."
+      },
+      "system.help-cache": {
+        "name": "System Help cache",
+        "description": "Downloaded content and search data used by macOS Help.",
+        "impact": "Help settings are kept. Help content may load again the next time it is opened."
+      },
+      "system.geo-services-cache": {
+        "name": "Maps and location cache",
+        "description": "Cached geographic data stored by Maps and location services.",
+        "impact": "Location permissions are unchanged. Map data may be downloaded again."
+      },
+      "system.apple-media-cache": {
+        "name": "Apple media services cache",
+        "description": "Temporary data used by the App Store, Music, and other Apple media services.",
+        "impact": "Purchases and media libraries are kept. Content may load again on the next visit."
+      },
+      "system.parsecd-cache": {
+        "name": "System suggestions cache",
+        "description": "Temporary indexes generated by the macOS suggestions service.",
+        "impact": "Personal files are kept. macOS rebuilds suggestions indexes as needed."
+      },
+      "system.apple-intelligence-cache": {
+        "name": "Apple Intelligence cache",
+        "description": "Temporary data generated by local Apple Intelligence services.",
+        "impact": "Models and personal content are kept. Some cache may be regenerated at startup."
+      },
+      "system.thumbnail-cache": {
+        "name": "Thumbnail and icon cache",
+        "description": "Thumbnail and icon databases generated by Windows File Explorer.",
+        "impact": "Windows regenerates previews and icons as folders are opened again."
+      },
+      "system.directx-shader-cache": {
+        "name": "DirectX shader cache",
+        "description": "Compiled DirectX shader cache generated by graphics drivers and applications.",
+        "impact": "Games and application data are kept. Graphics applications may briefly recompile shaders."
+      },
+      "system.crash-dumps": {
+        "name": "Crash dumps",
+        "description": "Diagnostic dump files created when applications crash.",
+        "impact": "Removed dumps can no longer be used to investigate earlier crashes."
+      },
+      "system.error-reports": {
+        "name": "Windows error reports",
+        "description": "User and system diagnostic reports generated by Windows Error Reporting.",
+        "impact": "Windows continues to work, but removed reports are no longer available for troubleshooting."
+      },
+      "system.stale-partial-downloads": {
+        "name": "Stale incomplete downloads",
+        "description": "Incomplete browser and download-manager files that have not changed for more than seven days.",
+        "impact": "Removed downloads cannot be resumed. Recent tasks and completed files are kept."
+      },
+      "app.slack-cache": {
+        "name": "Slack cache",
+        "description": "Rebuildable web response, script, and graphics cache generated by Slack.",
+        "impact": "Workspaces, messages, and sign-in state are kept. Close Slack before cleaning."
+      },
+      "app.lark-renderer-cache": {
+        "name": "Lark rendering cache",
+        "description": "Rebuildable web responses, code, GPU, shader, and Service Worker cache generated by Lark.",
+        "impact": "Accounts, messages, downloads, workspaces, browser storage, and sign-in state are kept. Close Lark before cleaning."
+      },
+      "app.wechat-cache": {
+        "name": "WeChat application cache",
+        "description": "Rebuildable web, code, GPU, shader, and Service Worker response cache generated by WeChat.",
+        "impact": "Accounts, chats, files, mini-program storage, browser data, and sign-in state are kept. Close WeChat before cleaning."
+      },
+      "app.wecom-cache": {
+        "name": "WeCom application cache",
+        "description": "Rebuildable CEF web, code, GPU, shader, component, and Service Worker response cache generated by WeCom.",
+        "impact": "Profiles, messages, mail, documents, downloads, browser data, and sign-in state are kept. Close WeCom before cleaning."
+      },
+      "app.qq-cache": {
+        "name": "QQ application cache",
+        "description": "Rebuildable web, code, GPU, shader, and partition rendering cache generated by QQ.",
+        "impact": "Accounts, messages, files, packages, browser data, and sign-in state are kept. Close QQ before cleaning."
+      },
+      "app.qq-update-cache": {
+        "name": "QQ downloaded updates",
+        "description": "Old downloaded update archives retained after QQ extracted its hot-update bundles.",
+        "impact": "Active and pending versions, accounts, messages, files, and sign-in state are kept. Removed updates may need to be downloaded again."
+      },
+      "app.ollama-update-cache": {
+        "name": "Ollama downloaded updates",
+        "description": "Stale macOS update archives downloaded by Ollama.",
+        "impact": "Models, manifests, settings, accounts, and the installed app are kept. Removed updates may need to be downloaded again."
+      },
+      "app.parallels-windows-image-cache": {
+        "name": "Parallels Windows images",
+        "description": "Old Windows ESD installation images downloaded by Parallels Desktop.",
+        "impact": "Virtual machines, snapshots, configuration, and user files are kept. A removed installer image may need to be downloaded again."
+      },
+      "app.ynote-cache": {
+        "name": "YNote cache",
+        "description": "Rebuildable interface, diagnostic log, and downloaded update data generated by YNote.",
+        "impact": "Notes, attachments, backups, settings, browser storage, and sign-in state are kept. Close YNote before cleaning."
+      },
+      "app.qqlive-rendering-cache": {
+        "name": "QQLive interface cache",
+        "description": "Temporary image, icon, web, code, GPU, and shader data generated by QQLive's desktop interface.",
+        "impact": "Runtime components, offline packages, account state, settings, and browser storage are kept. Close QQLive before cleaning."
+      },
+      "app.flashvoice-cache": {
+        "name": "FlashVoice cache",
+        "description": "Rebuildable WebKit or WebView2 content, code, graphics, component, and diagnostic cache generated by FlashVoice.",
+        "impact": "Speech models, recordings, transcriptions, settings, and application files are kept. Close FlashVoice before cleaning."
+      },
+      "app.utools-rendering-cache": {
+        "name": "uTools rendering cache",
+        "description": "Rebuildable web, code, GPU, shader, partition, and diagnostic cache generated by uTools.",
+        "impact": "Clipboard history, plugins, databases, settings, and browser storage are kept. Close uTools before cleaning."
+      },
+      "app.baidu-netdisk-rendering-cache": {
+        "name": "BaiduNetdisk rendering cache",
+        "description": "Rebuildable web, code, GPU, and shader cache generated by the BaiduNetdisk interface.",
+        "impact": "Cloud files, account and transfer databases, sync state, settings, and browser storage are kept. Close BaiduNetdisk before cleaning."
+      },
+      "app.manus-rendering-cache": {
+        "name": "Manus rendering cache",
+        "description": "Rebuildable web, code, GPU, shader, and dictionary cache generated by Manus.",
+        "impact": "Tasks, local files, credentials, settings, cookies, and browser storage are kept. Close Manus before cleaning."
+      },
+      "app.manus-update-cache": {
+        "name": "Manus downloaded update",
+        "description": "Downloaded desktop update packages and pending update metadata cached by Manus.",
+        "impact": "Tasks, local files, credentials, settings, and the installed application are kept. The update may need to be downloaded again."
+      },
+      "app.workbuddy-rendering-cache": {
+        "name": "WorkBuddy rendering cache",
+        "description": "Rebuildable web, code, GPU, shader, and partition cache generated by WorkBuddy.",
+        "impact": "Tasks, projects, artifacts, databases, skills, connectors, runtimes, settings, and browser state are kept. Close WorkBuddy before cleaning."
+      },
+      "app.clash-verge-diagnostic-cache": {
+        "name": "Clash Verge diagnostic logs",
+        "description": "Diagnostic log data generated by Clash Verge.",
+        "impact": "Profiles, proxy configuration, runtime components, GeoIP data, and browser storage are kept. Close Clash Verge before cleaning."
+      },
+      "app.youdao-translation-cache": {
+        "name": "Youdao translation cache",
+        "description": "Temporary translation, image, WebKit, and crash data generated by Youdao Dictionary.",
+        "impact": "Dictionaries, history, documents, preferences, and account state are kept. Close Youdao Dictionary before cleaning."
+      },
+      "app.gitmind-rendering-cache": {
+        "name": "GitMind rendering cache",
+        "description": "Rebuildable Electron and WebView2 content, code, GPU, shader, component, and diagnostic cache generated by GitMind.",
+        "impact": "Mind maps, credentials, history, settings, browser storage, and update packages are kept. Close GitMind before cleaning."
+      },
+      "app.whatsapp-rendering-cache": {
+        "name": "WhatsApp rendering cache",
+        "description": "Rebuildable WebView2 content, code, GPU, shader, component, dictionary, and response cache generated by WhatsApp.",
+        "impact": "Accounts, messages, credentials, settings, history, network state, and browser storage are kept. Close WhatsApp before cleaning."
+      },
+      "app.electron-updater-cache": {
+        "name": "Electron application update cache",
+        "description": "Downloaded update installers retained by GoWhisper, WeFlow, and GitMind.",
+        "impact": "Applications and their data are kept. Removed update packages may be downloaded again; close the affected applications first."
+      },
+      "app.lobsterai-update-cache": {
+        "name": "LobsterAI update cache",
+        "description": "Downloaded automatic-update disk images retained by LobsterAI.",
+        "impact": "Skills, integrations, local databases, and settings are kept. A removed update may be downloaded again."
+      },
+      "app.qwenwork-cache": {
+        "name": "QwenWork rendering cache",
+        "description": "Rebuildable web, code, GPU, partition, and diagnostic cache generated by QwenWork.",
+        "impact": "Accounts, conversations, workspaces, generated files, and awareness memory are kept. Close QwenWork first."
+      },
+      "app.zenaion-cache": {
+        "name": "ZenAion cache",
+        "description": "Rebuildable metadata, log, web, code, GPU, shader, and component cache generated by ZenAion.",
+        "impact": "Identity, accounts, memory, skills, agent state, settings, and browser storage are kept. Close ZenAion and its agent host first."
+      },
+      "app.xmind-rendering-cache": {
+        "name": "Xmind rendering cache",
+        "description": "Rebuildable web, code, GPU, shader, and crash-report cache generated by Xmind.",
+        "impact": "Mind maps, document-recovery cache, settings, cookies, and sign-in state are kept. Close Xmind first."
+      },
+      "app.dingtalk-content-cache": {
+        "name": "DingTalk content cache",
+        "description": "Cached mini apps, temporary images, cards, themes, and web resources classified as disposable by DingTalk.",
+        "impact": "Chats, databases, downloaded files, settings, and accounts are kept. Cached content may be downloaded again after DingTalk restarts."
+      },
+      "app.tencent-meeting-cache": {
+        "name": "Tencent Meeting cache",
+        "description": "Rebuildable network-response, web code, graphics, shader, and diagnostic-log cache generated by Tencent Meeting.",
+        "impact": "Accounts, meetings, recordings, downloads, models, dynamic resources, databases, preferences, HSTS, and browser storage are kept. Close Tencent Meeting before cleaning."
+      },
+      "app.tencent-lemon-cache": {
+        "name": "Tencent Lemon cache",
+        "description": "Rebuildable networking and remote-configuration cache generated by Tencent Lemon, its status monitor, and updater.",
+        "impact": "Cleanup history, scan databases, settings, monitor state, HTTP data, logs, and launch configuration are kept. Close Tencent Lemon and its monitor before cleaning."
+      },
+      "app.thunder-cache": {
+        "name": "Thunder application cache",
+        "description": "Rebuildable network-response, temporary-file, diagnostic, and system networking cache generated by Thunder.",
+        "impact": "Download tasks, downloaded files, cloud-drive databases, accounts, uploads, preferences, and browser storage are kept. Close Thunder before cleaning."
+      },
+      "app.sogou-input-cache": {
+        "name": "Sogou Input cache",
+        "description": "Web-response and code cache generated by the Sogou Input interface.",
+        "impact": "User dictionaries, personalization, backups, settings, models, components, updates, and browser storage are kept. Close related Sogou Input processes before cleaning."
+      },
+      "app.wps-cache": {
+        "name": "WPS Office application cache",
+        "description": "Rebuildable application, system networking, and temporary-file cache generated by WPS Office.",
+        "impact": "Documents, recovery data, templates, cloud files, accounts, preferences, and browser storage are kept. Close WPS Office before cleaning."
+      },
+      "app.wps-rendering-cache": {
+        "name": "WPS Office rendering cache",
+        "description": "Rebuildable network-response and code cache generated by WPS Office web interfaces.",
+        "impact": "Documents, recovery data, cloud files, accounts, cookies, databases, and persistent browser state are kept. Close WPS Office before cleaning."
+      },
+      "app.wps-diagnostic-cache": {
+        "name": "WPS Office diagnostic logs",
+        "description": "Application, renderer, cloud-service, workspace, and crash diagnostics generated by WPS Office.",
+        "impact": "Documents, recovery data, templates, cloud files, accounts, and settings are kept. Removed logs cannot be used for later troubleshooting."
+      },
+      "app.wechat-rendering-cache": {
+        "name": "Weixin rendering cache",
+        "description": "Rebuildable web, code, GPU, and shader cache generated by Weixin and WeChat renderer profiles.",
+        "impact": "Accounts, messages, files, history, cookies, and sign-in state are kept. Close Weixin or WeChat first."
+      },
+      "app.qq-rendering-cache": {
+        "name": "QQ rendering cache",
+        "description": "Temporary web, code, graphics, log, and crash-report data generated by QQ for Windows.",
+        "impact": "Accounts, messages, files, settings, browser storage, and updater support are kept. Close QQ before cleaning."
+      },
+      "app.wecom-diagnostic-cache": {
+        "name": "WeCom diagnostic logs",
+        "description": "Encrypted diagnostic, network, calling, framework, and installer logs generated by WeCom.",
+        "impact": "Accounts, messages, applets, settings, and application data are kept. Close WeCom before cleaning."
+      },
+      "app.discord-cache": {
+        "name": "Discord cache",
+        "description": "Rebuildable web response, script, and graphics cache generated by Discord.",
+        "impact": "Accounts, chats, and sign-in state are kept. Close Discord before cleaning."
+      },
+      "app.signal-cache": {
+        "name": "Signal cache",
+        "description": "Rebuildable code, graphics, dictionary, log, and crash-report cache generated by Signal Desktop.",
+        "impact": "Accounts, messages, attachments, encrypted databases, settings, and sign-in state are kept. Close Signal before cleaning."
+      },
+      "app.postman-cache": {
+        "name": "Postman rendering cache",
+        "description": "Rebuildable web, script, GPU, and partition rendering cache generated by Postman.",
+        "impact": "Workspaces, requests, environments, cookies, and sign-in state are kept. Close Postman before cleaning."
+      },
+      "app.notion-cache": {
+        "name": "Notion rendering cache",
+        "description": "Rebuildable web, script, GPU, dictionary, log, and partition rendering cache generated by Notion.",
+        "impact": "Pages, offline content, accounts, cookies, databases, settings, and sign-in state are kept. Close Notion before cleaning."
+      },
+      "app.netease-cloud-music-cache": {
+        "name": "NetEase Cloud Music cache",
+        "description": "Rebuildable web, script, GPU, and diagnostic-log cache generated by NetEase Cloud Music.",
+        "impact": "Music downloads, the audio cache, library data, playlists, accounts, cookies, and settings are kept. Close NetEase Cloud Music before cleaning."
+      },
+      "app.zoom-cache": {
+        "name": "Zoom cache",
+        "description": "Temporary files saved by Zoom.",
+        "impact": "Recordings, chat files, and settings are kept. Close Zoom before cleaning."
+      },
+      "app.teams-cache": {
+        "name": "Microsoft Teams cache",
+        "description": "Rebuildable web and graphics cache used by new and classic Microsoft Teams.",
+        "impact": "Chats, accounts, and downloaded files are kept. Close Teams before cleaning."
+      },
+      "app.chatgpt-cache": {
+        "name": "ChatGPT cache",
+        "description": "Rebuildable rendering and diagnostic data saved by the ChatGPT and Codex desktop app.",
+        "impact": "Conversations, projects, credentials, browser state, and sign-in state are kept. Close ChatGPT before cleaning."
+      },
+      "app.claude-cache": {
+        "name": "Claude cache",
+        "description": "Rebuildable web, code, GPU, shader, dictionary, and partition cache generated by Claude Desktop.",
+        "impact": "Sessions, credentials, local-agent work, configuration, browser storage, logs, and extensions are kept. Close Claude before cleaning."
+      },
+      "app.lm-studio-cache": {
+        "name": "LM Studio cache",
+        "description": "Rebuildable content generated in the standard macOS cache directory by LM Studio.",
+        "impact": "Models, chats, and legacy data directories are kept. Close LM Studio before cleaning."
+      },
+      "app.figma-cache": {
+        "name": "Figma cache",
+        "description": "Rebuildable web, script, and graphics cache generated by the Figma desktop app.",
+        "impact": "Local drafts and design files are kept. Close Figma before cleaning."
+      },
+      "app.adobe-media-cache": {
+        "name": "Adobe media cache",
+        "description": "Media analysis and preview cache generated by Adobe creative applications.",
+        "impact": "Project media and presets are kept. Media may be analyzed again when projects reopen."
+      },
+      "app.office-cache": {
+        "name": "Microsoft Office cache",
+        "description": "Standard application cache generated by Word, Excel, and PowerPoint.",
+        "impact": "Documents, AutoRecover data, and cloud content are kept. Close Office apps before cleaning."
+      },
+      "app.media-cache": {
+        "name": "Media application cache",
+        "description": "Standard system cache generated by music, podcast, and video applications.",
+        "impact": "Libraries, offline content, and media files are kept. Close related apps before cleaning."
+      },
+      "app.media-analysis-cache": {
+        "name": "Media analysis cache",
+        "description": "Cache and temporary files generated by sandboxed photo and media analysis services.",
+        "impact": "Photos and videos are kept. Background analysis may recreate some data."
+      },
+      "app.core-device-cache": {
+        "name": "Apple device support cache",
+        "description": "Local cache generated by Apple device connection services.",
+        "impact": "Device backups are kept. Cache may be rebuilt when a device reconnects."
+      },
+      "app.wallpaper-agent-cache": {
+        "name": "Wallpaper cache",
+        "description": "Runtime cache generated by the sandboxed wallpaper service.",
+        "impact": "Wallpaper files, settings, and preview covers are kept."
+      },
+      "app.google-updater-cache": {
+        "name": "Google updater cache",
+        "description": "Downloaded extension updates and temporary installation files from Google Updater.",
+        "impact": "Applications are not uninstalled. Update content may be downloaded again."
+      },
+      "app.electron-cache": {
+        "name": "Desktop app cache",
+        "description": "Temporary display data and logs from common desktop apps.",
+        "impact": "Accounts, sessions, databases, and local documents are kept. Close related apps first."
+      },
+      "app.telegram-temporary-cache": {
+        "name": "Telegram temporary files",
+        "description": "Temporary notification images, tray icons, calendar exports, and crash dumps created by Telegram Desktop.",
+        "impact": "Telegram must be fully closed. Accounts, chats, downloaded media, settings, and emoji resources are kept."
+      },
+      "app.vlc-cache": {
+        "name": "VLC artwork and crash cache",
+        "description": "Cached cover artwork and crash dumps created by VLC media player.",
+        "impact": "VLC must be closed. Preferences, playlists, media-library data, and media files are kept; artwork may be extracted or downloaded again."
+      },
+      "app.ea-rendering-cache": {
+        "name": "EA app rendering cache",
+        "description": "Temporary browser and QML compilation caches used by the EA app interface.",
+        "impact": "The EA app must be closed. Accounts, installed games, downloads, offline state, and browser storage are kept; the interface cache rebuilds."
+      },
+      "app.steam-rendering-cache": {
+        "name": "Steam interface rendering cache",
+        "description": "Temporary web, code, GPU, and shader data used by Steam's Chromium interface.",
+        "impact": "Steam must be fully closed. Accounts, cookies, history, settings, installed games, downloads, and game shader caches are kept; interface content may be downloaded or compiled again."
+      },
+      "app.battlenet-cache": {
+        "name": "Battle.net cache",
+        "description": "Downloaded launcher content, temporary Blizzard files, and renderer caches used by Battle.net.",
+        "impact": "Battle.net and its Agent must be closed. Accounts, browser sessions, launcher settings, installed games, downloads, and patch state are kept; interface content may be downloaded again."
+      },
+      "app.spotify-rendering-cache": {
+        "name": "Spotify rendering cache",
+        "description": "Temporary web, code, GPU, and shader data generated by Spotify's desktop interface.",
+        "impact": "Spotify must be closed. Accounts, history, settings, streamed-media storage, offline downloads, and application files are kept; interface content may be downloaded or compiled again."
+      },
+      "app.dropbox-rendering-cache": {
+        "name": "Dropbox interface cache",
+        "description": "Temporary web, code, GPU, and shader data generated by Dropbox's desktop interface.",
+        "impact": "Dropbox must be closed. Accounts, synchronized files, browser storage, sessions, settings, and Dropbox's sync recovery cache are kept; interface content may be rebuilt."
+      },
+      "app.game-launcher-cache": {
+        "name": "Game launcher cache",
+        "description": "Disposable storefront and web cache generated by supported game launchers.",
+        "impact": "The related launcher must be closed. Accounts, installed games, downloads, manifests, patch state, and installer packages are kept; storefront content may be downloaded again."
+      },
+      "container.docker-desktop-rendering-cache": {
+        "name": "Docker Desktop interface cache",
+        "description": "Temporary web, code, GPU, and shader data generated by the Docker Desktop dashboard.",
+        "impact": "Docker Desktop must be closed. Images, containers, volumes, build cache, settings, projects, diagnostics, logs, and VM disks are kept; dashboard content may be rebuilt."
+      },
+      "container.docker-desktop-diagnostic-cache": {
+        "name": "Docker Desktop old logs",
+        "description": "Host and virtual-machine diagnostic logs older than seven days.",
+        "impact": "Close Docker Desktop first. Images, containers, volumes, build cache, settings, projects, VM disks, and recent diagnostics are kept."
+      },
+      "app.douyin-live-updater-cache": {
+        "name": "Douyin Live Companion update cache",
+        "description": "Old installer packages downloaded by Douyin Live Companion.",
+        "impact": "The app and live-stream content are kept. Update packages are downloaded again when needed."
+      },
+      "app.wechat-diagnostic-cache": {
+        "name": "WeChat logs and temporary cache",
+        "description": "Diagnostic logs and small temporary display data generated by Weixin and WeChat.",
+        "impact": "Messages, accounts, plug-ins, and user files are kept. Close WeChat before cleaning."
+      },
+      "browser.chrome-cache": {
+        "name": "Chrome cache",
+        "description": "Temporary web, code, GPU, and shader data generated by Chrome.",
+        "impact": "Passwords, cookies, history, extensions, and bookmarks are kept. Close the browser first."
+      },
+      "browser.uc-cache": {
+        "name": "UC Browser cache",
+        "description": "Temporary web, code, GPU, shader, and downloaded component-package data saved by UC Browser.",
+        "impact": "Passwords, cookies, history, extensions, bookmarks, downloads, and sessions are kept. Close UC Browser first; cache data is rebuilt or downloaded again as needed."
+      },
+      "browser.360-speed-cache": {
+        "name": "360 Extreme Browser cache",
+        "description": "Temporary web, code, GPU, shader, and downloaded component-package data saved by 360 Extreme Browser.",
+        "impact": "Passwords, cookies, history, extensions, bookmarks, downloads, and sessions are kept. Close 360 Extreme Browser first; cache data is rebuilt or downloaded again as needed."
+      },
+      "browser.sogou-cache": {
+        "name": "Sogou Explorer cache",
+        "description": "Temporary web, code, GPU, Dawn, and shader data saved by Sogou Explorer.",
+        "impact": "Passwords, cookies, history, extensions, bookmarks, downloads, and sessions are kept. Close Sogou Explorer first; cache data is rebuilt as needed."
+      },
+      "browser.360-safe-cache": {
+        "name": "360 Safe Browser cache",
+        "description": "Temporary web, code, GPU, Dawn, and shader data saved by 360 Safe Browser.",
+        "impact": "Passwords, cookies, history, extensions, bookmarks, downloads, and sessions are kept. Close 360 Safe Browser first; cache data is rebuilt as needed."
+      },
+      "browser.2345-cache": {
+        "name": "2345 Browser cache",
+        "description": "Temporary web, code, GPU, Dawn, and shader data saved by 2345 Browser.",
+        "impact": "Passwords, cookies, history, extensions, bookmarks, downloads, and sessions are kept. Close 2345 Browser first; cache data is rebuilt as needed."
+      },
+      "browser.edge-cache": {
+        "name": "Edge cache",
+        "description": "Temporary website and startup files saved by Edge.",
+        "impact": "Passwords, cookies, history, extensions, and bookmarks are kept. Close the browser first."
+      },
+      "browser.edge-offline-cache": {
+        "name": "Edge offline cache",
+        "description": "Website data saved by Edge for faster or offline use.",
+        "impact": "Passwords, history, and bookmarks are kept. Some sites may download offline content again."
+      },
+      "browser.chrome-offline-cache": {
+        "name": "Chrome offline cache",
+        "description": "Website data saved by Chrome for faster or offline use.",
+        "impact": "Passwords, history, and bookmarks are kept. Some sites may download offline content again."
+      },
+      "browser.brave-cache": {
+        "name": "Brave cache",
+        "description": "Temporary website and startup files saved by Brave.",
+        "impact": "Passwords, cookies, history, extensions, and bookmarks are kept. Close the browser first."
+      },
+      "browser.arc-cache": {
+        "name": "Arc cache",
+        "description": "Temporary website and startup files saved by Arc.",
+        "impact": "Spaces, passwords, cookies, history, extensions, and bookmarks are kept. Close the browser first."
+      },
+      "browser.vivaldi-cache": {
+        "name": "Vivaldi cache",
+        "description": "Temporary website and startup files saved by Vivaldi.",
+        "impact": "Passwords, cookies, history, extensions, and bookmarks are kept. Close the browser first."
+      },
+      "browser.chromium-cache": {
+        "name": "Chromium cache",
+        "description": "Temporary website and startup files saved by Chromium.",
+        "impact": "Passwords, cookies, history, extensions, and bookmarks are kept. Close the browser first."
+      },
+      "browser.firefox-cache": {
+        "name": "Firefox cache",
+        "description": "Temporary website and startup files saved by Firefox.",
+        "impact": "Passwords, cookies, history, extensions, and bookmarks are kept. Close the browser first."
+      },
+      "browser.opera-cache": {
+        "name": "Opera cache",
+        "description": "Temporary website and startup files saved by Opera.",
+        "impact": "Passwords, cookies, history, extensions, and bookmarks are kept. Close the browser first."
+      },
+      "dev.xcode-derived-data": {
+        "name": "Xcode derived data",
+        "description": "Xcode DerivedData, indexes, and intermediate build output.",
+        "impact": "Source code is kept. The next build and indexing pass may take longer."
+      },
+      "dev.xcode-auxiliary-cache": {
+        "name": "Xcode documentation and device logs",
+        "description": "Xcode documentation indexes and iOS or watchOS device logs older than fourteen days.",
+        "impact": "Source code and archives are kept. Documentation indexes may be regenerated later."
+      },
+      "special.xcode-device-support": {
+        "name": "Xcode DeviceSupport",
+        "description": "System support files prepared by Xcode for physical-device debugging.",
+        "impact": "Xcode needs to prepare support again when debugging the matching system version."
+      },
+      "special.xcode-simulator-runtime": {
+        "name": "Simulator runtimes",
+        "description": "iOS, watchOS, tvOS, and visionOS simulator runtimes installed by Xcode.",
+        "impact": "Simulators for removed system versions stop working until the runtime is downloaded again in Xcode."
+      },
+      "special.xcode-archives": {
+        "name": "Xcode application archives",
+        "description": "Xcode Archives used for distribution, export, and crash symbolication.",
+        "impact": "Shown for review only and never added to cleanup. Manage archives in Xcode Organizer after confirming they are no longer needed."
+      },
+      "special.additional-user-caches": {
+        "name": "Additional user caches",
+        "description": "Other app caches that are not listed separately.",
+        "impact": "Not selected by default. Caches in use or that cannot be checked safely are skipped. Apps may recreate them later."
+      },
+      "dev.npm-cache": {
+        "name": "npm download cache",
+        "description": "Downloaded packages saved by npm.",
+        "impact": "Projects and installed dependencies are kept. Packages may be downloaded again."
+      },
+      "dev.npx-cache": {
+        "name": "npx temporary tools",
+        "description": "Packages temporarily downloaded and executed by npx.",
+        "impact": "Project dependencies are kept. npx may download the tools again."
+      },
+      "dev.node-gyp-cache": {
+        "name": "node-gyp build cache",
+        "description": "Headers and temporary build cache used to compile native Node.js modules.",
+        "impact": "Source code is kept. Required headers may be downloaded again."
+      },
+      "dev.pnpm-cache": {
+        "name": "pnpm store cache",
+        "description": "Downloaded packages saved by pnpm.",
+        "impact": "Projects and installed dependencies are kept. Packages may be downloaded again."
+      },
+      "dev.yarn-cache": {
+        "name": "Yarn download cache",
+        "description": "Downloaded packages saved by Yarn.",
+        "impact": "Projects and installed dependencies are kept. Packages may be downloaded again."
+      },
+      "dev.pip-cache": {
+        "name": "pip download cache",
+        "description": "Downloaded packages saved by pip.",
+        "impact": "Projects and installed dependencies are kept. Packages may be downloaded again."
+      },
+      "dev.python-cache": {
+        "name": "Python package cache",
+        "description": "Downloaded packages and analysis data saved by Python development tools.",
+        "impact": "Projects and installed dependencies are kept. Packages may be downloaded again."
+      },
+      "dev.pyinstaller-cache": {
+        "name": "PyInstaller binary cache",
+        "description": "Processed binary copies saved by PyInstaller for later builds.",
+        "impact": "Projects, spec files, and build output are kept. Later builds may need to process binaries again."
+      },
+      "dev.python-tooling-cache": {
+        "name": "Python tooling cache",
+        "description": "Package and installer cache saved by Poetry and pyenv-win.",
+        "impact": "Virtual environments and installed interpreters are kept. Dependencies may be downloaded again."
+      },
+      "dev.uv-cache": {
+        "name": "uv cache",
+        "description": "Downloaded and built packages saved by uv.",
+        "impact": "Projects, virtual environments, and managed Python installations are kept. Packages may be downloaded or built again."
+      },
+      "dev.dart-analysis-cache": {
+        "name": "Dart analysis cache",
+        "description": "Cached analysis results generated by Dart and Flutter tools.",
+        "impact": "Projects and SDKs are kept. Editors and analysis tools may need to rebuild their indexes."
+      },
+      "dev.node-tooling-cache": {
+        "name": "Node.js tooling cache",
+        "description": "Toolchain cache downloaded by Corepack, nvm, Bun, node-gyp, and Electron.",
+        "impact": "Project dependencies are kept. Runtimes or native build resources may be downloaded again."
+      },
+      "dev.cargo-cache": {
+        "name": "Cargo package cache",
+        "description": "Downloaded packages saved by Cargo.",
+        "impact": "Projects and installed dependencies are kept. Packages may be downloaded again."
+      },
+      "dev.cargo-extracted-sources": {
+        "name": "Cargo extracted source cache",
+        "description": "Crate source trees extracted by Cargo for local builds.",
+        "impact": "Projects and downloaded crate archives are kept. Cargo may extract or download sources again."
+      },
+      "dev.go-cache": {
+        "name": "Go build cache",
+        "description": "Local Go build output and downloaded module cache.",
+        "impact": "Source code is kept. Later builds may recompile code or download modules."
+      },
+      "dev.go-module-cache": {
+        "name": "Go module cache",
+        "description": "Downloaded packages saved by Go modules.",
+        "impact": "Projects and installed dependencies are kept. Packages may be downloaded again."
+      },
+      "dev.homebrew-cache": {
+        "name": "Homebrew download cache",
+        "description": "Downloaded packages saved by Homebrew.",
+        "impact": "Projects and installed dependencies are kept. Packages may be downloaded again."
+      },
+      "dev.cocoapods-cache": {
+        "name": "CocoaPods cache",
+        "description": "Downloaded packages saved by CocoaPods.",
+        "impact": "Projects and installed dependencies are kept. Packages may be downloaded again."
+      },
+      "dev.swiftpm-cache": {
+        "name": "Swift Package Manager cache",
+        "description": "Downloaded packages saved by Swift Package Manager.",
+        "impact": "Projects and installed dependencies are kept. Packages may be downloaded again."
+      },
+      "dev.vscode-cache": {
+        "name": "Visual Studio Code cache",
+        "description": "Temporary display and compiled-code data, downloaded extension packages, and crash reports from Visual Studio Code.",
+        "impact": "Projects, settings, installed extensions, workspace state, accounts, and backups are kept. Close Visual Studio Code first; some data may be rebuilt or downloaded again."
+      },
+      "dev.editor-cache": {
+        "name": "Code editor cache",
+        "description": "Temporary search, display, and log data from code editors.",
+        "impact": "Projects, settings, and extensions are kept. Close the related applications first."
+      },
+      "dev.qoder-rendering-cache": {
+        "name": "Qoder rendering cache",
+        "description": "Generated code, extension package, web, GPU, shader, and diagnostic cache from Qoder editions.",
+        "impact": "Projects, settings, extensions, backups, workspace state, and sign-in state are kept. Close both Qoder editions first."
+      },
+      "dev.browser-automation-cache": {
+        "name": "Browser automation cache",
+        "description": "Browser runtimes downloaded by Playwright, Puppeteer, Cypress, and Selenium.",
+        "impact": "Test tools must download browsers again and may be unavailable while offline."
+      },
+      "dev.visual-studio-cache": {
+        "name": "Visual Studio cache",
+        "description": "Temporary search, display, and log data from Visual Studio.",
+        "impact": "Projects, settings, and extensions are kept. Close the related applications first."
+      },
+      "dev.jetbrains-cache": {
+        "name": "JetBrains IDE cache",
+        "description": "Temporary search, display, and log data from JetBrains IDEs and Android Studio.",
+        "impact": "Projects, settings, and extensions are kept. Close the related applications first."
+      },
+      "dev.android-cache": {
+        "name": "Android SDK cache",
+        "description": "Temporary downloads and extraction cache created by Android SDK Manager.",
+        "impact": "Installed SDKs, emulators, and projects are kept. Components may be downloaded again."
+      },
+      "dev.android-user-cache": {
+        "name": "Android user cache",
+        "description": "Rebuildable user cache generated by Android development tools.",
+        "impact": "Projects, SDKs, and emulators are kept. Development tools recreate required data."
+      },
+      "dev.package-manager-cache": {
+        "name": "Package manager cache",
+        "description": "Downloaded packages saved by Composer, Deno, and vcpkg.",
+        "impact": "Projects and installed dependencies are kept. Packages may be downloaded again."
+      },
+      "dev.nuget-cache": {
+        "name": "NuGet package and request cache",
+        "description": "Downloaded packages and HTTP responses saved by NuGet.",
+        "impact": "Projects and installed dependencies are kept. Packages may be downloaded again."
+      },
+      "dev.qclaw-compile-cache": {
+        "name": "QClaw compile cache",
+        "description": "Compiled module cache generated by QClaw's Node.js runtime.",
+        "impact": "Workspaces, memory, plugins, and settings are kept. Close QClaw first; startup may be slower while the cache is rebuilt."
+      },
+      "dev.maven-cache": {
+        "name": "Maven package cache",
+        "description": "Downloaded and locally installed artifacts in the Maven local repository.",
+        "impact": "Projects and Maven settings are kept. Local-only artifacts must be rebuilt or installed again."
+      },
+      "dev.gradle-cache": {
+        "name": "Gradle cache",
+        "description": "Downloaded dependencies, Wrapper distributions, build caches, and temporary files saved by Gradle.",
+        "impact": "Projects, Gradle settings, and installed JDKs are kept. Close Gradle and Java first; supporting data may be downloaded or generated again."
+      },
+      "dev.user-tool-cache": {
+        "name": "Developer tool cache",
+        "description": "Rebuildable cache generated by command-line developer tools.",
+        "impact": "Projects and installed tools are kept. Supporting data may be downloaded again."
+      },
+      "dev.build-accelerator-cache": {
+        "name": "Build accelerator cache",
+        "description": "Local compilation artifacts generated by build acceleration tools.",
+        "impact": "Source code is kept. Later builds may recompile previously cached work."
+      },
+      "dev.sccache-cache": {
+        "name": "sccache compilation cache",
+        "description": "Rebuildable compiler artifacts cached by sccache for Rust, C/C++, and other builds.",
+        "impact": "Source code and tool settings are kept. Later builds may recompile cached work."
+      },
+      "dev.jvm-tooling-cache": {
+        "name": "JVM tooling cache",
+        "description": "Indexes, downloads, and temporary data generated by JVM development tools.",
+        "impact": "Projects and JDK installations are kept. Tooling data may be rebuilt or downloaded again."
+      },
+      "ai.huggingface-xet-cache": {
+        "name": "Hugging Face download cache",
+        "description": "Temporary files used to speed up Hugging Face downloads and uploads.",
+        "impact": "Models, datasets, and unfinished uploads are kept. Future transfers may download these files again."
+      },
+      "special.ai-model-hugging-face": {
+        "name": "Hugging Face local models",
+        "description": "Model weights and snapshots downloaded by Hugging Face Hub.",
+        "impact": "Only models you explicitly select are removed. Apps must download them again before use."
+      },
+      "special.ai-model-whisper": {
+        "name": "Whisper speech models",
+        "description": "Speech-recognition model weights downloaded by OpenAI Whisper.",
+        "impact": "Only models you explicitly select are removed. Transcription downloads them again when needed."
+      },
+      "special.ai-model-pytorch": {
+        "name": "PyTorch Hub models",
+        "description": "Model checkpoints and weight files downloaded by PyTorch Hub.",
+        "impact": "Only checkpoints you explicitly select are removed. Apps may download them again on the next run."
+      },
+      "special.ai-cache-pytorch-hub-repositories": {
+        "name": "PyTorch Hub repository cache",
+        "description": "Model-definition repositories downloaded by PyTorch Hub when loading pretrained models.",
+        "impact": "Only repository caches you explicitly select are removed. Checkpoints are kept, and related model code must be downloaded again."
+      },
+      "special.ai-model-modelscope": {
+        "name": "ModelScope local models",
+        "description": "Model repositories downloaded by ModelScope SDK, FunASR, Qwen, and related frameworks.",
+        "impact": "Only selected models are removed. Datasets and training output are kept, and models must be downloaded again."
+      },
+      "special.ai-model-keras": {
+        "name": "Keras pretrained models",
+        "description": "Pretrained weights downloaded automatically by Keras Applications.",
+        "impact": "Only selected weights are removed. Keras datasets are kept, and weights must be downloaded again."
+      },
+      "special.ai-model-openai-clip": {
+        "name": "OpenAI CLIP vision models",
+        "description": "Image-text model weights downloaded automatically by OpenAI CLIP.",
+        "impact": "Only selected models are removed. CLIP must download them again before the next use."
+      },
+      "special.ai-model-tensorflow-hub": {
+        "name": "TensorFlow Hub models",
+        "description": "Model modules downloaded and extracted locally by TensorFlow Hub.",
+        "impact": "Only selected modules are removed. Apps must download and extract them again on the next run."
+      },
+      "special.ai-model-lm-studio": {
+        "name": "LM Studio local models",
+        "description": "Large language models and quantized weights stored by LM Studio.",
+        "impact": "Close LM Studio first. Only selected models are removed, and they must be downloaded again."
+      },
+      "special.ai-model-ollama": {
+        "name": "Ollama local model library",
+        "description": "Files that make up downloaded Ollama models.",
+        "impact": "Ollama shares files between models, so the selected library is removed as a whole. Close Ollama first. Models must be downloaded again."
+      },
+      "special.ai-model-coqui-tts": {
+        "name": "Coqui TTS speech models",
+        "description": "Text-to-speech and vocoder models downloaded by Coqui TTS.",
+        "impact": "Only models you explicitly select are removed. Speech synthesis downloads them again when needed."
+      },
+      "special.ai-model-gpt4all": {
+        "name": "GPT4All local models",
+        "description": "GGUF language models saved in GPT4All's default download directory.",
+        "impact": "Close GPT4All first. Only selected models are removed; chats and LocalDocs are kept."
+      },
+      "special.ai-model-jan": {
+        "name": "Jan local models",
+        "description": "Local models managed inside the Jan data folder.",
+        "impact": "Close Jan first. Only selected models are removed; conversations, assistants, settings, and logs are kept."
+      },
+      "project.rust-build-artifacts": {
+        "name": "Rust build artifacts",
+        "description": "Cargo target output and cross-compilation cache.",
+        "impact": "Source and Cargo configuration are kept. The next build recompiles targets."
+      },
+      "project.node-build-artifacts": {
+        "name": "Node.js build artifacts",
+        "description": "Dependency folders and framework build caches in Node.js projects.",
+        "impact": "Source and lockfiles are kept. Dependencies and caches must be restored."
+      },
+      "project.react-native-build-artifacts": {
+        "name": "React Native build artifacts",
+        "description": "Android, iOS, Expo, and Metro caches in React Native projects.",
+        "impact": "Project source is kept. Mobile builds regenerate these caches."
+      },
+      "project.python-build-artifacts": {
+        "name": "Python build artifacts",
+        "description": "Test, type-checking, and bytecode caches in Python projects.",
+        "impact": "Source and virtual environments are kept. Tools regenerate their caches."
+      },
+      "project.maven-build-artifacts": {
+        "name": "Maven build artifacts",
+        "description": "Compiled output under Maven project target folders.",
+        "impact": "Source and pom.xml are kept. The next build recompiles the project."
+      },
+      "project.gradle-build-artifacts": {
+        "name": "Gradle build artifacts",
+        "description": "Gradle build output and project-local cache.",
+        "impact": "Source and build scripts are kept. The next build regenerates the output."
+      },
+      "project.sbt-build-artifacts": {
+        "name": "SBT build artifacts",
+        "description": "Compiled output under SBT target folders.",
+        "impact": "Scala source and build definitions are kept. The next build recompiles targets."
+      },
+      "project.dotnet-build-artifacts": {
+        "name": ".NET build artifacts",
+        "description": "Compiled bin and obj folders in .NET projects.",
+        "impact": "Project files and source are kept. The next build recompiles the project."
+      },
+      "project.swift-build-artifacts": {
+        "name": "Swift build artifacts",
+        "description": "The .build folder generated by Swift Package Manager.",
+        "impact": "Package.swift and source are kept. Dependencies and targets rebuild."
+      },
+      "project.flutter-build-artifacts": {
+        "name": "Flutter build artifacts",
+        "description": "Build output and tool caches in Flutter and Dart projects.",
+        "impact": "Project source is kept. Flutter regenerates the removed folders."
+      },
+      "project.cmake-build-artifacts": {
+        "name": "CMake build artifacts",
+        "description": "Common out-of-source build folders in CMake projects.",
+        "impact": "CMakeLists.txt and source are kept. The project must be configured and built again."
+      },
+      "project.zig-build-artifacts": {
+        "name": "Zig build artifacts",
+        "description": "Local compilation caches in Zig projects.",
+        "impact": "build.zig and source are kept. The next build recompiles targets."
+      },
+      "project.godot-build-artifacts": {
+        "name": "Godot build artifacts",
+        "description": "Imported data and editor cache generated by Godot.",
+        "impact": "Project assets and settings are kept. Godot imports resources again."
+      },
+      "project.elixir-build-artifacts": {
+        "name": "Elixir build artifacts",
+        "description": "Mix output and language-service caches.",
+        "impact": "Elixir source and mix.exs are kept. Tools regenerate their caches."
+      },
+      "project.terraform-build-artifacts": {
+        "name": "Terraform working directory",
+        "description": "Providers and modules downloaded into Terraform project working folders.",
+        "impact": "Configuration, state, and lockfiles are kept. Initialization may download dependencies again."
+      },
+      "project.unity-build-artifacts": {
+        "name": "Unity build artifacts",
+        "description": "Unity Library, Temp, Obj, and diagnostic folders.",
+        "impact": "Assets and ProjectSettings are kept. Reimporting a project can take time."
+      },
+      "project.unreal-build-artifacts": {
+        "name": "Unreal build artifacts",
+        "description": "Binaries, intermediate output, and derived-data cache in Unreal projects.",
+        "impact": "Project content and configuration are kept. Unreal regenerates the output."
+      },
+      "project.cocoapods-build-artifacts": {
+        "name": "CocoaPods project dependencies",
+        "description": "The Pods folder installed from a project Podfile.",
+        "impact": "Source, Podfile, and lockfile are kept. Dependencies must be installed again."
+      },
+      "project.haskell-build-artifacts": {
+        "name": "Haskell build artifacts",
+        "description": "Local Stack and Cabal build folders.",
+        "impact": "Haskell source and project configuration are kept. The next build recompiles targets."
+      },
+      "project.composer-build-artifacts": {
+        "name": "Composer project dependencies",
+        "description": "Dependencies installed by PHP Composer.",
+        "impact": "Source files, composer.json, and lock files are kept. Dependencies need to be installed again."
+      },
+      "project.jupyter-build-artifacts": {
+        "name": "Jupyter notebook checkpoints",
+        "description": "Automatic checkpoint folders generated beside Jupyter notebooks.",
+        "impact": "Notebooks are kept. Jupyter recreates checkpoints as you continue editing."
+      },
+      "project.pixi-build-artifacts": {
+        "name": "Pixi project environment",
+        "description": "The local environment created for a Pixi project.",
+        "impact": "Source files, pixi.toml, and lock files are kept. The environment needs to be restored."
+      },
+      "special.docker-build-cache": {
+        "name": "Docker build cache",
+        "description": "Build cache that Docker reports as unused and not shared with an image.",
+        "impact": "Images, containers, networks, and volumes are kept. Later builds may download or regenerate cache."
+      },
+      "special.conda-cache": {
+        "name": "Conda download cache",
+        "description": "Downloaded packages and temporary data reported by Conda.",
+        "impact": "Environments and installed packages are kept. Conda may download these files again."
+      },
+      "special.codex-archived-sessions": {
+        "name": "Older Codex archived sessions",
+        "description": "Codex conversation archives not modified for 30 days.",
+        "impact": "Only selected archived sessions are permanently removed. They cannot be reopened or recovered."
+      },
+      "special.rust-toolchains": {
+        "name": "Additional Rust toolchains",
+        "description": "Installed Rust versions not required by the default, active, override, or discovered project configuration.",
+        "impact": "Only selected versions are uninstalled through rustup. Projects that still need them must download them again."
+      },
+      "special.dropbox-cache": {
+        "name": "Dropbox temporary cache",
+        "description": "Temporary upload, download, and recovery files discovered from Dropbox account locations.",
+        "impact": "Dropbox must be fully closed. Synced files and account settings are kept; temporary files may be recreated."
+      },
+      "special.windows-recycle-bin": {
+        "name": "Recycle Bin",
+        "description": "All items in the current account's Windows Recycle Bin.",
+        "impact": "Files and folders cannot be restored from the Recycle Bin after it is emptied. This item is never selected by default."
+      },
+      "special.windows-system-logs": {
+        "name": "Windows log files",
+        "description": "Setup, upgrade, and diagnostic logs older than three days under Panther, Logs, and System32\\LogFiles in the Windows directory.",
+        "impact": "Only fixed Windows log locations and log types are included. Files in use or unavailable to your account are skipped."
+      },
+      "special.windows-internet-cache": {
+        "name": "Internet temporary files",
+        "description": "Temporary internet data that Windows reports as removable.",
+        "impact": "Saved passwords and browsing history are kept. Some pages may load again."
+      },
+      "special.windows-delivery-optimization": {
+        "name": "Delivery Optimization files",
+        "description": "Update delivery cache that Windows no longer needs.",
+        "impact": "Installed updates are kept. Windows may download update data again."
+      },
+      "special.windows-defender-cache": {
+        "name": "Microsoft Defender cache",
+        "description": "Temporary Defender data that Windows reports as removable.",
+        "impact": "Protection settings, quarantine, and current security definitions are kept."
+      },
+      "special.windows-update-cleanup": {
+        "name": "Windows Update cleanup",
+        "description": "Superseded update files that Windows reports as removable.",
+        "impact": "Installed updates remain active. Removing old update files may limit rollback options."
+      },
+      "special.macos-universal-binaries": {
+        "name": "Universal binaries",
+        "description": "Extra Intel or Apple silicon code included in compatible Mac apps.",
+        "impact": "Keeps the code needed by this Mac and checks each app before and after cleanup. Apps that are running or cannot be changed safely are skipped. Reinstall or update an app to restore support for both processor types."
+      }
+    },
+    "actionMessages": {
+      "blocked": "Close the related applications and try again",
+      "previewed": "Checks complete. No files were deleted",
+      "completed": "Cleanup complete",
+      "partial": "Files in use or without permission were safely skipped",
+      "failed": "Cleanup could not be completed. No other files were removed"
+    },
+    "actionReasons": {
+      "runningProcesses": "Close {processes} and try again",
+      "itemsSkipped": "Files in use or without permission were safely skipped",
+      "requiredToolUnavailable": "The app or tool needed for this cleanup is unavailable. Nothing changed",
+      "preflightFailed": "The selected files could not be checked safely. Nothing changed",
+      "executionFailed": "Cleanup did not finish. No other files were removed",
+      "verificationFailed": "Cleanup finished, but MangoDisk could not confirm the result. Scan again",
+      "cleanerUnavailable": "This cleanup option is currently unavailable. Nothing changed"
+    }
+  }
+}

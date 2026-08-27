@@ -1,0 +1,31 @@
+id = "dev.android-user-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["studio64.exe"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${home}/.android/cache"
+
+[[roots]]
+template = "${home}/.android/build-cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only .android/cache and the legacy build-cache; Android's documented user-home configuration keeps AVDs, debug keys, repositories, and other persistent state outside these roots"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://developer.android.com/studio/command-line/variables"]

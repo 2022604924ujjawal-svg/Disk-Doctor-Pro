@@ -1,0 +1,41 @@
+id = "dev.python-tooling-cache"
+schema_version = 3
+rule_version = 3
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["python.exe", "python3.exe"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/pypoetry/Cache/artifacts"
+
+[[roots]]
+template = "${local_app_data}/pypoetry/Cache/cache"
+
+[[roots]]
+template = "${local_app_data}/pyenv/pyenv-win/install_cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Poetry's artifacts and repository cache leaves contain rebuildable packages; its sibling virtualenvs directory is excluded. pyenv-win install_cache contains downloaded installers; interpreters, configuration, and credentials remain outside the boundary"
+verified_at = "2026-08-21"
+verified_platform = "windows"
+references = [
+  "https://python-poetry.org/docs/configuration/#cache-dir",
+  "https://github.com/pyenv-win/pyenv-win",
+]

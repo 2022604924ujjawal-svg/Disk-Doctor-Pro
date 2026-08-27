@@ -1,0 +1,32 @@
+# Douyin Live Companion leaves downloaded updater installers in a dedicated
+# per-user staging directory. The application binary, user configuration,
+# recordings, and projects live elsewhere and remain outside this boundary.
+id = "app.douyin-live-updater-cache"
+schema_version = 3
+rule_version = 3
+platform = "windows"
+category = "application"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["webcast_mate.exe", "webcast_mate_updater.exe"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${local_app_data}/webcast_mate-updater"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule is confined to the dedicated webcast_mate-updater staging directory under Local AppData; the installed application, recordings, live assets, accounts, and configuration remain outside the root"
+verified_at = "2026-07-27"
+verified_platform = "windows"

@@ -1,0 +1,37 @@
+id = "dev.uv-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["uv"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["uv.exe"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/uv/cache"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "uv documents Local AppData/uv/cache as disposable data and provides cache clean and cache prune commands; persistent tools, managed Python installations, configuration, and project environments outside the cache remain excluded"
+verified_at = "2026-08-03"
+verified_platform = "windows"
+references = [
+  "https://docs.astral.sh/uv/reference/storage/#cache-directory",
+  "https://docs.astral.sh/uv/concepts/cache/#clearing-the-cache",
+]

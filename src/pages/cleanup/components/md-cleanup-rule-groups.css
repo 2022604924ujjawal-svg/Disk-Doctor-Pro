@@ -1,0 +1,538 @@
+@reference "@assets/main.css";
+
+.cleanup-browser {
+  @apply border-border/70 bg-workspace;
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+  grid-template-columns: clamp(250px, 31%, 324px) minmax(0, 1fr);
+  overflow: hidden;
+  border-width: 1px;
+  border-radius: var(--radius);
+}
+
+/*
+ * The page-level result workspace owns the shared border when a scan has
+ * completed. Removing the nested frame keeps the summary and browser visually
+ * connected without changing the standalone browser's default contract.
+ */
+.cleanup-browser.embedded {
+  border: 0;
+  border-radius: 0;
+}
+
+.cleanup-categories,
+.detail-list {
+  min-height: 0;
+}
+
+.cleanup-categories {
+  @apply border-border/70 bg-workspace;
+  border-right-width: 1px;
+  padding: 8px 6px;
+}
+
+.category-row {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  text-align: left;
+  transition:
+    background-color 0.16s ease,
+    color 0.16s ease;
+}
+
+.category-row + .category-row {
+  margin-top: 2px;
+}
+
+.category-row:hover {
+  @apply bg-muted/60;
+}
+
+.category-row:focus-visible {
+  @apply outline-none ring-2 ring-inset ring-ring/45;
+}
+
+.category-row.active {
+  @apply text-foreground;
+  background: var(--surface-primary-subtle);
+}
+
+.category-row.active::before {
+  @apply bg-primary;
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 0;
+  width: 2px;
+  border-radius: 999px;
+  content: '';
+}
+
+.category-icon,
+.rule-icon {
+  @apply text-muted-foreground;
+  display: grid;
+  flex: none;
+  place-items: center;
+}
+
+.category-icon {
+  width: 28px;
+  height: 32px;
+}
+
+.category-row.active .category-icon {
+  @apply text-primary;
+}
+
+.category-icon.recoverable,
+.rule-icon.recoverable {
+  @apply text-warning-foreground;
+}
+
+.category-main {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.category-main strong,
+.category-main small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.category-main strong {
+  color: inherit;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.category-main small {
+  @apply text-muted-foreground;
+  font-size: 11px;
+}
+
+.category-selected-size {
+  @apply text-muted-foreground;
+  max-width: 76px;
+  overflow: hidden;
+  padding-left: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.category-row.active .category-selected-size {
+  @apply text-primary;
+}
+
+.cleanup-details {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.cleanup-details.empty {
+  @apply text-muted-foreground;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.detail-warning {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 7px;
+  border-bottom-width: 1px;
+  padding: 8px 16px;
+  font-size: 11px;
+}
+
+.detail-warning {
+  @apply text-warning-foreground;
+  border-color: var(--border-subtle);
+  background: var(--surface-warning-subtle);
+}
+
+.detail-list-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-anchor: none;
+  padding: 0 8px 8px;
+}
+
+.rule-card {
+  min-width: 0;
+  overflow-anchor: none;
+}
+
+.rule-card.compact .rule-summary {
+  padding-block: 3px;
+}
+
+.rule-card.compact .rule-size small {
+  display: none;
+}
+
+.rule-summary {
+  display: grid;
+  min-width: 0;
+  height: 52px;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding-block: 3px;
+  transition: background-color 0.16s ease;
+}
+
+.rule-disclosure {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 30px minmax(0, 1fr) auto 22px;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 6px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rule-disclosure:disabled {
+  cursor: default;
+}
+
+.rule-icon {
+  width: 30px;
+  height: 36px;
+  contain: layout;
+}
+
+.rule-icon :deep(svg) {
+  display: block;
+}
+
+.rule-main {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rule-main strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.leftover-meta {
+  @apply text-muted-foreground;
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 4px;
+  overflow: hidden;
+  font-size: 10px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.leftover-identifier {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leftover-location-count {
+  flex: none;
+}
+
+.rule-title {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+}
+
+.rule-title strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rule-title em {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  border-radius: 999px;
+  padding: 2px 6px;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.rule-title em.safe {
+  @apply text-success-foreground;
+  background: var(--surface-success-subtle);
+}
+
+.rule-size {
+  display: flex;
+  min-width: 72px;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.rule-size small {
+  @apply text-muted-foreground;
+  font-size: 9px;
+}
+
+.rule-size.all strong,
+.rule-size.partial strong {
+  @apply text-foreground;
+}
+
+.expand-icon {
+  @apply text-muted-foreground;
+  display: grid;
+  place-items: center;
+}
+
+.expand-icon svg {
+  transition: transform 0.16s ease;
+}
+
+.expand-icon svg.expanded {
+  transform: rotate(180deg);
+}
+
+.source-load-more {
+  min-height: 38px;
+  border-top-width: 0;
+  background: transparent;
+  padding: 4px 10px;
+}
+
+.rule-details {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+  padding: 7px 10px 8px;
+}
+
+.rule-description {
+  @apply text-foreground;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.rule-detail-note {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 6px;
+  @apply text-muted-foreground;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.rule-detail-note svg {
+  flex: none;
+  margin-top: 1px;
+}
+
+.rule-detail-note.impact svg,
+.rule-detail-note.warning svg {
+  @apply text-warning-foreground;
+}
+
+.source-row {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--layout-result-row-height);
+  padding-block: 4px;
+  transition: background-color 0.16s ease;
+}
+
+.source-row.with-artwork {
+  grid-template-columns: 20px 38px minmax(0, 1fr) auto;
+}
+
+.application-list-content {
+  padding-top: 4px;
+}
+
+.application-row {
+  display: grid;
+  min-width: 0;
+  min-height: 50px;
+  grid-template-columns: 20px 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  border-radius: calc(var(--radius) - 5px);
+  padding-block: 3px;
+  transition: background-color 0.16s ease;
+}
+
+.rule-card :deep(.hierarchy-items::before) {
+  width: 1px;
+  @apply bg-border/65;
+}
+
+.application-row:last-child {
+  border-bottom: 0;
+}
+
+.application-row:has(input:disabled) {
+  @apply bg-muted/35;
+  opacity: 0.72;
+}
+
+.application-main {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.application-primary,
+.source-primary {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+}
+
+.application-primary .application-main,
+.source-primary .source-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.source-actions {
+  position: absolute;
+  right: 0;
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.14s ease;
+}
+
+.source-row:is(:hover, :has(:focus-visible)) .source-actions,
+.application-row:is(:hover, :has(:focus-visible)) .source-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.source-row:is(:hover, :has(:focus-visible)) .source-main,
+.application-row:is(:hover, :has(:focus-visible)) .application-main {
+  padding-right: 32px;
+}
+
+.application-main strong,
+.application-main small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.application-main strong {
+  font-size: 13px;
+}
+
+.application-main small {
+  @apply text-muted-foreground;
+  font-size: 10px;
+}
+
+.application-size {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.source-row:last-child {
+  border-bottom: 0;
+}
+
+.source-row:has(input:disabled) {
+  @apply bg-muted/35;
+  opacity: 0.72;
+}
+
+.source-main {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.source-main small {
+  @apply text-muted-foreground;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.source-row > strong {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.empty-detail {
+  @apply text-muted-foreground;
+  display: flex;
+  min-height: 180px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+}
+
+.empty-detail small {
+  max-width: 360px;
+}
+
+@container cleanup (max-width: 760px) {
+  .cleanup-browser {
+    grid-template-columns: minmax(190px, 34%) minmax(0, 1fr);
+  }
+
+  .rule-disclosure {
+    grid-template-columns: 30px minmax(0, 1fr) auto 22px;
+  }
+
+  .rule-icon {
+    width: 30px;
+    height: 36px;
+  }
+
+  .rule-title em {
+    display: none;
+  }
+}

@@ -1,0 +1,28 @@
+id = "dev.go-module-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${home}/go/pkg/mod/cache/download"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The selected pkg/mod/cache/download tree contains Go module zip, metadata, and checksum downloads; source modules, workspaces, and Go configuration remain outside the root"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://go.dev/ref/mod#module-cache"]

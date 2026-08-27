@@ -1,0 +1,83 @@
+id = "browser.opera-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["opera.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.operasoftware.Opera", "Opera"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera Stable/Cache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera Stable/Code Cache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera Stable/GPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera Stable/DawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera Stable/DawnGraphiteCache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera Stable/DawnWebGPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera Stable/GrShaderCache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera Stable/GraphiteDawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera Stable/Media Cache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera GX Stable/Cache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera GX Stable/Code Cache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera GX Stable/GPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera GX Stable/DawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera GX Stable/DawnGraphiteCache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera GX Stable/DawnWebGPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera GX Stable/GrShaderCache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera GX Stable/GraphiteDawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/Opera Software/Opera GX Stable/Media Cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only explicitly named Chromium renderer, shader, Dawn, and media cache directories under Opera and Opera GX profiles; cookies, history, passwords, bookmarks, extensions, and settings are excluded"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://help.opera.com/en/latest/web-preferences/#clearBrowsingData"]

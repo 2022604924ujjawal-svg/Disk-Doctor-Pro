@@ -1,0 +1,116 @@
+:root {
+  /* Keep primary actions recognizable across light and dark themes. */
+  --brand-primary: oklch(0.56 0.225 275);
+  --brand-primary-foreground: oklch(0.985 0 0);
+  /*
+   * Content uses one semantic type scale. Pages choose a role instead of
+   * inventing list-specific sizes. Area-dependent visualizations are exempt.
+   */
+  --font-content-empty-title: 1.25rem;
+  --font-content-section-title: 0.9375rem;
+  --font-content-primary: 0.8125rem;
+  --font-content-body: 0.75rem;
+  --font-content-secondary: 0.6875rem;
+  --font-content-meta: 0.625rem;
+  --radius: 0.75rem;
+  --background: oklch(0.982 0.004 270);
+  --workspace: var(--card);
+  --foreground: oklch(0.235 0.018 270);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.235 0.018 270);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.235 0.018 270);
+  --primary: var(--brand-primary);
+  --primary-foreground: var(--brand-primary-foreground);
+  --secondary: oklch(0.955 0.012 270);
+  --secondary-foreground: oklch(0.31 0.025 270);
+  --muted: oklch(0.957 0.009 270);
+  --muted-foreground: oklch(0.53 0.025 270);
+  --accent: oklch(0.946 0.025 275);
+  --accent-foreground: oklch(0.48 0.205 275);
+  --destructive: oklch(0.59 0.22 25);
+  --destructive-foreground: oklch(0.985 0 0);
+  --success: oklch(0.58 0.16 155);
+  --success-foreground: oklch(0.42 0.13 155);
+  --warning: oklch(0.72 0.17 75);
+  --warning-foreground: oklch(0.48 0.13 65);
+  --border: oklch(0.9 0.012 270);
+  --input: oklch(0.875 0.014 270);
+  --ring: oklch(0.62 0.205 275);
+  --sidebar: oklch(0.976 0.006 275);
+  --sidebar-foreground: oklch(0.31 0.02 270);
+  --sidebar-accent: oklch(0.954 0.022 275);
+  --sidebar-accent-foreground: oklch(0.47 0.2 275);
+  --sidebar-border: oklch(0.9 0.012 270);
+  --chart-1: oklch(0.76 0.12 275);
+  --chart-2: oklch(0.76 0.12 215);
+  --chart-3: oklch(0.78 0.12 155);
+  --chart-4: oklch(0.8 0.13 80);
+  --chart-5: oklch(0.75 0.12 330);
+  /*
+   * File visuals are semantic theme roles. Components must not depend on
+   * Tailwind's fixed color palette because skins replace these values.
+   */
+  --file-code: var(--chart-1);
+  --file-audio: var(--chart-2);
+  --file-image: var(--chart-5);
+  --file-data: var(--chart-3);
+  --file-package: var(--chart-4);
+  --file-binary: var(--muted-foreground);
+  --windows-executable-titlebar: oklch(0.64 0.006 250);
+  --windows-executable-chrome: oklch(0.91 0 0);
+  --windows-executable-surface: oklch(0.98 0 0);
+  --windows-executable-accent: oklch(0.58 0.17 248);
+  --windows-executable-detail: oklch(0.82 0 0);
+  /* Executable placeholders retain a terminal identity across product themes. */
+  --terminal-executable-surface: oklch(0.25 0 0);
+  --terminal-executable-glyph: oklch(0.97 0 0);
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+  /*
+   * Dark surfaces use restrained luminance steps so containers remain
+   * distinguishable without turning every boundary into a bright outline.
+   */
+  --background: oklch(0.18 0.015 270);
+  /* Large workspaces reveal the page canvas instead of adding a third slab. */
+  --workspace: transparent;
+  --foreground: oklch(0.94 0.012 270);
+  --card: oklch(0.225 0.018 270);
+  --card-foreground: oklch(0.94 0.012 270);
+  --popover: oklch(0.24 0.02 270);
+  --popover-foreground: oklch(0.94 0.012 270);
+  --primary: var(--brand-primary);
+  --primary-foreground: var(--brand-primary-foreground);
+  --secondary: oklch(0.265 0.018 270);
+  --secondary-foreground: oklch(0.91 0.012 270);
+  --muted: oklch(0.25 0.016 270);
+  --muted-foreground: oklch(0.7 0.025 270);
+  --accent: oklch(0.275 0.045 275);
+  --accent-foreground: oklch(0.84 0.105 275);
+  --destructive: oklch(0.67 0.2 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --success: oklch(0.72 0.15 155);
+  --success-foreground: oklch(0.77 0.13 155);
+  --warning: oklch(0.78 0.15 75);
+  --warning-foreground: oklch(0.82 0.13 75);
+  --border: oklch(0.295 0.018 270);
+  --input: oklch(0.315 0.02 270);
+  --ring: oklch(0.71 0.17 275);
+  --sidebar: oklch(0.135 0.014 270);
+  --sidebar-foreground: oklch(0.84 0.018 270);
+  --sidebar-accent: oklch(0.245 0.038 275);
+  --sidebar-accent-foreground: oklch(0.86 0.1 275);
+  --sidebar-border: oklch(0.265 0.016 270);
+  --chart-1: oklch(0.54 0.16 275);
+  --chart-2: oklch(0.55 0.13 215);
+  --chart-3: oklch(0.54 0.13 155);
+  --chart-4: oklch(0.59 0.14 80);
+  --chart-5: oklch(0.55 0.14 330);
+  --windows-executable-titlebar: oklch(0.52 0.006 250);
+  --windows-executable-chrome: oklch(0.3 0 0);
+  --windows-executable-surface: oklch(0.24 0 0);
+  --windows-executable-accent: oklch(0.68 0.15 245);
+  --windows-executable-detail: oklch(0.47 0 0);
+}

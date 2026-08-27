@@ -1,0 +1,42 @@
+# Adobe media caches can be large but take time to regenerate when a project is
+# reopened. This rule remains recoverable and keeps automatic cleanup disabled;
+# including it in the shared recommendation still requires explicit cleanup
+# intent. Project media, presets, and Creative Cloud files are excluded.
+id = "app.adobe-media-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "application"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Adobe Premiere Pro", "Adobe After Effects", "Adobe Media Encoder"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Adobe Premiere Pro", "Adobe After Effects", "Adobe Media Encoder"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/Adobe"
+verified_rebuildable = true
+
+[[roots]]
+template = "${application_support}/Adobe/Common/Media Cache Files"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Adobe documents media cache as regenerated accelerator files and provides an in-app deletion workflow; the rule is limited to Adobe Library/Caches and Common/Media Cache Files while project media, presets, and Creative Cloud data are excluded"
+verified_at = "2026-07-17"
+verified_platform = "macos"
+references = ["https://helpx.adobe.com/premiere/desktop/troubleshooting/media-issues/manage-media-cache.html"]

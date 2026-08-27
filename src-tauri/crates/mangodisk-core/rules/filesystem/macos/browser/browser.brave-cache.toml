@@ -1,0 +1,39 @@
+id = "browser.brave-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Brave Browser"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.brave.Browser", "Brave"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/BraveSoftware/Brave-Browser"
+
+[[roots]]
+template = "${application_support}/BraveSoftware/Brave-Browser"
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "GrShaderCache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only named renderer and network cache directories from Brave's user-data profiles; cookies, history, passwords, bookmarks, extensions, and other profile data remain outside the selected suffixes"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://support.brave.com/hc/en-us/articles/360017903152-How-Do-I-Clear-Cookies-And-Site-Data-In-Brave"]

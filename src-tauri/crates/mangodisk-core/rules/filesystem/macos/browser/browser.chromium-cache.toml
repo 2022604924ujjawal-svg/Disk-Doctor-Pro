@@ -1,0 +1,39 @@
+id = "browser.chromium-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Chromium"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["org.chromium.Chromium", "Chromium"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/Chromium"
+
+[[roots]]
+template = "${application_support}/Chromium"
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "GrShaderCache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only named renderer and network cache directories from Chromium's documented user-data profiles; cookies, history, passwords, bookmarks, extensions, and other profile data remain outside the selected suffixes"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md"]

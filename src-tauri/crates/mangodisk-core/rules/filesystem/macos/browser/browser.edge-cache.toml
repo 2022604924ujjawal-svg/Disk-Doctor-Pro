@@ -1,0 +1,39 @@
+id = "browser.edge-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Microsoft Edge"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Microsoft Edge", "Microsoft Edge Update"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/Microsoft Edge"
+
+[[roots]]
+template = "${application_support}/Microsoft Edge"
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "GrShaderCache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only named renderer and network cache directories from Edge's user-data profiles; cookies, history, passwords, bookmarks, extensions, and other profile data remain outside the selected suffixes"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/userdatadir"]

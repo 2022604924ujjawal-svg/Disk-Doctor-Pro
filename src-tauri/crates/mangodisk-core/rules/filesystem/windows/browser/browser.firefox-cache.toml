@@ -1,0 +1,38 @@
+id = "browser.firefox-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["firefox.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["org.mozilla.firefox", "Mozilla Firefox", "Firefox"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Mozilla/Firefox/Profiles"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["cache2", "startupCache", "shader-cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Firefox keeps disk cache and other temporary profile data under Local AppData, separate from the Roaming profile that contains bookmarks, credentials, history, and settings; the rule selects only cache2, startupCache, and shader-cache"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = [
+  "https://support.mozilla.org/en-US/kb/how-clear-firefox-cache",
+  "https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data",
+]

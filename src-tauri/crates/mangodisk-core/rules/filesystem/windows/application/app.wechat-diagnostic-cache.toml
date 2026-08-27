@@ -1,0 +1,38 @@
+# Modern Weixin and legacy WeChat keep diagnostic logs and a small rendering
+# cache beside plug-ins and account state. Only the explicitly listed
+# diagnostics and cache paths are selected; messages, plug-ins, login data,
+# network state, and user files remain outside the rule.
+id = "app.wechat-diagnostic-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Weixin.exe", "WeChat.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Weixin", "WeChat", "微信"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/Tencent"
+kind = "childDirectories"
+child_names = ["xwechat", "WeChat"]
+suffixes = ["log", "radium/cache", "crashinfo/reports", "crash/Reports"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule expands only known current and legacy client directories and selects diagnostic, crash, log, and update-report suffixes; accounts, messages, plug-ins, databases, downloads, and network state are excluded"
+verified_at = "2026-07-27"
+verified_platform = "windows"

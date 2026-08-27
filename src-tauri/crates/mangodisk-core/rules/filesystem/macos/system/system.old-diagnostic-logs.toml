@@ -1,0 +1,29 @@
+id = "system.old-diagnostic-logs"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "system"
+risk = "safe"
+default_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${user_library}/Logs"
+
+[matcher]
+kind = "olderThan"
+days = 7
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The matcher is limited to diagnostic and crash-report file types under the user's Logs directory and applies MangoDisk's seven-day retention boundary"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/xcode/acquiring-crash-reports-and-diagnostic-logs"]

@@ -1,0 +1,39 @@
+# Thunder keeps download tasks, cloud-drive databases, account state, and
+# WebKit website data outside its standard macOS cache container. The selected
+# root is recreated by the signed client after a normal restart.
+id = "app.thunder-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Thunder", "DownloadService"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.xunlei.Thunder", "Thunder", "迅雷"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.xunlei.Thunder"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed and notarized Thunder 5.80.5 recreated its dedicated macOS cache after restart. Download tasks, cloud databases, accounts, uploads, preferences, HTTP storage, and WebKit website data remain outside the selected root"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://mac.xunlei.com/",
+  "https://developer.apple.com/documentation/foundation/url/cachesdirectory",
+]

@@ -1,0 +1,53 @@
+id = "browser.vivaldi-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Vivaldi"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.vivaldi.Vivaldi", "Vivaldi"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.vivaldi.Vivaldi"
+
+[[roots]]
+template = "${application_support}/Vivaldi/ShaderCache"
+
+[[roots]]
+template = "${application_support}/Vivaldi/GrShaderCache"
+
+[[roots]]
+template = "${application_support}/Vivaldi/GraphiteDawnCache"
+
+[[roots]]
+template = "${application_support}/Vivaldi/component_crx_cache"
+
+[[roots]]
+template = "${application_support}/Vivaldi/extensions_crx_cache"
+
+[[roots]]
+template = "${application_support}/Vivaldi"
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "GrShaderCache", "GraphiteDawnCache", "Media Cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Vivaldi uses Chromium profile cache boundaries while keeping passwords, cookies, history, extensions, and bookmarks outside the selected directories"
+verified_at = "2026-07-30"
+verified_platform = "macos"

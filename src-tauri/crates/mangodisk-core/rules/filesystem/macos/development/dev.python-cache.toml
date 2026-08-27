@@ -1,0 +1,48 @@
+id = "dev.python-cache"
+schema_version = 3
+rule_version = 3
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${user_library}/Caches/pip"
+
+[[roots]]
+template = "${user_library}/Caches/pypoetry/artifacts"
+
+[[roots]]
+template = "${user_library}/Caches/pypoetry/cache"
+
+[[roots]]
+template = "${home}/.pyenv/cache"
+
+[[roots]]
+template = "${home}/.cache/ruff"
+
+[[roots]]
+template = "${home}/.cache/mypy"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Poetry's artifacts and repository cache leaves contain rebuildable package data, while its sibling virtualenvs directory contains working environments and is excluded. pip, pyenv, Ruff, and mypy remain limited to their dedicated cache directories"
+verified_at = "2026-08-21"
+verified_platform = "macos"
+references = [
+  "https://pip.pypa.io/en/stable/topics/caching/",
+  "https://python-poetry.org/docs/configuration/#cache-dir",
+  "https://docs.astral.sh/ruff/configuration/#cache-dir",
+  "https://mypy.readthedocs.io/en/stable/command_line.html#cmdoption-mypy-cache-dir",
+]

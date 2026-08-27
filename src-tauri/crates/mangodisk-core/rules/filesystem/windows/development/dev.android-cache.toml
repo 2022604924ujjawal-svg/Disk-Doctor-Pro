@@ -1,0 +1,34 @@
+id = "dev.android-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["studio64.exe"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${local_app_data}/Android/Sdk/.temp"
+
+[[roots]]
+template = "${local_app_data}/Android/Sdk/temp"
+
+[[roots]]
+template = "${local_app_data}/Android/Sdk/cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only Android SDK temporary download, extraction, and cache directories; installed SDK platforms, build tools, emulator images, licenses, and projects remain outside the roots"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://developer.android.com/tools/sdkmanager"]

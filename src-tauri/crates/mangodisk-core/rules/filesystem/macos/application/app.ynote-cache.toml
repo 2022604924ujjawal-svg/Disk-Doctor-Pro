@@ -1,0 +1,84 @@
+# YNote keeps notes, attachments, local databases, settings, and browser state
+# beside Electron caches. Only fixed renderer leaves, diagnostics, and the
+# dedicated updater cache are disposable, and the application must be closed.
+id = "app.ynote-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["有道云笔记"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["ynote-desktop", "有道云笔记"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${application_support}/ynote-desktop/Cache"
+
+[[roots]]
+template = "${application_support}/ynote-desktop/Code Cache"
+
+[[roots]]
+template = "${application_support}/ynote-desktop/GPUCache"
+
+[[roots]]
+template = "${application_support}/ynote-desktop/DawnCache"
+
+[[roots]]
+template = "${application_support}/ynote-desktop/DawnGraphiteCache"
+
+[[roots]]
+template = "${application_support}/ynote-desktop/DawnWebGPUCache"
+
+[[roots]]
+template = "${application_support}/ynote-desktop/GrShaderCache"
+
+[[roots]]
+template = "${application_support}/ynote-desktop/GraphiteDawnCache"
+
+[[roots]]
+template = "${application_support}/ynote-desktop/Shared Dictionary/cache"
+
+[[roots]]
+template = "${application_support}/ynote-desktop/Crashpad/reports"
+
+[[roots]]
+template = "${application_support}/ynote-desktop/myLogs"
+verified_rebuildable = true
+
+# Renderer partitions also hold cookies, IndexedDB, Local Storage, Network,
+# preferences, and sessions. Dynamic discovery appends cache suffixes only.
+[[roots]]
+template = "${application_support}/ynote-desktop/Partitions"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache"]
+
+# The signed application declares this exact electron-updater cache name in
+# app-update.yml. Notes and attachments remain in the separate profile root.
+[[roots]]
+template = "${application_support}/Caches/ynote-desktop-updater"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed YNote 8.1.60 reproduced Electron renderer caches, diagnostics, and its app-update.yml-declared updater cache. Notes, attachments, backup databases, settings, cookies, IndexedDB, Local Storage, sessions, and account state are excluded"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://note.youdao.com/",
+  "https://www.electronjs.org/docs/latest/api/app#appgetpathname",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

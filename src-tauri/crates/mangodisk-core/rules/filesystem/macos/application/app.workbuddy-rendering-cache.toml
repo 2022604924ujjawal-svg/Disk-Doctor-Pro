@@ -1,0 +1,77 @@
+# WorkBuddy stores tasks, projects, databases, skills, connectors, downloaded
+# runtimes, and browser state under .workbuddy. The main executable is named
+# Electron, so unique WorkBuddy helper processes provide the process gate while
+# this rule owns only fixed renderer-cache leaves.
+id = "app.workbuddy-rendering-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["WorkBuddy Helper", "WorkBuddy Helper (GPU)", "WorkBuddy Helper (Renderer)", "WorkBuddyRepair"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.workbuddy.workbuddy", "WorkBuddy"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${home}/.workbuddy/app/session/Cache"
+
+[[roots]]
+template = "${home}/.workbuddy/app/session/Code Cache"
+
+[[roots]]
+template = "${home}/.workbuddy/app/session/GPUCache"
+
+[[roots]]
+template = "${home}/.workbuddy/app/session/DawnCache"
+
+[[roots]]
+template = "${home}/.workbuddy/app/session/DawnGraphiteCache"
+
+[[roots]]
+template = "${home}/.workbuddy/app/session/DawnWebGPUCache"
+
+[[roots]]
+template = "${home}/.workbuddy/app/session/GrShaderCache"
+
+[[roots]]
+template = "${home}/.workbuddy/app/session/GraphiteDawnCache"
+
+[[roots]]
+template = "${home}/.workbuddy/app/session/Shared Dictionary/cache"
+
+[[roots]]
+template = "${home}/.workbuddy/app/session/Service Worker/CacheStorage"
+
+# WorkBuddy creates direct browser-preview and MCP-app partitions. Preferences,
+# cookies, DIPS, IndexedDB, Local Storage, and session state remain excluded.
+[[roots]]
+template = "${home}/.workbuddy/app/session/Partitions"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache", "Service Worker/CacheStorage"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Notarized WorkBuddy 5.1.7 reproduced fixed session and direct-partition Electron caches. Tasks, projects, artifacts, databases, settings, skills, connectors, runtimes, credentials, browser storage, and logs are excluded"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://copilot.tencent.com/work/",
+  "https://www.codebuddy.cn/docs/workbuddy/Overview",
+  "https://www.electronjs.org/docs/latest/api/app#appgetpathname",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

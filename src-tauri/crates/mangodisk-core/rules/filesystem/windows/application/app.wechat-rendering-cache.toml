@@ -1,0 +1,62 @@
+# Current Weixin and legacy WeChat create multiple direct Chromium profiles and
+# dedicated mini-program compiled-code caches. Persistent applet data stays in
+# neighboring roots, so dynamic discovery appends fixed cache suffixes only.
+id = "app.wechat-rendering-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Weixin.exe", "WeChat.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Weixin", "WeChat", "微信"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/Tencent/xwechat/radium/web/profiles"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache"]
+
+[[roots]]
+template = "${roaming_app_data}/Tencent/WeChat/radium/web/profiles"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache"]
+
+# Current Weixin stores per-account compiled mini-program JavaScript below a
+# stable `codecache` leaf. Applet databases, packages, icons, and settings are
+# siblings and therefore remain outside the expanded roots.
+[[roots]]
+template = "${roaming_app_data}/Tencent/xwechat/radium/users"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["applet/codecache"]
+
+# Legacy WeChat uses a versioned WMPF cache containing only compiled
+# `.cachedata` artifacts; the adjacent Applet database is not selected.
+[[roots]]
+template = "${roaming_app_data}/Tencent/WeChat/radium/WmpfCache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Tencent-signed Weixin 4.1.10.53 reproduced Chromium profiles and 18.74 MiB of mini-program compiled-code caches. Fixed cache leaves exclude applet databases/packages, accounts, messages, files, browser storage, sessions, service workers, and preferences"
+verified_at = "2026-08-15"
+verified_platform = "windows"
+references = [
+  "https://weixin.qq.com/cgi-bin/readtemplate?lang=zh_CN&t=download/windows",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

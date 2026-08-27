@@ -1,0 +1,38 @@
+# DuckDuckGo stores WebView2 state inside its MSIX package. The matcher selects
+# only explicit renderer-cache path segments and leaves history, credentials,
+# bookmarks, sessions, IndexedDB, and Local Storage untouched.
+id = "browser.duckduckgo-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["DuckDuckGo.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["DuckDuckGo", "DuckDuckGo Browser"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Packages"
+kind = "childDirectories"
+child_prefixes = ["DuckDuckGo.DesktopBrowser_"]
+suffixes = ["LocalState/EBWebView", "LocalState/internalEnvironment/EBWebView"]
+
+[matcher]
+kind = "pathSegmentIn"
+values = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Media Cache"]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "DuckDuckGo MSIX package and WebView2 cache boundaries re-authored from the current Windows desktop profile layout"
+verified_at = "2026-07-18"
+verified_platform = "windows"

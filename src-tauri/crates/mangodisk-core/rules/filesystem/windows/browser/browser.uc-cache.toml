@@ -1,0 +1,55 @@
+# UC stores Chromium profile state under Local AppData. Only fixed renderer,
+# network, and downloaded component-package cache leaves are selected; the
+# complete profile and application installation remain outside the boundary.
+id = "browser.uc-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["uc.exe", "uc_proxy.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["UC Browser", "UC浏览器", "UC"] },
+  { kind = "executableAvailable", names = ["uc.exe"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/UC/User Data/ShaderCache"
+
+[[roots]]
+template = "${local_app_data}/UC/User Data/GrShaderCache"
+
+[[roots]]
+template = "${local_app_data}/UC/User Data/GraphiteDawnCache"
+
+[[roots]]
+template = "${local_app_data}/UC/User Data/component_crx_cache"
+
+[[roots]]
+template = "${local_app_data}/UC/User Data"
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Media Cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed UC 1.1.0.22 on Windows 11 reproduced fixed web, code, GPU, shader, and component-package caches; real cleanup preserved credentials, cookies, history, bookmarks, extensions, sessions, and settings"
+verified_at = "2026-08-14"
+verified_platform = "windows"
+references = [
+  "https://www.uc.cn/zh-cn/browser/pc.html",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

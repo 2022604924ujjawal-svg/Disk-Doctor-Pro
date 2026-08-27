@@ -1,0 +1,31 @@
+id = "dev.yarn-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${roaming_app_data}/Yarn/Cache"
+
+[[roots]]
+template = "${local_app_data}/Yarn/Cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Yarn Classic documents its Windows global cache as downloaded package content that yarn cache clean removes and later installs repopulate; project manifests and Yarn configuration remain outside the roots"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://classic.yarnpkg.com/lang/en/docs/cli/cache/"]

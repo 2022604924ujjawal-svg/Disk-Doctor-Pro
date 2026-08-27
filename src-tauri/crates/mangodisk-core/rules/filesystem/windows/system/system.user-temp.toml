@@ -1,0 +1,29 @@
+id = "system.user-temp"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "system"
+risk = "safe"
+default_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${temp}"
+
+[matcher]
+kind = "olderThan"
+days = 3
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The root is the Windows-designated temporary-files directory returned by the operating system; the matcher preserves recent entries with a three-day age gate"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-gettemppathw"]

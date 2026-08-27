@@ -1,0 +1,35 @@
+id = "app.obs-diagnostic-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["OBS"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.obsproject.obs-studio", "OBS"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${application_support}/obs-studio/logs"
+
+[[roots]]
+template = "${application_support}/obs-studio/profiler_data"
+
+[matcher]
+kind = "olderThan"
+days = 14
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only OBS logs and profiler_data older than fourteen days; recordings, scene collections, profiles, plugins, and application settings remain outside the roots"
+verified_at = "2026-07-18"
+verified_platform = "macos"

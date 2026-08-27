@@ -1,0 +1,34 @@
+# WhatsApp messages, attachments, and account databases are excluded. The
+# standard bundle cache is rebuildable after the application is restarted.
+id = "app.whatsapp-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["WhatsApp"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["net.whatsapp.WhatsApp", "WhatsApp"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/net.whatsapp.WhatsApp"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only WhatsApp's bundle directory under Library/Caches, which Apple designates for discardable files; messages, attachments, account databases, and preferences remain outside the root"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/url/cachesdirectory"]

@@ -1,0 +1,19 @@
+id = "project.cocoapods-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["Podfile"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "Pods"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://guides.cocoapods.org/using/pod-install-vs-update.html"]
+verified_at = "2026-07-31"

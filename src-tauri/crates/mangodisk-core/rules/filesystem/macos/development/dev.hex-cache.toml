@@ -1,0 +1,34 @@
+# Hex configuration, credentials, archives, and Mix tooling remain outside the
+# selected cache subdirectory.
+id = "dev.hex-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["beam.smp", "mix"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["mix"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${home}/.hex/cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Hex stores downloaded package cache under the cache child of HEX_HOME; configuration and credentials remain outside this root"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://hex.hexdocs.pm/Mix.Tasks.Hex.Config.html"]

@@ -1,0 +1,35 @@
+# ccache stores its default Windows configuration in the cache directory.
+# Preserve ccache.conf while removing rebuildable compiler results.
+id = "dev.ccache-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["ccache.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["ccache.exe", "ccache"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/ccache"
+
+[matcher]
+kind = "not"
+item = { kind = "nameEquals", values = ["ccache.conf"] }
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "ccache documents APPDATA/ccache as the Windows fallback for both cache and configuration; the matcher preserves ccache.conf"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://ccache.dev/manual/latest.html#_location_of_the_configuration_file"]

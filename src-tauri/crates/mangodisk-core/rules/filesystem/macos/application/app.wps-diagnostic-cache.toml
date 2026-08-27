@@ -1,0 +1,44 @@
+# WPS keeps recovery, cloud synchronization, templates, and account state near
+# isolated diagnostic roots. Only the fixed log and crash-dump directories are
+# selected, and the application must be fully stopped before traversal.
+id = "app.wps-diagnostic-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = [
+  "wpsoffice",
+  "WPS Office",
+  "wpscloudsvr",
+  "promecefpluginhost",
+  "promecefpluginhost (GPU)",
+  "promecefpluginhost (Renderer)",
+]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.kingsoft.wpsoffice.mac.global", "wpsoffice", "WPS Office"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Containers/com.kingsoft.wpsoffice.mac.global/Data/Library/Application Support/Kingsoft/office6"
+
+[matcher]
+kind = "pathSegmentIn"
+values = ["log", "dump"]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed WPS Office 12.1.26050 reproduced isolated renderer, cloud-service, application, workspace, and crash logs. Recovery, documents, cloud data, templates, accounts, and preferences are excluded"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = ["https://www.wps.com/office/mac/"]

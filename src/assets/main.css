@@ -1,0 +1,405 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import './themes/default.css';
+@import './themes/mangodisk.css';
+
+/*
+ * Cross-page scrolling behavior belongs in the global utility layer. Feature
+ * components request a hidden scrollbar or a stable gutter without repeating
+ * browser-specific pseudo-elements.
+ */
+@utility scrollbar-hidden {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility scrollbar-stable {
+  overflow-y: scroll;
+  scrollbar-gutter: stable both-edges;
+}
+
+@utility scrollbar-stable-end {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
+/* Running actions rotate only their icon so header geometry remains stable. */
+@utility icon-spin {
+  flex: none;
+  animation: icon-spin 0.9s linear infinite;
+}
+
+@keyframes icon-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*
+ * Operational indicators communicate that a filesystem task is still alive.
+ * Keep them moving even when the OS requests reduced motion, but slow them
+ * down below so they remain low-stimulation rather than becoming misleadingly
+ * static on Windows.
+ */
+.md-operational-motion {
+  animation-iteration-count: infinite;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-workspace: var(--workspace);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-file-code: var(--file-code);
+  --color-file-audio: var(--file-audio);
+  --color-file-image: var(--file-image);
+  --color-file-data: var(--file-data);
+  --color-file-package: var(--file-package);
+  --color-file-binary: var(--file-binary);
+  --text-content-empty-title: var(--font-content-empty-title);
+  --text-content-section-title: var(--font-content-section-title);
+  --text-content-primary: var(--font-content-primary);
+  --text-content-body: var(--font-content-body);
+  --text-content-secondary: var(--font-content-secondary);
+  --text-content-meta: var(--font-content-meta);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  /*
+   * Layout density is shared across the application shell and result pages.
+   * Keeping these semantic sizes here prevents individual pages from slowly
+   * drifting back to different header, toolbar, and row rhythms.
+   */
+  --layout-sidebar-collapsed-width: 68px;
+  --layout-sidebar-expanded-width: 240px;
+  --layout-sidebar-brand-height: 84px;
+  --layout-sidebar-item-height: 40px;
+  --layout-page-padding-inline: 20px;
+  --layout-page-padding-top: 14px;
+  --layout-scrollbar-width: 10px;
+  --layout-page-header-height: 58px;
+  --layout-workspace-toolbar-height: 36px;
+  --layout-workspace-control-height: 32px;
+  --layout-result-header-height: 36px;
+  --layout-result-row-height: 44px;
+  --layout-result-group-height: 48px;
+  --layout-result-child-row-height: 40px;
+  --layout-action-bar-height: 48px;
+
+  /*
+   * Safari 15.6 ignores color-mix(). These opaque semantic fallbacks keep
+   * labels and icons readable instead of letting Tailwind's generated solid
+   * fallback paint the foreground and background with the same color.
+   */
+  --surface-primary-subtle: var(--accent);
+  --surface-destructive-subtle: var(--muted);
+  --surface-success-subtle: var(--muted);
+  --surface-warning-subtle: var(--muted);
+  --surface-muted-subtle: var(--muted);
+  --surface-accent-subtle: var(--accent);
+  --border-subtle: var(--border);
+  --border-primary-subtle: var(--primary);
+  --focus-ring-subtle: var(--ring);
+  --shadow-subtle: rgb(0 0 0 / 7%);
+  --shadow-dialog: rgb(0 0 0 / 18%);
+  --progress-shimmer: var(--primary-foreground);
+  --modal-overlay-background: rgb(0 0 0 / 18%);
+
+  /*
+   * Result rows use transparent wrappers and inset their visual background.
+   * Keep both values global so ordinary rows, grouped rows, and page-owned
+   * navigation items preserve the same 2px rhythm without stacking local
+   * margins on top of the shared row treatment.
+   */
+  --result-item-gap: 2px;
+  --result-item-background-inset: 1px;
+}
+
+@supports (color: color-mix(in oklab, black, white)) {
+  :root {
+    --surface-primary-subtle: color-mix(in oklab, var(--primary) 10%, transparent);
+    --surface-destructive-subtle: color-mix(in oklab, var(--destructive) 10%, transparent);
+    --surface-success-subtle: color-mix(in oklab, var(--success) 12%, transparent);
+    --surface-warning-subtle: color-mix(in oklab, var(--warning) 15%, transparent);
+    --surface-muted-subtle: color-mix(in oklab, var(--muted) 55%, transparent);
+    --surface-accent-subtle: color-mix(in oklab, var(--accent) 65%, transparent);
+    --border-subtle: color-mix(in oklab, var(--border) 70%, transparent);
+    --border-primary-subtle: color-mix(in oklab, var(--primary) 20%, transparent);
+    --focus-ring-subtle: color-mix(in oklab, var(--ring) 40%, transparent);
+    --shadow-subtle: color-mix(in srgb, var(--foreground) 7%, transparent);
+    --shadow-dialog: color-mix(in srgb, var(--foreground) 16%, transparent);
+    --progress-shimmer: color-mix(in oklab, var(--primary-foreground) 42%, transparent);
+    --modal-overlay-background: color-mix(in oklab, var(--background) 50%, transparent);
+  }
+}
+
+@supports not (color: color-mix(in oklab, black, white)) {
+  /*
+   * Template-owned opacity utilities survive in the DOM, unlike @apply
+   * output. Override the few combinations whose generated Safari fallback
+   * would otherwise make selected labels invisible.
+   */
+  .bg-primary\/5,
+  .bg-primary\/7,
+  .bg-primary\/8,
+  .bg-primary\/10,
+  .bg-primary\/12 {
+    background-color: var(--surface-primary-subtle) !important;
+  }
+
+  .bg-destructive\/8,
+  .bg-destructive\/10,
+  .bg-destructive\/12 {
+    background-color: var(--surface-destructive-subtle) !important;
+  }
+
+  .bg-success\/10,
+  .bg-success\/12 {
+    background-color: var(--surface-success-subtle) !important;
+  }
+
+  .bg-warning\/10,
+  .bg-warning\/15 {
+    background-color: var(--surface-warning-subtle) !important;
+  }
+
+  .bg-card\/95 {
+    background-color: var(--card) !important;
+  }
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  min-width: 320px;
+  height: 100%;
+  margin: 0;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    cursor: default;
+  }
+
+  /*
+   * Desktop application content is presentation, not a selectable web page.
+   * Apply the boundary to every portal and generated child, then opt actual
+   * text editors back in so inputs keep native selection and caret behavior.
+   */
+  :where(body, body *, body *::before, body *::after) {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  :where(
+    input,
+    textarea,
+    [contenteditable]:not([contenteditable='false']),
+    [contenteditable]:not([contenteditable='false']) *
+  ) {
+    -webkit-user-select: text;
+    user-select: text;
+    cursor: text;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+  }
+
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :where(button, input, select, textarea, [tabindex]):focus-visible {
+    @apply outline-ring/70;
+    outline-width: 2px;
+    outline-style: solid;
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    @apply bg-primary/20 text-foreground;
+  }
+}
+
+@layer components {
+  /*
+   * Result workspaces share one semantic visual language. Pages own their
+   * layout, while theme tokens own header, hover, and selection feedback.
+   */
+  .md-result-header {
+    @apply border-border bg-muted/55 text-muted-foreground;
+  }
+
+  .md-result-sort {
+    @apply text-muted-foreground;
+  }
+
+  .md-result-sort:hover {
+    @apply text-muted-foreground;
+  }
+
+  .md-result-sort[data-active='true'] {
+    @apply text-foreground;
+    font-weight: 600;
+  }
+
+  .md-result-sort:focus-visible {
+    border-radius: 4px;
+    outline: 2px solid var(--focus-ring-subtle);
+    outline-offset: 2px;
+  }
+
+  /*
+   * System fonts rasterize medium text differently across platforms.
+   * Use an explicit medium weight for dense result rows while reserving
+   * semibold emphasis for page headings and summary metrics.
+   */
+  .md-result-primary {
+    font-weight: 500;
+  }
+
+  /*
+   * Every workspace starts its scrollable content at the same vertical
+   * position. An explicit block size prevents page-specific controls from
+   * stretching the toolbar and producing a visible jump during navigation.
+   */
+  .md-workspace-toolbar {
+    height: var(--layout-workspace-toolbar-height);
+    min-height: var(--layout-workspace-toolbar-height);
+  }
+}
+
+[data-slot='dialog-overlay'] {
+  background-color: var(--modal-overlay-background) !important;
+  -webkit-backdrop-filter: blur(0px) !important;
+  backdrop-filter: blur(0px) !important;
+}
+
+[data-slot='dialog-content'] {
+  box-shadow: 0 25px 50px -12px var(--shadow-dialog) !important;
+}
+
+/*
+ * Safari 15.6 may paint the first frame at an incorrect compositor size when
+ * fixed centering, translation, and scaling animate together. Keeping fade
+ * motion avoids the apparent double-open without changing modern WebKit.
+ */
+@supports not (color: color-mix(in oklab, black, white)) {
+  [data-slot='dialog-content'] {
+    --tw-enter-scale: 1;
+    --tw-exit-scale: 1;
+  }
+}
+
+/*
+ * Button geometry is an application-wide interaction invariant. Keep color
+ * and shadow feedback while overriding movement declared by component
+ * variants without modifying generated component sources.
+ */
+:where(button, [role='button'], [data-slot='button']) {
+  /*
+   * Tailwind 4 implements translate utilities with registered custom
+   * properties. Reset the variables as well as the CSS properties so the
+   * invariant remains effective in Windows WebView2 and WebKit.
+   */
+  --tw-translate-x: 0 !important;
+  --tw-translate-y: 0 !important;
+  --tw-translate-z: 0 !important;
+  translate: 0 0 !important;
+  scale: 1 !important;
+  transition-property: color, background-color, border-color, box-shadow, opacity !important;
+}
+
+:where(button, [role='button'], [data-slot='button']):hover,
+:where(button, [role='button'], [data-slot='button']):active {
+  --tw-translate-x: 0 !important;
+  --tw-translate-y: 0 !important;
+  --tw-translate-z: 0 !important;
+  translate: 0 0 !important;
+  scale: 1 !important;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/45;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .md-operational-motion,
+  .md-operational-motion::before,
+  .md-operational-motion::after {
+    animation-duration: 1.8s !important;
+    animation-iteration-count: infinite !important;
+  }
+}

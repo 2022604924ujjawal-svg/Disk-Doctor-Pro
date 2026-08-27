@@ -1,0 +1,48 @@
+# DingTalk message databases, screenshots, downloaded files, and account data
+# are excluded. This rule keeps only diagnostic logs and generated image cache.
+id = "app.dingtalk-diagnostic-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["DingTalk", "DingTalkMac"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.alibaba.DingTalkMac", "DingTalk"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${application_support}/DingTalkMac/log"
+
+[[roots]]
+template = "${application_support}/DingTalkMac/activitylog"
+verified_rebuildable = true
+
+[[roots]]
+template = "${application_support}/DingTalkMac/holmeslogs"
+verified_rebuildable = true
+
+[[roots]]
+template = "${application_support}/DingTalkMac/image_translate_cache"
+
+[[roots]]
+template = "${application_support}/DingTalkMac/image_res_cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only DingTalk directories explicitly named log, activitylog, holmeslogs, image_translate_cache, and image_res_cache; messages, accounts, databases, and downloaded content remain outside the roots"
+verified_at = "2026-07-18"
+verified_platform = "macos"

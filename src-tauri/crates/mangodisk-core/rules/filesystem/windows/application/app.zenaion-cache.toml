@@ -1,0 +1,81 @@
+# ZenAion uses a dedicated WebView2 user-data folder. Only fixed disk, code,
+# GPU, shader, component-package, and crash-report caches are included; browser
+# identity, cookies, history, permissions, storage, and preferences are excluded.
+id = "app.zenaion-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["ZenAI.exe", "zenai-host.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["ZenAion", "ZenAI"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/Default/Cache"
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/Default/Code Cache"
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/Default/GPUCache"
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/Default/DawnGraphiteCache"
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/Default/DawnWebGPUCache"
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/Default/GrShaderCache"
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/Default/GraphiteDawnCache"
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/Default/Shared Dictionary/cache"
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/ShaderCache"
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/GrShaderCache"
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/GraphiteDawnCache"
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/GPUPersistentCache/DawnGraphiteCache"
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/component_crx_cache"
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/extensions_crx_cache"
+
+[[roots]]
+template = "${local_app_data}/bot.zenai/EBWebView/Crashpad/reports"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed ZenAion 0.1.2 reproduced 448 MiB in fixed WebView2 rendering and component caches. Auth, cookies, history, Local Storage, IndexedDB, browser settings, skills, and agent state are excluded"
+verified_at = "2026-08-11"
+verified_platform = "windows"
+references = [
+  "https://zenai.bot/guide/core-features/view-all",
+  "https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/user-data-folder",
+]

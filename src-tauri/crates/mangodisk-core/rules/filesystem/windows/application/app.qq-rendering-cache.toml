@@ -1,0 +1,76 @@
+# QQ stores browser persistence and account data beside Chromium caches. Only
+# fixed renderer, diagnostic-log, and crash-report leaves are disposable.
+id = "app.qq-rendering-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["QQ.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["QQ", "Tencent QQ", "腾讯QQ"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/QQ/Cache"
+
+[[roots]]
+template = "${roaming_app_data}/QQ/Code Cache"
+
+[[roots]]
+template = "${roaming_app_data}/QQ/GPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/QQ/DawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/QQ/DawnGraphiteCache"
+
+[[roots]]
+template = "${roaming_app_data}/QQ/DawnWebGPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/QQ/GrShaderCache"
+
+[[roots]]
+template = "${roaming_app_data}/QQ/GraphiteDawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/QQ/Shared Dictionary/cache"
+
+[[roots]]
+template = "${roaming_app_data}/QQ/log"
+
+[[roots]]
+template = "${roaming_app_data}/QQ/Crashpad/reports"
+
+# Future renderer partitions retain cookies, storage, preferences, and session
+# state. Direct-child discovery appends only fixed cache suffixes.
+[[roots]]
+template = "${roaming_app_data}/QQ/Partitions"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Tencent-signed QQ 9.9.33.51802 reproduced fixed Chromium response, code, Shared Dictionary, log, and crash-report leaves. Local Storage, Network state, dictionaries, account data, messages, files, settings, and updater support are excluded"
+verified_at = "2026-08-11"
+verified_platform = "windows"
+references = [
+  "https://im.qq.com/index/",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

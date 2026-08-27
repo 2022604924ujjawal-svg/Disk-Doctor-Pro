@@ -1,0 +1,58 @@
+# Browser automation runtimes are downloaded artifacts rather than project
+# data. Removing them forces the corresponding tool to download a compatible
+# browser again, so the rule is recoverable and opt-in.
+id = "dev.browser-automation-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = [
+  "node",
+  "playwright",
+  "Cypress",
+  "selenium-manager",
+  "Google Chrome for Testing",
+]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["playwright", "npx", "cypress", "selenium-manager"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/ms-playwright"
+
+[[roots]]
+template = "${user_library}/Caches/ms-playwright-go"
+
+[[roots]]
+template = "${user_library}/Caches/ms-playwright-mcp"
+
+[[roots]]
+template = "${user_library}/Caches/Cypress"
+
+[[roots]]
+template = "${home}/.cache/selenium"
+
+[matcher]
+kind = "not"
+item = { kind = "nameEquals", values = ["se-config.toml"] }
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Downloaded Playwright, Cypress, and Selenium browser runtimes are rebuildable; Selenium user configuration is explicitly excluded"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = [
+  "https://playwright.dev/docs/browsers#managing-browser-binaries",
+  "https://docs.cypress.io/app/references/advanced-installation#Binary-cache",
+  "https://www.selenium.dev/documentation/selenium_manager/#caching",
+]

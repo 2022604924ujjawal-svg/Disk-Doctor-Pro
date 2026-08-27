@@ -1,0 +1,41 @@
+# Ollama stages the macOS updater ZIP below a hash-named child. A seven-day age
+# gate prevents cleanup from removing a newly downloaded pending update, while
+# the filename and depth gates exclude backup applications and unrelated data.
+id = "app.ollama-update-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.electron.ollama", "Ollama"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/ollama/updates"
+
+[matcher]
+kind = "allOf"
+items = [
+  { kind = "nameEquals", values = ["Ollama-darwin.zip"] },
+  { kind = "olderThan", days = 7 },
+  { kind = "maxDepth", depth = 2 },
+]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Ollama updater diagnostics identify hash-scoped Ollama-darwin.zip files as staged updates. Only archives older than seven days are selected; the app, models, manifests, account state, logs, and updater backups remain outside the boundary"
+verified_at = "2026-08-21"
+verified_platform = "macos"
+references = ["https://github.com/ollama/ollama/issues/11972"]

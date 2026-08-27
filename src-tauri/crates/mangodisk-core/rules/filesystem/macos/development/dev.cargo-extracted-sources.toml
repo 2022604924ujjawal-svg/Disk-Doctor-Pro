@@ -1,0 +1,37 @@
+# Cargo keeps downloaded crate archives and their extracted source trees in
+# separate roots. This opt-in rule removes only the extracted copies, allowing
+# Cargo to restore them from a retained archive or download them again.
+id = "dev.cargo-extracted-sources"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+recommended_selected = false
+required_stopped_processes = ["cargo", "rustc", "rust-analyzer"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["cargo"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${home}/.cargo/registry/src"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Cargo documents registry/src as source extracted from downloaded crate archives; projects, registry indexes, compressed archives, credentials, and installed binaries remain outside the exact root"
+verified_at = "2026-08-04"
+verified_platform = "macos"
+references = ["https://doc.rust-lang.org/cargo/guide/cargo-home.html"]

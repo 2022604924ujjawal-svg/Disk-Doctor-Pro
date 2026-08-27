@@ -1,0 +1,44 @@
+id = "dev.nuget-cache"
+schema_version = 3
+rule_version = 3
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["dotnet", "nuget", "msbuild"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${home}/.nuget/packages"
+verified_rebuildable = true
+
+[[roots]]
+template = "${local_app_data}/NuGet/v3-cache"
+verified_rebuildable = true
+
+[[roots]]
+template = "${local_app_data}/NuGet/plugins-cache"
+verified_rebuildable = true
+
+[[roots]]
+template = "${local_app_data}/NuGet/Scratch"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "NuGet documents the Windows global packages, HTTP cache, plugins cache, and scratch locations selected by this rule and provides nuget locals commands to list or clear them; NuGet.Config remains excluded"
+verified_at = "2026-08-03"
+verified_platform = "windows"
+references = [
+  "https://learn.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders",
+  "https://learn.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-locals",
+]

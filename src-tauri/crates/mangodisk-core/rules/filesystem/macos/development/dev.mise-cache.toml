@@ -1,0 +1,40 @@
+# mise configuration, trust state, plugins, shims, and most installed tool
+# versions live outside this cache directory. HTTP backend installations may
+# link to extracted artifacts under http-tarballs, so that subtree is excluded.
+id = "dev.mise-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["mise"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["mise"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/mise"
+
+[matcher]
+kind = "not"
+item = { kind = "pathSegmentIn", values = ["http-tarballs"] }
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "mise documents its macOS cache as disposable internal metadata, but HTTP backend installations can link to extracted cache artifacts, so http-tarballs is excluded"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = [
+  "https://mise.jdx.dev/directories.html",
+  "https://mise.jdx.dev/cache-behavior.html",
+  "https://mise.jdx.dev/dev-tools/backends/http.html",
+]

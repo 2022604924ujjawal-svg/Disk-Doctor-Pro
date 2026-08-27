@@ -1,0 +1,34 @@
+# Apple Mail message stores, downloaded attachments, account configuration,
+# and indexes are protected content. Only its standard bundle cache is used.
+id = "app.apple-mail-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Mail"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.apple.mail", "Mail"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.apple.mail"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only Apple Mail's bundle directory under Library/Caches, which Apple designates for discardable files; Mail data, attachments, accounts, and indexes remain outside the root"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/url/cachesdirectory"]

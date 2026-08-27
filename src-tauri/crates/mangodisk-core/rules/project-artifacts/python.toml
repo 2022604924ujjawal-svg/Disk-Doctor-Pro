@@ -1,0 +1,58 @@
+id = "project.python-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "poetry.lock"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".pytest_cache"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".mypy_cache"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".ruff_cache"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".tox"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".nox"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "__pypackages__"
+
+[[artifacts]]
+kind = "descendantDirectory"
+name = "__pycache__"
+max_depth = 32
+
+[[artifacts]]
+kind = "descendantDirectory"
+name = ".ipynb_checkpoints"
+max_depth = 32
+
+[verification]
+lifecycle = "verified"
+evidence = [
+  "https://docs.pytest.org/en/stable/how-to/cache.html",
+  "https://mypy.readthedocs.io/en/stable/command_line.html#cmdoption-mypy-cache-dir",
+  "https://docs.astral.sh/ruff/settings/#cache-dir",
+  "https://tox.wiki/en/stable/config.html#tox-root",
+  "https://nox.thea.codes/en/stable/config.html#nox.options.envdir",
+  "https://peps.python.org/pep-0582/",
+  "https://peps.python.org/pep-3147/",
+  "https://github.com/jupyter-server/jupyter_server/blob/main/jupyter_server/services/contents/filecheckpoints.py",
+]
+verified_at = "2026-07-31"

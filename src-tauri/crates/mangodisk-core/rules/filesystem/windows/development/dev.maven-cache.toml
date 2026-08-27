@@ -1,0 +1,29 @@
+id = "dev.maven-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${home}/.m2/repository"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Maven documents .m2/repository as the local repository for downloaded and locally installed artifacts; settings.xml and project sources remain outside the root, and the rule stays opt-in because locally installed artifacts may require rebuilding"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://maven.apache.org/guides/mini/guide-configuring-maven.html"]

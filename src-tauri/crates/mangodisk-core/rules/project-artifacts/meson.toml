@@ -1,0 +1,19 @@
+id = "project.meson-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["meson.build"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "builddir"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://mesonbuild.com/Using-multiple-build-directories.html"]
+verified_at = "2026-07-18"

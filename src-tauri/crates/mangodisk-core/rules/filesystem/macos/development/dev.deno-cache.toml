@@ -1,0 +1,37 @@
+# Deno installations, configuration, project vendor directories, and local
+# node_modules remain outside this platform cache directory.
+id = "dev.deno-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["deno"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/deno"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Deno documents this macOS DENO_DIR default as the shared cache for downloaded dependencies and compiled artifacts"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = [
+  "https://docs.deno.com/runtime/getting_started/installation/#cache-location",
+  "https://docs.deno.com/runtime/reference/cli/clean/",
+]

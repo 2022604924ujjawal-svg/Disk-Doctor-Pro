@@ -1,0 +1,35 @@
+id = "dev.visual-studio-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["devenv.exe"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${local_app_data}/Microsoft/VisualStudio/VSCommon/MEFCache"
+
+[[roots]]
+template = "${local_app_data}/Microsoft/VisualStudio"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["ComponentModelCache", "Cache", "ImageLibrary", "MEFCacheBackup"]
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Microsoft documents ComponentModelCache under each Visual Studio instance as generated MEF data; the rule selects only named cache directories while projects, extensions, settings, and templates remain excluded"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://learn.microsoft.com/en-us/visualstudio/extensibility/managed-extensibility-framework-in-the-editor"]

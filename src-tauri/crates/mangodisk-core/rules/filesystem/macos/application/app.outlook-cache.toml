@@ -1,0 +1,34 @@
+# Outlook mail stores, account configuration, attachments, and recovery data
+# are outside this bundle cache rule.
+id = "app.outlook-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Microsoft Outlook"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.microsoft.Outlook", "Microsoft Outlook"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.microsoft.Outlook"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only Outlook's bundle directory under Library/Caches, which Apple designates for discardable files; mail databases, attachments, account data, and preferences remain outside the root"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/url/cachesdirectory"]

@@ -1,0 +1,39 @@
+id = "dev.jvm-tooling-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["java"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${home}/.sbt/boot"
+verified_rebuildable = true
+
+[[roots]]
+template = "${home}/.sbt/preloaded"
+verified_rebuildable = true
+
+[[roots]]
+template = "${home}/.ivy2/cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "SBT bootstrap components and Ivy dependency caches can be restored by the JVM build tools"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = [
+  "https://www.scala-sbt.org/1.x/docs/Launcher-Getting-Started.html",
+  "https://ant.apache.org/ivy/history/latest-milestone/settings/caches.html",
+]

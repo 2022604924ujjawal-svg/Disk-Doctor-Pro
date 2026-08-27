@@ -1,0 +1,31 @@
+id = "dev.swiftpm-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${user_library}/Caches/org.swift.swiftpm"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The selected org.swift.swiftpm directory is confined to Library/Caches, which Apple designates for discardable data; package manifests, source workspaces, and credentials remain outside the root"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = [
+  "https://developer.apple.com/documentation/foundation/url/cachesdirectory",
+  "https://github.com/swiftlang/swift-package-manager",
+]

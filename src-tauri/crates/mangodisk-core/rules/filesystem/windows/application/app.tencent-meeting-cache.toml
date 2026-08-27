@@ -1,0 +1,49 @@
+# Tencent Meeting stores downloaded audio models, dynamic resources, account
+# databases, preferences, and browser persistence beside a timestamped WebView
+# profile. Direct-child expansion appends only fixed cache suffixes.
+id = "app.tencent-meeting-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["WeMeetApp.exe", "WeMeetCrashHandler.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Tencent Meeting", "TencentMeeting", "WeMeet", "腾讯会议"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/Tencent/WeMeet/Global/Data/WebkitCacheData"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["BrowserMetrics", "Default/Cache", "Default/Code Cache", "Default/GPUCache", "Default/DawnCache", "Default/DawnGraphiteCache", "Default/DawnWebGPUCache", "Default/GrShaderCache", "Default/GraphiteDawnCache", "Default/Shared Dictionary/cache", "GraphiteDawnCache", "GrShaderCache", "ShaderCache"]
+
+[[roots]]
+template = "${roaming_app_data}/Tencent/WeMeet/Global/Logs"
+
+[[roots]]
+template = "${local_app_data}/Tencent/WeMeet/Logs"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Hash-matched Tencent Meeting 3.44.10.457 installer passed Authenticode verification. Fixed WebView caches and logs were reproduced; accounts, meetings, downloads, models, resources, databases, preferences, browser state, and binaries remain excluded"
+verified_at = "2026-08-11"
+verified_platform = "windows"
+references = [
+  "https://meeting.tencent.com/download/",
+  "https://github.com/microsoft/winget-pkgs/tree/master/manifests/t/Tencent/TencentMeeting/3.44.10.457",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

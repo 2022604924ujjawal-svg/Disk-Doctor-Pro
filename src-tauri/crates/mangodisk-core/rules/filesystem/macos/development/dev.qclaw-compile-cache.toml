@@ -1,0 +1,37 @@
+# QClaw stores Node.js module compile cache in a dedicated directory alongside
+# unrelated persistent data. The exact root and stopped-process requirement
+# prevent the rule from touching workspaces, memory, plugins, or live writes.
+id = "dev.qclaw-compile-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+recommended_selected = false
+required_stopped_processes = ["qclaw"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["qclaw"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${home}/.qclaw/compile-cache"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The exact QClaw compile-cache root contains versioned Node.js module compile cache; Node.js documents that module compile cache can be removed and is recreated automatically, while all other QClaw state remains outside the root"
+verified_at = "2026-08-04"
+verified_platform = "macos"
+references = ["https://nodejs.org/api/module.html#module-compile-cache"]

@@ -1,0 +1,76 @@
+# Postman stores durable workspace and session state beside top-level Electron
+# caches and installation-specific renderer partitions. Dynamic discovery is
+# limited to direct partition children followed by fixed cache suffixes.
+id = "app.postman-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Postman.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Postman", "Postman, Inc."] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/Postman/Cache"
+
+[[roots]]
+template = "${roaming_app_data}/Postman/Code Cache"
+
+[[roots]]
+template = "${roaming_app_data}/Postman/GPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/Postman/DawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/Postman/DawnGraphiteCache"
+
+[[roots]]
+template = "${roaming_app_data}/Postman/DawnWebGPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/Postman/GrShaderCache"
+
+[[roots]]
+template = "${roaming_app_data}/Postman/GraphiteDawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/Postman/logs"
+
+[[roots]]
+template = "${roaming_app_data}/Postman/Shared Dictionary/cache"
+
+# Every direct child is one renderer partition. IndexedDB, Local Storage,
+# Network, Preferences, Session Storage, WebStorage, and all other state remain
+# outside the fixed suffix list.
+[[roots]]
+template = "${roaming_app_data}/Postman/Partitions"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed Postman 11.55.5 reproduced three renderer partitions and fixed Electron caches. Workspaces, requests, environments, cookies, storage, preferences, network state, installation binaries, and updater packages remain excluded"
+verified_at = "2026-08-11"
+verified_platform = "windows"
+references = [
+  "https://learning.postman.com/latest-v-12/docs/getting-started/troubleshooting-inapp",
+  "https://www.electronjs.org/docs/latest/api/app#appgetpathname",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

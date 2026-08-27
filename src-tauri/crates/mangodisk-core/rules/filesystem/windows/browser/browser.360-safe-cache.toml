@@ -1,0 +1,45 @@
+# 360 Safe Browser stores durable Chromium profile state beside renderer
+# caches. Whole-profile roots stay excluded from this safe cleanup rule.
+id = "browser.360-safe-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["360se.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["360安全浏览器", "360 Safe Browser", "360se"] },
+  { kind = "executableAvailable", names = ["360se.exe"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/360se6/User Data/GraphiteDawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/360se6/User Data"
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "Shared Dictionary/cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed 360 Safe Browser 15.3.6440.64 on Windows 11 reproduced fixed web, code, Dawn, and shader caches; real cleanup preserved credentials, history, extensions, sessions, local storage, and settings"
+verified_at = "2026-08-21"
+verified_platform = "windows"
+references = [
+  "https://browser.360.cn/",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

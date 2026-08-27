@@ -1,0 +1,31 @@
+id = "system.quicklook-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "system"
+risk = "safe"
+default_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${user_library}/Caches/com.apple.QuickLook.thumbnailcache"
+
+[[roots]]
+template = "${user_library}/Caches/Quick Look"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule is confined to the two Quick Look directories under Library/Caches; Apple defines this location for discardable files that can be regenerated as needed"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/url/cachesdirectory"]

@@ -1,0 +1,31 @@
+# Windows Error Reporting stores application crash dumps in
+# LOCALAPPDATA\CrashDumps. This directory does not contain application binaries
+# or user documents; cleaning it only removes diagnostics for earlier crashes.
+id = "system.crash-dumps"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "system"
+risk = "safe"
+default_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${local_app_data}/CrashDumps"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Windows Error Reporting documents Local AppData/CrashDumps as the default local user-mode dump folder; the matcher is limited to dump files older than seven days"
+verified_at = "2026-07-17"
+verified_platform = "windows"
+references = ["https://learn.microsoft.com/en-us/windows/win32/wer/collecting-user-mode-dumps"]

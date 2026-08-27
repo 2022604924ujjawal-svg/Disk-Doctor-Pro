@@ -1,0 +1,284 @@
+@reference "@assets/main.css";
+
+.uninstall-force-close-warning {
+  margin: 0 0 8px;
+  border-radius: 8px;
+  padding: 8px 10px;
+  @apply text-destructive;
+  background: var(--surface-destructive-subtle);
+  font-size: var(--font-content-secondary);
+  line-height: 1.55;
+}
+.capability-notice p {
+  margin: 5px 0 0;
+  @apply text-muted-foreground;
+  font-size: 13px;
+}
+.capability-notice {
+  display: flex;
+  flex: none;
+  align-items: flex-start;
+  gap: 12px;
+  border-width: 1px;
+  border-radius: 12px;
+  margin: 12px 16px 0;
+  padding: 14px 16px;
+  @apply border-border bg-muted/45;
+}
+.preflight-notice {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  margin: 12px 16px 0;
+  padding: 10px 14px;
+  border: 1px solid var(--border-subtle);
+  @apply text-foreground;
+  background: var(--surface-warning-subtle);
+}
+.preflight-notice > span {
+  display: grid;
+  flex: none;
+  place-items: center;
+  @apply text-warning;
+}
+.preflight-notice p {
+  margin: 0;
+  @apply text-sm text-muted-foreground;
+}
+.preflight-notice strong {
+  margin-right: 6px;
+  @apply text-foreground;
+}
+.catalog {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+.catalog-filters {
+  display: flex;
+  min-width: 0;
+  gap: 4px;
+  overflow-x: auto;
+}
+.catalog-filters button {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  border-radius: 9px;
+  min-height: 32px;
+  padding: 5px 9px;
+  background: transparent;
+  color: var(--muted-foreground);
+  font: inherit;
+  font-size: 13px;
+}
+.catalog-filters button:hover,
+.catalog-filters button.active {
+  @apply text-primary;
+  background: var(--surface-primary-subtle);
+}
+.catalog-filters button:focus-visible {
+  outline: 2px solid var(--focus-ring-subtle);
+  outline-offset: -2px;
+}
+.catalog-filters span {
+  min-width: 16px;
+  padding: 2px;
+  @apply text-muted-foreground;
+  font-size: 11px;
+  text-align: center;
+}
+.application-list {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+.application-list-header {
+  display: grid;
+  min-height: var(--layout-result-header-height);
+  flex: none;
+  grid-template-columns: 20px minmax(0, 1fr) auto minmax(72px, auto) minmax(128px, auto) 30px;
+  align-items: center;
+  gap: 14px;
+  padding-block: 0;
+  font-size: 11px;
+}
+.application-list-header label {
+  display: flex;
+  align-items: center;
+}
+.application-list-header button {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+/* Match the name column to the 40px app icon plus the 14px row gap. */
+.application-list-header .name-header {
+  grid-column: 2;
+  justify-self: stretch;
+  justify-content: flex-start;
+  padding-left: 54px;
+  text-align: left;
+}
+.size-header,
+.application-date-header {
+  justify-content: flex-end;
+  text-align: right;
+}
+.button-spinner {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 999px;
+  animation: spin 0.8s linear infinite;
+}
+.uninstall-execution-list {
+  max-height: 230px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-width: 1px;
+  border-radius: 11px;
+  @apply border-border/80 bg-muted/20;
+}
+.uninstall-execution-item {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  border-top-width: 1px;
+  padding: 9px 11px;
+  @apply border-border/60;
+}
+.uninstall-execution-item:first-child {
+  border-top: 0;
+}
+.uninstall-execution-item.is-active {
+  background: var(--surface-primary-subtle);
+}
+.uninstall-execution-status {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border-radius: 50%;
+  @apply bg-muted text-muted-foreground;
+}
+.uninstall-execution-item.is-completed .uninstall-execution-status {
+  @apply text-success;
+  background: var(--surface-success-subtle);
+}
+.uninstall-execution-item.is-cancelled .uninstall-execution-status {
+  @apply bg-muted text-muted-foreground;
+}
+.uninstall-execution-item.is-failed .uninstall-execution-status {
+  @apply text-warning-foreground;
+  background: var(--surface-warning-subtle);
+}
+.uninstall-execution-item.is-active .uninstall-execution-status {
+  @apply text-primary;
+  background: var(--surface-primary-subtle);
+}
+.uninstall-execution-status i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  @apply bg-muted-foreground/45;
+}
+.uninstall-execution-status b {
+  font-size: 12px;
+  line-height: 1;
+}
+.uninstall-execution-item.is-active .uninstall-execution-status i {
+  width: 13px;
+  height: 13px;
+  border-width: 2px;
+  @apply border-primary/20 border-t-primary bg-transparent;
+  animation: spin 0.8s linear infinite;
+}
+.uninstall-execution-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+.uninstall-execution-copy strong,
+.uninstall-execution-copy small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.uninstall-execution-progress {
+  height: 4px;
+  margin-top: 14px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--surface-primary-subtle);
+}
+.uninstall-execution-progress > span {
+  display: block;
+  min-width: 2%;
+  height: 100%;
+  border-radius: inherit;
+  @apply bg-primary transition-[width] duration-300 ease-out;
+}
+.uninstall-execution-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.uninstall-execution-cancel {
+  @apply text-muted-foreground hover:text-foreground;
+}
+.uninstall-execution-copy strong {
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+.uninstall-execution-item-label {
+  @apply text-muted-foreground;
+  font-size: 10.5px;
+  white-space: nowrap;
+}
+.uninstall-execution-copy small {
+  margin-top: 1px;
+  @apply text-muted-foreground;
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+.catalog-empty {
+  min-height: 260px;
+  border: 0;
+  box-shadow: none;
+}
+@container application-uninstall (max-width: 760px) {
+  /* Keep the compact header aligned with the four columns rendered by rows. */
+  .application-list-header .status-header,
+  .application-list-header .application-date-header {
+    display: none;
+  }
+  .application-list-header {
+    grid-template-columns: 20px minmax(0, 1fr) minmax(72px, auto) 30px;
+  }
+  .application-list-header .size-header {
+    grid-column: 3;
+  }
+  .application-list-header > :last-child {
+    grid-column: 4;
+  }
+}

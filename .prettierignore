@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build, generated, and test output
+dist/
+coverage/
+test-results/
+target/
+src-tauri/gen/
+output/
+
+# Rust source and generated or third-party UI
+src-tauri/*
+!src-tauri/AGENTS.md
+src/components/ui/
+*.generated.*
+bindings/
+components.d.ts
+auto-imports.d.ts
+
+# Local-only workspaces and tool state
+.local/
+.playwright-cli/
+.playwright-mcp/
+.temp/
+.cache/
+
+# Lock files and logs
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+*.log

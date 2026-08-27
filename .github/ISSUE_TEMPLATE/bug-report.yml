@@ -1,0 +1,28 @@
+name: Bug report
+description: Report a problem you encountered while using MangoDisk
+title: '[Bug]: '
+labels:
+  - bug
+body:
+  - type: input
+    id: version
+    attributes:
+      label: MangoDisk version
+      placeholder: e.g. 1.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: operating_system
+    attributes:
+      label: Operating system and version
+      placeholder: e.g. macOS 15.7 or Windows 11
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem description
+    validations:
+      required: true

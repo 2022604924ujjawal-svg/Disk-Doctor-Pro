@@ -1,0 +1,21 @@
+id = "project.rails-cache"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["Gemfile"]
+relative_paths_all = ["config/application.rb"]
+relative_paths_any = ["bin/rails", "config/environment.rb"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "tmp/cache"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://guides.rubyonrails.org/v6.0/command_line.html"]
+verified_at = "2026-07-18"

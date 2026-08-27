@@ -1,0 +1,70 @@
+# Signal keeps encrypted message data, account configuration, optional media
+# resources, and browser persistence beside standard Electron cache leaves.
+# Only fixed rendering and diagnostic boundaries are selected.
+id = "app.signal-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Signal.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Signal", "Signal Messenger, LLC"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/Signal/Cache"
+
+[[roots]]
+template = "${roaming_app_data}/Signal/Code Cache"
+
+[[roots]]
+template = "${roaming_app_data}/Signal/GPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/Signal/DawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/Signal/DawnGraphiteCache"
+
+[[roots]]
+template = "${roaming_app_data}/Signal/DawnWebGPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/Signal/GrShaderCache"
+
+[[roots]]
+template = "${roaming_app_data}/Signal/GraphiteDawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/Signal/Shared Dictionary/cache"
+
+[[roots]]
+template = "${roaming_app_data}/Signal/logs"
+
+[[roots]]
+template = "${roaming_app_data}/Signal/Crashpad/reports"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed Signal 8.22.0 reproduced fixed Electron cache leaves. Account config, encrypted message databases, optional resources, browser storage, network state, attachments, and application binaries remain excluded"
+verified_at = "2026-08-11"
+verified_platform = "windows"
+references = [
+  "https://github.com/signalapp/Signal-Desktop/tree/v8.22.0",
+  "https://www.electronjs.org/docs/latest/api/app#appgetpathname",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

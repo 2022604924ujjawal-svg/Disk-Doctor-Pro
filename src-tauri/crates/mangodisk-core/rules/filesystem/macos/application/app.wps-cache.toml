@@ -1,0 +1,48 @@
+# WPS document recovery, templates, cloud files, recent-file state, and user
+# documents are excluded. Only classic and sandboxed macOS cache containers
+# are removed.
+id = "app.wps-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = [
+  "wpsoffice",
+  "WPS Office",
+  "wpscloudsvr",
+  "promecefpluginhost",
+  "promecefpluginhost (GPU)",
+  "promecefpluginhost (Renderer)",
+]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.kingsoft.wpsoffice.mac", "com.kingsoft.wpsoffice.mac.global", "wpsoffice", "WPS Office"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.kingsoft.wpsoffice.mac"
+
+[[roots]]
+template = "${user_library}/Containers/com.kingsoft.wpsoffice.mac.global/Data/Library/Caches/com.kingsoft.wpsoffice.mac.global"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed WPS Office 12.1.26050 reproduced a dedicated sandbox cache container. Recovery, templates, cloud files, documents, accounts, preferences, and CEF website data remain outside both cache roots"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://www.wps.com/office/mac/",
+  "https://developer.apple.com/documentation/foundation/url/cachesdirectory",
+]

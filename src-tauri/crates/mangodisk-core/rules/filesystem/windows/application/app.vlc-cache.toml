@@ -1,0 +1,40 @@
+# VLC keeps configuration and playlist state in the parent directory. Match
+# only file types written by the artwork cache and Breakpad so a future sibling
+# cannot enter the cleanup boundary merely because it appears under vlc.
+id = "app.vlc-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["vlc.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["VLC media player", "VideoLAN.VLC"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/vlc/art"
+
+[[roots]]
+template = "${roaming_app_data}/vlc/crashdump"
+
+[matcher]
+kind = "extensionIn"
+values = ["jpg", "jpeg", "png", "webp", "bmp", "gif", "tif", "tiff", "dmp"]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "VLC 3.0.23 source maps desktop cache storage to Roaming/vlc, writes artwork under art, and Breakpad dumps under crashdump. Windows ARM64 playback of a generated embedded cover reproduced art/arturl/.../art.png; configuration and playlists are excluded"
+verified_at = "2026-08-10"
+verified_platform = "windows"
+references = ["https://github.com/videolan/vlc/tree/3.0.23"]

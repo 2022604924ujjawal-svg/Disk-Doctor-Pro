@@ -1,0 +1,55 @@
+name: Cross-platform Check
+
+on:
+  # Pull requests must prove both platform adapters before review can merge a
+  # filesystem or protocol change. Manual runs remain available for release
+  # diagnostics and infrastructure verification.
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Install pnpm
+        # pnpm/action-setup reads the packageManager field from package.json.
+        # Keeping one version source prevents configuration drift.
+        uses: pnpm/action-setup@v6
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          # Use the current LTS release so local and CI builds share a stable
+          # runtime rather than adopting a Current release early.
+          node-version: 24
+          cache: pnpm
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run static checks
+        run: pnpm check
+
+      - name: Run Rust tests
+        run: cargo test --manifest-path src-tauri/Cargo.toml --workspace
+
+      # A no-bundle build covers Vite, Tauri configuration, Rust linking, and
+      # the Windows WebView2 or macOS WebKit host without producing installers.
+      - name: Verify native Tauri build
+        run: pnpm tauri:build:check

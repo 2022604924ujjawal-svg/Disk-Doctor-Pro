@@ -1,0 +1,46 @@
+# Xcode documentation indexes and device logs live under Library/Developer
+# rather than the standard Caches directory. Only content older than fourteen
+# days is eligible, independently from the DerivedData rule.
+id = "dev.xcode-auxiliary-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["Xcode"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.apple.dt.Xcode", "Xcode"] },
+  { kind = "executableAvailable", names = ["xcodebuild"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Developer/Xcode/DocumentationCache"
+
+[[roots]]
+template = "${user_library}/Developer/Xcode/DocumentationIndex"
+
+[[roots]]
+template = "${user_library}/Developer/Xcode/iOS Device Logs"
+
+[[roots]]
+template = "${user_library}/Developer/Xcode/watchOS Device Logs"
+
+[matcher]
+kind = "olderThan"
+days = 14
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule is limited to Xcode DocumentationCache, DocumentationIndex, and device diagnostic-log roots and applies MangoDisk's fourteen-day retention boundary; project sources, archives, signing material, and simulator devices are excluded"
+verified_at = "2026-07-17"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/xcode/acquiring-crash-reports-and-diagnostic-logs"]

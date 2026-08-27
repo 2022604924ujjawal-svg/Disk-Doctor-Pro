@@ -1,0 +1,23 @@
+id = "project.dotnet-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_suffixes_any = [".csproj", ".fsproj"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "bin"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "obj"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://learn.microsoft.com/en-us/dotnet/core/project-sdk/overview#default-includes-and-excludes"]
+verified_at = "2026-07-31"

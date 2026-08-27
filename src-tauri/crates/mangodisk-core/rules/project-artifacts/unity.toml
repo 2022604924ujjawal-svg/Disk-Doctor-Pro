@@ -1,0 +1,36 @@
+id = "project.unity-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["Assembly-CSharp.csproj"]
+relative_paths_all = ["Assets", "ProjectSettings"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "Library"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "Temp"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "Obj"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "Logs"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "MemoryCaptures"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://docs.unity3d.com/Manual/AssetWorkflow.html"]
+verified_at = "2026-07-31"

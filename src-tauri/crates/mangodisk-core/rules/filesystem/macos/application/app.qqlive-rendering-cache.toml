@@ -1,0 +1,84 @@
+# QQLive stores runtime components, offline packages, knowledge data, and
+# browser state beside renderer caches. The rule owns only fixed disposable
+# leaves and requires the signed client to be closed before traversal.
+id = "app.qqlive-rendering-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["QQLive"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.tencent.tenvideo", "QQLive", "腾讯视频"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.tencent.tenvideo"
+
+# QQLive stores downloaded interface images in this dedicated cache root.
+[[roots]]
+template = "${application_support}/Caches/com.tencent.tenvideo"
+
+[[roots]]
+template = "${application_support}/com.tencent.mac.marvis/icon_cache"
+
+[[roots]]
+template = "${application_support}/com.tencent.mac.marvis/Cache"
+
+[[roots]]
+template = "${application_support}/com.tencent.mac.marvis/Code Cache"
+
+[[roots]]
+template = "${application_support}/com.tencent.mac.marvis/GPUCache"
+
+[[roots]]
+template = "${application_support}/com.tencent.mac.marvis/DawnCache"
+
+[[roots]]
+template = "${application_support}/com.tencent.mac.marvis/DawnGraphiteCache"
+
+[[roots]]
+template = "${application_support}/com.tencent.mac.marvis/DawnWebGPUCache"
+
+[[roots]]
+template = "${application_support}/com.tencent.mac.marvis/GrShaderCache"
+
+[[roots]]
+template = "${application_support}/com.tencent.mac.marvis/GraphiteDawnCache"
+
+[[roots]]
+template = "${application_support}/com.tencent.mac.marvis/Shared Dictionary/cache"
+
+[[roots]]
+template = "${application_support}/com.tencent.mac.marvis/Crashpad/reports"
+
+# Each direct partition mixes persistent browser state with renderer caches.
+# Only fixed cache suffixes are selected; partition roots are never cleared.
+[[roots]]
+template = "${application_support}/com.tencent.mac.marvis/Partitions"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed QQLive 2.165.0 reproduced two renderer partitions, image and icon caches, and fixed Chromium cache leaves. Components, offline packages, knowledge data, settings, cookies, IndexedDB, Local Storage, sessions, and login state are excluded"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://v.qq.com/download.html",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

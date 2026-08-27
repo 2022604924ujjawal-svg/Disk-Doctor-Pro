@@ -1,0 +1,19 @@
+id = "project.maven-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["pom.xml"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "target"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://maven.apache.org/plugins/maven-clean-plugin/usage.html"]
+verified_at = "2026-07-31"

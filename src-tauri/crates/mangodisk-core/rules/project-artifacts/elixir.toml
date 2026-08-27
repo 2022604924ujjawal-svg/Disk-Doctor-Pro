@@ -1,0 +1,36 @@
+id = "project.elixir-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["mix.exs"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "_build"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".elixir_ls"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".elixir-tools"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".lexical"
+
+[verification]
+lifecycle = "verified"
+evidence = [
+  "https://hexdocs.pm/mix/Mix.Tasks.Clean.html",
+  "https://github.com/elixir-lsp/elixir-ls",
+  "https://github.com/elixir-tools/next-ls",
+  "https://github.com/lexical-lsp/lexical",
+]
+verified_at = "2026-07-31"

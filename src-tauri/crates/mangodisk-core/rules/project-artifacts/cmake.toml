@@ -1,0 +1,27 @@
+id = "project.cmake-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["CMakeLists.txt"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "build"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "cmake-build-debug"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "cmake-build-release"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://cmake.org/cmake/help/latest/guide/tutorial/Before%20You%20Begin.html"]
+verified_at = "2026-07-31"

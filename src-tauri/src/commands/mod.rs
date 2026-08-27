@@ -1,0 +1,15 @@
+pub(crate) mod analysis;
+pub(crate) mod app_distribution;
+pub(crate) mod applications;
+pub(crate) mod cleanup;
+pub(crate) mod disk;
+pub(crate) mod duplicate_files;
+pub(crate) mod error;
+pub(crate) mod file_icons;
+pub(crate) mod file_manager;
+pub(crate) mod folder_selection;
+pub(crate) mod history;
+pub(crate) mod large_files;
+pub(crate) mod permanent_delete;
+pub(crate) mod startup;
+pub(crate) mod system_settings;

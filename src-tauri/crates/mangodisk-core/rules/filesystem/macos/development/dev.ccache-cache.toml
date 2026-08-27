@@ -1,0 +1,32 @@
+id = "dev.ccache-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["ccache"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["ccache"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/ccache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "ccache documents its macOS cache fallback separately from the Preferences configuration file"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://ccache.dev/manual/latest.html#_location_of_the_configuration_file"]

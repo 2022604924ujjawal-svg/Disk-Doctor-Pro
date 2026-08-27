@@ -1,0 +1,48 @@
+id = "dev.browser-automation-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["cypress.exe", "playwright.exe"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${local_app_data}/ms-playwright"
+verified_rebuildable = true
+
+[[roots]]
+template = "${local_app_data}/ms-playwright-go"
+verified_rebuildable = true
+
+[[roots]]
+template = "${local_app_data}/ms-playwright-mcp"
+verified_rebuildable = true
+
+[[roots]]
+template = "${local_app_data}/Cypress/Cache"
+
+[[roots]]
+template = "${local_app_data}/selenium"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Playwright, Cypress, and Selenium document the selected roots as downloaded browser runtime or driver caches that their managers can repopulate; test projects and tool configuration remain outside the roots"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = [
+  "https://playwright.dev/docs/browsers#managing-browser-binaries",
+  "https://docs.cypress.io/app/references/advanced-installation#Binary-cache",
+  "https://www.selenium.dev/documentation/selenium_manager/#caching",
+]

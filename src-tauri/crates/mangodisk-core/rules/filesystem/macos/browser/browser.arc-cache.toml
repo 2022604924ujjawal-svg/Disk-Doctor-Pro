@@ -1,0 +1,55 @@
+# Arc stores account, spaces, sessions, and profile state beside Chromium
+# caches. Only dedicated rendering and download caches are selected.
+id = "browser.arc-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Arc"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["company.thebrowser.Browser", "Arc"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/company.thebrowser.Browser"
+
+[[roots]]
+template = "${application_support}/Arc/User Data/ShaderCache"
+
+[[roots]]
+template = "${application_support}/Arc/User Data/GrShaderCache"
+
+[[roots]]
+template = "${application_support}/Arc/User Data/GraphiteDawnCache"
+
+[[roots]]
+template = "${application_support}/Arc/User Data/component_crx_cache"
+
+[[roots]]
+template = "${application_support}/Arc/User Data/extensions_crx_cache"
+
+[[roots]]
+template = "${application_support}/Arc/User Data"
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "GrShaderCache", "GraphiteDawnCache", "Media Cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Arc uses Chromium profile cache boundaries while keeping spaces, sessions, cookies, and account state outside the selected directories"
+verified_at = "2026-07-30"
+verified_platform = "macos"

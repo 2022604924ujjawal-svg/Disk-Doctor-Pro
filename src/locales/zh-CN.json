@@ -1,0 +1,2723 @@
+{
+  "navigation": {
+    "system-optimization": "系统优化",
+    "cleanup": "深度清理",
+    "analysis": "磁盘空间分析",
+    "large-files": "大文件清理",
+    "duplicate-files": "重复文件清理",
+    "application-uninstall": "应用卸载",
+    "startup": "启动项管理",
+    "history": "操作历史",
+    "settings": "设置"
+  },
+  "navigationGroups": {
+    "storage": "存储空间",
+    "system": "系统工具"
+  },
+  "systemOptimization": {
+    "title": "系统优化",
+    "scanning": "正在检查系统设置",
+    "scanningDescription": "只读取已支持的设置，不会在扫描时修改系统",
+    "applyChanges": "应用 {count} 项更改",
+    "pendingSummary": "待应用更改",
+    "noChanges": "暂无待应用更改",
+    "optimizing": "正在优化…",
+    "checking": "正在确认设置…",
+    "rescan": "重新检查",
+    "filterCategory": "筛选优化类别",
+    "pendingEmpty": {
+      "title": "没有待应用更改",
+      "description": "选择推荐方案或调整设置开关后，更改会显示在这里"
+    },
+    "categories": {
+      "pending": "待应用",
+      "all": "全部",
+      "performance": "性能响应",
+      "productivity": "效率体验",
+      "privacy": "隐私与干扰",
+      "storage": "存储维护",
+      "gaming": "游戏体验",
+      "appearance": "外观偏好"
+    },
+    "modes": {
+      "label": "推荐方案",
+      "smart": { "name": "智能推荐" },
+      "performance": { "name": "性能优先" },
+      "privacy": { "name": "隐私优先" },
+      "manual": { "name": "自定义选择" }
+    },
+    "statuses": {
+      "pendingEnable": "待启用",
+      "pendingDisable": "待停用",
+      "requiresElevation": "需管理员权限",
+      "authorizationRequired": "应用所选更改时需要管理员授权",
+      "requiresRestart": "应用后需要重新打开相关系统组件或重新登录",
+      "caution": "需谨慎",
+      "highImpact": "高影响",
+      "riskDescriptions": {
+        "caution": "这项设置存在明显使用取舍，请确认符合你的需求",
+        "high": "这项设置可能削弱安全、恢复或更新能力"
+      }
+    },
+    "riskDialog": {
+      "title": "确认高影响设置",
+      "description": "以下设置可能降低系统安全、恢复或更新能力，请确认你了解其影响",
+      "note": "智能推荐不会自动选择这些设置；仅应用你当前手动开启的项目",
+      "confirm": "仍然继续"
+    },
+    "feedback": {
+      "nothingToApply": "所选项目已经处于目标状态",
+      "alreadyOptimized": "当前没有等待应用的设置更改",
+      "draftNotice": "更改将在点击底部“应用更改”后生效",
+      "completed": "已应用 {count} 项系统设置更改",
+      "completedRestart": "已应用 {count} 项更改，部分设置需要重新打开相关系统组件或重新登录后生效",
+      "cancelled": "已取消管理员授权，此前已完成 {changed} 项更改",
+      "cancelledRestart": "已取消管理员授权，此前完成的 {changed} 项中有设置需要重新打开相关系统组件或重新登录",
+      "partial": "已完成 {changed} 项，{failed} 项未能应用",
+      "partialRestart": "已完成 {changed} 项、{failed} 项未能应用；部分更改需要重新打开相关系统组件或重新登录"
+    },
+    "items": {
+      "macos_finder_show-file-extensions": {
+        "name": "显示所有文件扩展名",
+        "description": "更容易识别文件真实类型，减少误操作"
+      },
+      "macos_finder_show-path-bar": { "name": "显示 Finder 路径栏", "description": "在窗口底部显示当前位置的完整层级" },
+      "macos_finder_show-status-bar": { "name": "显示 Finder 状态栏", "description": "显示项目数量和剩余磁盘空间" },
+      "macos_finder_show-hidden-files": { "name": "显示隐藏文件", "description": "在 Finder 中直接查看隐藏项目" },
+      "macos_finder_show-posix-path": {
+        "name": "标题栏显示完整路径",
+        "description": "在 Finder 标题中显示当前目录路径"
+      },
+      "macos_finder_disable-animations": {
+        "name": "减少 Finder 动画",
+        "description": "减少窗口动画，让文件操作反馈更直接"
+      },
+      "macos_finder_keep-folders-on-top": {
+        "name": "文件夹优先排列",
+        "description": "按名称排序时将文件夹保持在文件前面"
+      },
+      "macos_finder_search-current-folder": {
+        "name": "默认搜索当前文件夹",
+        "description": "从 Finder 发起搜索时优先限定当前目录"
+      },
+      "macos_finder_disable-extension-warning": {
+        "name": "关闭扩展名更改提醒",
+        "description": "重命名文件扩展名时不再二次询问"
+      },
+      "macos_panels_expand-save": { "name": "展开文件保存面板", "description": "保存文件时直接显示完整目录选择器" },
+      "macos_panels_expand-print": { "name": "展开打印面板", "description": "打印时直接显示完整选项" },
+      "macos_desktop_prevent-network-ds-store": {
+        "name": "不在网络磁盘写入 .DS_Store",
+        "description": "减少共享目录中的 macOS 元数据文件"
+      },
+      "macos_desktop_prevent-usb-ds-store": {
+        "name": "不在 USB 磁盘写入 .DS_Store",
+        "description": "减少移动磁盘中的 macOS 元数据文件"
+      },
+      "macos_dock_auto-hide": { "name": "自动隐藏 Dock", "description": "需要时再显示 Dock，扩大可用桌面空间" },
+      "macos_dock_minimize-to-application": {
+        "name": "窗口最小化到应用图标",
+        "description": "避免 Dock 生成额外的窗口缩略图"
+      },
+      "macos_dock_use-scale-effect": { "name": "使用快速缩放效果", "description": "用更简洁的缩放动画替代神奇效果" },
+      "macos_mission-control_keep-space-order": {
+        "name": "保持桌面空间顺序",
+        "description": "阻止系统按最近使用情况自动重排桌面"
+      },
+      "macos_dock_hide-recent-apps": {
+        "name": "隐藏 Dock 最近应用",
+        "description": "不在 Dock 末尾显示最近打开的应用"
+      },
+      "macos_screenshots_disable-shadow": {
+        "name": "截图不包含窗口阴影",
+        "description": "窗口截图边缘更紧凑，文件通常更小"
+      },
+      "macos_screenshots_use-png": { "name": "截图使用 PNG", "description": "保持无损画质和透明背景" },
+      "macos_screenshots_disable-thumbnail": {
+        "name": "关闭截图悬浮缩略图",
+        "description": "截图后立即保存，不等待右下角预览"
+      },
+      "macos_keyboard_full-navigation": {
+        "name": "启用完整键盘导航",
+        "description": "使用 Tab 键在更多界面控件之间移动"
+      },
+      "macos_keyboard_fast-key-repeat": { "name": "加快按键重复速度", "description": "长按按键时更快连续输入字符" },
+      "macos_keyboard_short-repeat-delay": { "name": "缩短按键重复等待", "description": "长按按键后更快开始连续输入" },
+      "macos_text_disable-auto-correct": { "name": "关闭自动纠正", "description": "避免系统自动改写输入内容" },
+      "macos_text_disable-smart-quotes": { "name": "关闭智能引号", "description": "输入时保留普通直引号" },
+      "macos_text_disable-smart-dashes": { "name": "关闭智能破折号", "description": "输入时不自动替换连续连字符" },
+      "macos_text_disable-auto-capitalization": {
+        "name": "关闭自动大写",
+        "description": "避免系统自动修改英文句首大小写"
+      },
+      "macos_text_disable-period-substitution": {
+        "name": "关闭双空格句号",
+        "description": "连续输入空格时不自动插入句号"
+      },
+      "windows_explorer_show-file-extensions": {
+        "name": "显示文件扩展名",
+        "description": "更容易识别文件真实类型，减少误操作"
+      },
+      "windows_explorer_show-hidden-files": { "name": "显示隐藏文件", "description": "在资源管理器中显示普通隐藏项目" },
+      "windows_explorer_launch-this-pc": {
+        "name": "资源管理器打开此电脑",
+        "description": "新窗口默认显示磁盘与常用位置"
+      },
+      "windows_explorer_compact-mode": { "name": "使用紧凑文件间距", "description": "在同一窗口中显示更多文件" },
+      "windows_explorer_show-full-path": { "name": "标题栏显示完整路径", "description": "更清楚地识别当前文件夹位置" },
+      "windows_explorer_show-item-checkboxes": { "name": "显示项目复选框", "description": "多选文件时可直接勾选项目" },
+      "windows_explorer_hide-recent-files": {
+        "name": "隐藏最近使用文件",
+        "description": "不在资源管理器主页展示最近打开的文件"
+      },
+      "windows_explorer_hide-frequent-folders": {
+        "name": "隐藏常用文件夹",
+        "description": "不在资源管理器主页展示访问频繁的目录"
+      },
+      "windows_taskbar_show-seconds": { "name": "任务栏时钟显示秒", "description": "在系统时钟中显示秒数" },
+      "windows_taskbar_hide-task-view": { "name": "隐藏任务视图按钮", "description": "减少不常用的任务栏按钮" },
+      "windows_taskbar_hide-widgets": {
+        "name": "关闭 Windows 小组件",
+        "description": "移除任务栏入口并禁止打开小组件面板"
+      },
+      "windows_taskbar_disable-widgets-board": {
+        "name": "关闭 Windows 小组件",
+        "description": "在新版本 Windows 11 中移除入口并禁止打开小组件面板"
+      },
+      "windows_taskbar_enable-end-task": {
+        "name": "启用任务栏结束任务",
+        "description": "右键应用图标即可结束无响应进程"
+      },
+      "windows_taskbar_hide-search": {
+        "name": "隐藏任务栏搜索框",
+        "description": "释放任务栏空间，仍可从开始菜单搜索"
+      },
+      "windows_taskbar_align-left": { "name": "任务栏图标左对齐", "description": "将开始菜单和应用图标移动到左侧" },
+      "windows_taskbar_disable-animations": {
+        "name": "关闭任务栏动画",
+        "description": "减少任务栏切换动画并提升响应速度"
+      },
+      "windows_desktop_prefer-performance-effects": {
+        "name": "优先系统响应速度",
+        "description": "减少非必要视觉效果以改善界面响应"
+      },
+      "windows_personalization_dark-apps": { "name": "应用使用深色模式", "description": "让支持的应用使用深色界面" },
+      "windows_personalization_dark-system": {
+        "name": "系统使用深色模式",
+        "description": "让任务栏和系统界面使用深色主题"
+      },
+      "windows_gaming_enable-game-mode": { "name": "启用游戏模式", "description": "游戏运行时优先分配系统资源" },
+      "windows_gaming_disable-capture": { "name": "关闭后台游戏录制", "description": "不需要录制时减少后台捕获开销" },
+      "windows_gaming_optimize-windowed-games": {
+        "name": "优化窗口化游戏",
+        "description": "为兼容游戏启用更低延迟的呈现模式"
+      },
+      "windows_performance_disable-background-store-apps": {
+        "name": "限制商店应用后台活动",
+        "description": "减少不使用的商店应用占用 CPU 和内存"
+      },
+      "windows_privacy_disable-advertising-id": {
+        "name": "关闭个性化广告标识",
+        "description": "阻止应用使用广告 ID 提供个性化广告"
+      },
+      "windows_privacy_disable-tailored-experiences": {
+        "name": "关闭定制体验",
+        "description": "不使用诊断数据提供个性化提示和推荐"
+      },
+      "windows_privacy_disable-activity-publishing": {
+        "name": "关闭活动记录共享",
+        "description": "不向其他设备发布当前用户的活动记录"
+      },
+      "windows_privacy_disable-activity-upload": {
+        "name": "关闭活动记录上传",
+        "description": "不将当前用户的活动历史上传到云端"
+      },
+      "windows_content_disable-silent-app-installs": {
+        "name": "阻止静默推荐应用",
+        "description": "减少系统自动添加的推荐应用"
+      },
+      "windows_content_disable-suggestions": {
+        "name": "关闭系统建议内容",
+        "description": "减少开始菜单和系统界面的推广建议"
+      },
+      "windows_content_disable-lock-screen-tips": {
+        "name": "关闭锁屏提示",
+        "description": "减少锁屏界面的技巧和推荐内容"
+      },
+      "windows_content_disable-welcome-experience": {
+        "name": "关闭更新后欢迎体验",
+        "description": "更新或登录后不再展示功能推广页面"
+      },
+      "windows_content_disable-usage-tips": {
+        "name": "关闭使用技巧建议",
+        "description": "减少使用 Windows 时出现的技巧和推荐"
+      },
+      "windows_content_disable-notification-suggestions": {
+        "name": "关闭通知中心建议",
+        "description": "不在通知中心显示系统推荐内容"
+      },
+      "windows_content_disable-device-setup-suggestions": {
+        "name": "关闭设备设置建议",
+        "description": "不再提示完成设备设置或启用附加服务"
+      },
+      "windows_search_disable-web-suggestions": {
+        "name": "关闭搜索框网络建议",
+        "description": "开始菜单搜索主要保留本机结果"
+      },
+      "windows_storage_enable-storage-sense": {
+        "name": "启用存储感知",
+        "description": "允许 Windows 自动维护临时文件空间"
+      },
+      "windows_desktop_reduce-menu-delay": { "name": "缩短菜单响应延迟", "description": "让系统菜单更快响应鼠标停留" },
+      "windows_explorer_enable-auto-suggest": {
+        "name": "启用资源管理器输入建议",
+        "description": "在地址栏和运行窗口输入时显示匹配建议"
+      },
+      "windows_explorer_disable-aero-shake": {
+        "name": "关闭摇晃窗口最小化",
+        "description": "避免拖动窗口时意外最小化其他窗口"
+      },
+      "windows_explorer_show-operation-details": {
+        "name": "默认展开文件操作详情",
+        "description": "复制和移动文件时直接显示速度与剩余时间"
+      },
+      "windows_explorer_hide-sync-notifications": {
+        "name": "关闭资源管理器同步推广",
+        "description": "不在资源管理器中显示云服务推荐通知"
+      },
+      "windows_explorer_classic-context-menu": {
+        "name": "使用经典右键菜单",
+        "description": "在 Windows 11 中直接显示完整右键菜单"
+      },
+      "windows_explorer_remove-cast-to-device": {
+        "name": "移除“投放到设备”菜单",
+        "description": "隐藏文件右键菜单中的旧式媒体投放入口"
+      },
+      "windows_taskbar_show-all-tray-icons": {
+        "name": "显示全部托盘图标",
+        "description": "不再自动隐藏通知区域中的应用图标"
+      },
+      "windows_taskbar_hide-weather": {
+        "name": "隐藏任务栏天气",
+        "description": "移除 Windows 10 任务栏中的天气和资讯入口"
+      },
+      "windows_taskbar_hide-search-policy": {
+        "name": "隐藏任务栏搜索",
+        "description": "在 Windows 11 24H2 及更高版本中隐藏任务栏搜索入口"
+      },
+      "windows_taskbar_hide-chat": {
+        "name": "隐藏任务栏聊天按钮",
+        "description": "移除不需要的聊天或会议入口"
+      },
+      "windows_taskbar_hide-copilot": {
+        "name": "隐藏任务栏 Copilot",
+        "description": "移除任务栏中的 Copilot 入口"
+      },
+      "windows_windowing_disable-snap-assist": {
+        "name": "关闭贴靠布局建议",
+        "description": "拖动或悬停窗口时不显示贴靠布局面板"
+      },
+      "windows_gaming_disable-game-dvr": {
+        "name": "关闭 Game DVR",
+        "description": "不使用游戏录制时减少后台捕获活动"
+      },
+      "windows_privacy_disable-input-personalization": {
+        "name": "关闭输入个性化收集",
+        "description": "不使用键入内容训练个性化输入模型"
+      },
+      "windows_privacy_disable-ink-personalization": {
+        "name": "关闭手写个性化收集",
+        "description": "不使用手写内容训练个性化识别模型"
+      },
+      "windows_privacy_disable-feedback-requests": {
+        "name": "关闭反馈请求",
+        "description": "减少 Windows 主动弹出的使用体验问卷"
+      },
+      "windows_privacy_disable-nearby-sharing": {
+        "name": "关闭附近共享",
+        "description": "不需要邻近设备传输时关闭发现和共享"
+      },
+      "windows_privacy_disable-cross-device-experiences": {
+        "name": "关闭跨设备体验",
+        "description": "阻止应用在其他设备上继续当前活动"
+      },
+      "windows_privacy_disable-language-list-sharing": {
+        "name": "停止共享语言列表",
+        "description": "不向网站发送用于个性化内容的语言列表"
+      },
+      "windows_clipboard_disable-history": {
+        "name": "关闭剪贴板历史",
+        "description": "不在系统中保留多个已复制项目"
+      },
+      "windows_content_disable-spotlight": {
+        "name": "关闭锁屏聚焦内容",
+        "description": "锁屏不再自动轮换推荐图片和内容"
+      },
+      "windows_content_disable-phone-link-suggestions": {
+        "name": "关闭手机连接建议",
+        "description": "减少 Windows 推荐连接手机的提示"
+      },
+      "windows_content_disable-service-suggestions": {
+        "name": "关闭微软服务推荐通知",
+        "description": "不再显示推广微软服务的系统通知"
+      },
+      "windows_content_disable-preinstalled-app-suggestions": {
+        "name": "关闭预装应用建议",
+        "description": "减少系统为当前用户准备推荐应用"
+      },
+      "windows_edge_disable-sidebar": {
+        "name": "关闭 Edge 侧边栏",
+        "description": "隐藏 Edge 中的侧边栏和发现入口"
+      },
+      "windows_edge_disable-personalization": {
+        "name": "关闭 Edge 个性化体验",
+        "description": "不使用浏览数据提供个性化微软服务"
+      },
+      "windows_edge_disable-recommendations": {
+        "name": "关闭 Edge 推荐内容",
+        "description": "减少浏览器中的功能推广和推荐体验"
+      },
+      "windows_edge_disable-web-widget": {
+        "name": "关闭 Edge Web 小组件",
+        "description": "禁止 Edge 在桌面提供资讯和搜索小组件"
+      },
+      "windows_office_disable-optional-telemetry": {
+        "name": "关闭 Office 可选诊断数据",
+        "description": "不发送 Microsoft 365 应用的可选客户端诊断数据"
+      },
+      "windows_firefox_disable-telemetry": {
+        "name": "关闭 Firefox 遥测",
+        "description": "禁止 Firefox 上传遥测并停止本地遥测归档"
+      },
+      "windows_ai_disable-recall-snapshots": {
+        "name": "关闭 Recall 快照分析",
+        "description": "阻止 Windows AI 保存和分析屏幕活动快照"
+      },
+      "windows_ai_disable-copilot": {
+        "name": "关闭 Windows Copilot",
+        "description": "不使用 Copilot 时关闭系统级入口"
+      },
+      "windows_typing_disable-autocorrect": {
+        "name": "关闭输入自动纠正",
+        "description": "避免 Windows 自动修改键入的单词"
+      },
+      "windows_typing_disable-spellcheck": {
+        "name": "关闭输入拼写检查",
+        "description": "不在系统输入界面标记拼写问题"
+      },
+      "windows_typing_disable-text-prediction": {
+        "name": "关闭文本预测",
+        "description": "键入时不显示预测文字建议"
+      },
+      "windows_typing_disable-double-space-period": {
+        "name": "关闭双空格句号",
+        "description": "连续输入空格时不自动插入句号"
+      },
+      "windows_accessibility_disable-sticky-keys-shortcut": {
+        "name": "关闭粘滞键快捷触发",
+        "description": "避免连续按 Shift 时意外弹出粘滞键"
+      },
+      "windows_accessibility_disable-filter-keys-shortcut": {
+        "name": "关闭筛选键快捷触发",
+        "description": "避免长按 Shift 时意外启用筛选键"
+      },
+      "windows_accessibility_disable-toggle-keys-shortcut": {
+        "name": "关闭切换键快捷触发",
+        "description": "避免长按 Num Lock 时意外启用切换键"
+      },
+      "windows_desktop_reduce-hover-delay": {
+        "name": "缩短鼠标悬停延迟",
+        "description": "让依赖鼠标悬停的系统控件更快响应"
+      },
+      "windows_performance_reduce-crash-dump": {
+        "name": "缩小系统崩溃转储",
+        "description": "改用小型内存转储以减少蓝屏转储占用，但诊断信息会更少"
+      },
+      "windows_privacy_disable-remote-assistance": {
+        "name": "关闭远程协助",
+        "description": "阻止他人通过 Windows 远程协助连接这台电脑"
+      },
+      "windows_performance_reduce-service-shutdown-timeout": {
+        "name": "缩短服务关机等待时间",
+        "description": "减少关机时等待后台服务退出的时间，未响应服务可能被更快终止"
+      },
+      "windows_performance_disable-network-throttling": {
+        "name": "关闭多媒体网络节流",
+        "description": "降低 Windows 对多媒体网络吞吐的限制，适合低延迟网络场景"
+      },
+      "windows_performance_remove-reserved-bandwidth": {
+        "name": "取消 QoS 带宽预留",
+        "description": "取消系统为特定网络任务预留的带宽；对普通上网速度通常影响有限"
+      },
+      "windows_performance_multimedia-responsiveness": {
+        "name": "优先处理游戏和多媒体",
+        "description": "降低系统为后台任务保留的 CPU 比例，可能影响后台工作负载"
+      },
+      "windows_performance_multimedia-no-lazy-mode": {
+        "name": "提高多媒体调度积极性",
+        "description": "让多媒体调度器更积极处理任务，可能增加耗电"
+      },
+      "windows_performance_multimedia-always-on": {
+        "name": "保持多媒体调度常驻",
+        "description": "持续启用多媒体调度优化，可能增加空闲资源消耗"
+      },
+      "windows_gaming_enable-hardware-gpu-scheduling": {
+        "name": "启用硬件加速 GPU 调度",
+        "description": "由 GPU 管理更多调度工作；效果取决于显卡和驱动，需重启"
+      },
+      "windows_compatibility_disable-camera-frame-server": {
+        "name": "使用旧版摄像头兼容模式",
+        "description": "可解决部分旧相机应用无法预览的问题，但可能影响多应用共享摄像头"
+      },
+      "windows_services_print-spooler-manual": {
+        "name": "打印服务按需启动",
+        "description": "仅在需要打印时启动服务；打印和虚拟打印功能可能受影响"
+      },
+      "windows_services_disable-sysmain": {
+        "name": "关闭应用预加载（SysMain）",
+        "description": "减少后台预加载和磁盘活动，但常用应用冷启动可能变慢"
+      },
+      "windows_services_disable-compatibility-assistant": {
+        "name": "关闭旧程序兼容性检查",
+        "description": "停止兼容性检测和提示，旧程序出现问题时需手动处理"
+      },
+      "windows_services_disable-search-indexing": {
+        "name": "关闭文件搜索索引",
+        "description": "减少后台索引活动，但文件和邮件搜索速度会明显下降"
+      },
+      "windows_services_disable-diagnostic-tracking": {
+        "name": "关闭诊断数据服务",
+        "description": "减少系统诊断数据收集，部分问题诊断能力可能受影响"
+      },
+      "windows_services_disable-error-reporting": {
+        "name": "关闭 Windows 错误报告服务",
+        "description": "停止收集和发送崩溃报告，故障诊断信息会减少"
+      },
+      "windows_services_disable-sensors": {
+        "name": "关闭传感器服务",
+        "description": "停止位置、方向和环境传感器支持，二合一设备功能可能受影响"
+      },
+      "windows_services_disable-insider": {
+        "name": "关闭预览体验支持服务",
+        "description": "不参与 Insider 预览时可关闭，预览版本设置将不可用"
+      },
+      "windows_services_disable-xbox-auth": {
+        "name": "关闭 Xbox 登录服务",
+        "description": "减少 Xbox 后台服务，可能导致 Game Pass 和 Xbox 登录失效"
+      },
+      "windows_services_disable-fax": {
+        "name": "关闭传真服务",
+        "description": "未使用 Windows 传真功能时停止其后台启动"
+      },
+      "windows_services_disable-media-player-sharing": {
+        "name": "关闭局域网媒体共享",
+        "description": "未使用局域网媒体共享时停止其后台启动"
+      },
+      "windows_security_disable-system-restore": {
+        "name": "关闭系统还原",
+        "description": "阻止创建新的系统还原点；系统故障后将无法依赖系统还原恢复"
+      },
+      "windows_security_disable-defender": {
+        "name": "关闭 Microsoft Defender 防病毒",
+        "description": "显著降低恶意软件防护，仅在已部署其他安全方案时选择"
+      },
+      "windows_security_disable-smartscreen": {
+        "name": "关闭 Windows SmartScreen",
+        "description": "不再检查未知应用和下载内容，会降低恶意文件拦截能力"
+      },
+      "windows_network_disable-smb1": {
+        "name": "关闭 SMB 1.0",
+        "description": "停用旧版文件共享协议，老旧 NAS 或设备可能无法连接"
+      },
+      "windows_network_disable-smb2": {
+        "name": "关闭 SMB 2/3",
+        "description": "会中断现代 Windows 文件和打印共享，仅在明确不需要 SMB 时选择"
+      },
+      "windows_security_disable-vbs": {
+        "name": "关闭虚拟化安全功能（VBS）",
+        "description": "可能改善部分游戏性能，但会降低账户凭据和内核隔离保护"
+      },
+      "windows_storage_disable-ntfs-last-access": {
+        "name": "停止记录文件最后访问时间",
+        "description": "减少文件访问时的元数据写入，依赖访问时间的软件可能受影响"
+      },
+      "windows_update_notify-before-download": {
+        "name": "更新下载前先通知",
+        "description": "将自动更新改为先通知再下载，安全更新需要用户主动处理"
+      },
+      "windows_update_disable-peer-sharing": {
+        "name": "关闭局域网更新共享",
+        "description": "仅从更新服务器下载，不与其他电脑交换 Windows 更新内容"
+      },
+      "windows_update_disable-preview-builds": {
+        "name": "停止接收 Windows 预览版",
+        "description": "保持正式发布通道，不接收 Insider 预览版本"
+      },
+      "windows_update_prevent-restart-when-logged-on": {
+        "name": "登录期间禁止更新自动重启",
+        "description": "用户登录时不因计划更新自动重新启动电脑"
+      },
+      "windows_update_disable-automatic-updates": {
+        "name": "关闭 Windows 自动更新",
+        "description": "仅在手动检查时获取更新，可能错过重要安全修复"
+      },
+      "windows_privacy_limit-diagnostic-data": {
+        "name": "限制 Windows 诊断数据",
+        "description": "仅发送维持安全、更新和可靠性所需的诊断数据"
+      },
+      "windows_update_exclude-driver-updates": {
+        "name": "Windows 更新不安装驱动",
+        "description": "避免系统自动替换设备驱动，后续需自行维护驱动版本"
+      },
+      "windows_update_disable-store-auto-updates": {
+        "name": "关闭应用商店自动更新",
+        "description": "应用不再自动更新，安全修复和新版本需要手动安装"
+      },
+      "windows_cloud_disable-onedrive-sync": {
+        "name": "关闭 OneDrive 文件同步",
+        "description": "阻止 OneDrive 同步文件，不会卸载客户端或删除现有文件"
+      },
+      "windows_search_disable-cortana-policy": {
+        "name": "关闭 Cortana 助手",
+        "description": "禁用 Cortana 助手，部分旧版 Windows 搜索功能可能受影响"
+      },
+      "windows_input_disable-windows-ink": {
+        "name": "关闭 Windows Ink 工作区",
+        "description": "减少手写笔相关功能，触控笔和手写用户不建议选择"
+      },
+      "windows_clipboard_disable-cross-device-policy": {
+        "name": "关闭跨设备剪贴板",
+        "description": "阻止剪贴板内容在微软账户设备之间同步"
+      },
+      "windows_filesystem_enable-long-paths": {
+        "name": "启用超长文件路径",
+        "description": "允许兼容应用访问超过 260 个字符的路径"
+      },
+      "windows_setup_bypass-hardware-checks": {
+        "name": "允许绕过 Windows 11 硬件检查",
+        "description": "允许在不受支持的 CPU 或 TPM 上升级，可能失去官方支持"
+      },
+      "windows_time_use-utc-hardware-clock": {
+        "name": "硬件时钟使用 UTC",
+        "description": "适合 Windows 与 Linux 双系统，单 Windows 设备通常无需调整"
+      },
+      "windows_power_disable-modern-standby": {
+        "name": "关闭现代待机",
+        "description": "改用传统睡眠行为；部分设备可能不支持并出现睡眠问题"
+      },
+      "windows_power_disable-hibernation": {
+        "name": "关闭休眠功能",
+        "description": "减少休眠相关磁盘占用，但休眠和快速启动可能不可用"
+      },
+      "windows_recovery_enable-registry-backups": {
+        "name": "定期备份 Windows 注册表",
+        "description": "让 Windows 定期生成注册表备份，会占用少量系统盘空间"
+      },
+      "windows_login_enable-verbose-status": {
+        "name": "显示详细登录状态",
+        "description": "登录和关机时显示正在执行的系统步骤，便于排查卡顿"
+      },
+      "macos_finder_show-hard-drives-on-desktop": {
+        "name": "在桌面显示内置磁盘",
+        "description": "直接从桌面访问 Mac 内置磁盘"
+      },
+      "macos_finder_show-external-drives-on-desktop": {
+        "name": "在桌面显示外接磁盘",
+        "description": "连接外置硬盘后在桌面显示入口"
+      },
+      "macos_finder_show-removable-media-on-desktop": {
+        "name": "在桌面显示可移动介质",
+        "description": "在桌面显示 U 盘、光盘等可移动设备"
+      },
+      "macos_dock_disable-launch-animation": {
+        "name": "关闭 Dock 启动动画",
+        "description": "减少应用启动时的图标跳动动画"
+      },
+      "macos_dock_show-only-open-apps": {
+        "name": "Dock 仅显示运行中应用",
+        "description": "隐藏未运行的固定应用，让 Dock 更精简"
+      },
+      "macos_dock_dim-hidden-apps": {
+        "name": "淡化已隐藏的应用图标",
+        "description": "用半透明图标区分当前隐藏的应用"
+      },
+      "macos_mission-control_group-windows-by-app": {
+        "name": "按应用分组调度中心窗口",
+        "description": "在调度中心将同一应用的窗口集中显示"
+      },
+      "macos_keyboard_disable-press-and-hold": {
+        "name": "长按按键直接重复输入",
+        "description": "关闭重音字符面板，长按字母时连续输入"
+      },
+      "macos_documents_save-locally": {
+        "name": "新文稿默认保存到本机",
+        "description": "保存新文稿时优先选择本机而不是 iCloud"
+      },
+      "macos_printing_quit-after-finish": {
+        "name": "打印完成后退出打印队列",
+        "description": "没有待处理任务时自动关闭打印队列应用"
+      },
+      "macos_finder_default-list-view": {
+        "name": "Finder 默认使用列表视图",
+        "description": "打开未保存视图偏好的文件夹时使用列表布局"
+      },
+      "macos_finder_folders-first-on-desktop": {
+        "name": "桌面文件夹优先排列",
+        "description": "在桌面排序时将文件夹显示在文件前面"
+      },
+      "macos_finder_enable-quit-menu": {
+        "name": "显示“退出 Finder”菜单",
+        "description": "可从 Finder 菜单完整退出并按需重新打开"
+      },
+      "macos_finder_remove-old-trash-items": {
+        "name": "自动清理旧废纸篓项目",
+        "description": "自动删除进入废纸篓超过 30 天的项目，删除后无法从废纸篓恢复"
+      },
+      "macos_dock_remove-auto-hide-delay": {
+        "name": "取消 Dock 自动隐藏延迟",
+        "description": "启用自动隐藏时，让 Dock 在指针靠近后立即出现"
+      },
+      "macos_dock_enable-magnification": {
+        "name": "启用 Dock 图标放大",
+        "description": "指针经过 Dock 时放大附近的应用图标"
+      },
+      "macos_window_disable-animations": {
+        "name": "减少窗口动画",
+        "description": "关闭部分窗口打开与关闭动画，让界面反馈更直接"
+      },
+      "macos_window_close-app-windows": {
+        "name": "退出应用时关闭窗口",
+        "description": "再次打开应用时不自动恢复上次保留的窗口"
+      },
+      "macos_window_double-click-titlebar-minimize": {
+        "name": "双击标题栏最小化窗口",
+        "description": "双击窗口标题栏时最小化，而不是放大窗口"
+      },
+      "macos_keyboard_use-standard-function-keys": {
+        "name": "F1–F12 作为标准功能键",
+        "description": "直接使用标准功能键，按住 Fn 才控制亮度和音量"
+      },
+      "macos_safari_show-full-url": {
+        "name": "Safari 显示完整网址",
+        "description": "在地址栏中始终显示当前网页的完整网址"
+      },
+      "macos_safari_disable-safe-download-auto-open": {
+        "name": "禁止 Safari 自动打开下载",
+        "description": "下载完成后不自动打开系统认为安全的文件"
+      },
+      "macos_safari_show-status-bar": {
+        "name": "Safari 显示状态栏",
+        "description": "悬停链接时在窗口底部显示目标地址"
+      },
+      "macos_safari_enable-develop-menu": {
+        "name": "启用 Safari 开发菜单",
+        "description": "显示网页检查、调试和缓存控制等开发工具"
+      },
+      "macos_textedit_plain-text-default": {
+        "name": "文本编辑默认使用纯文本",
+        "description": "新建“文本编辑”文稿时不自动使用富文本格式"
+      },
+      "macos_photos_disable-auto-open": {
+        "name": "连接设备时不自动打开“照片”",
+        "description": "连接相机、iPhone 或存储卡时不自动启动照片类应用"
+      },
+      "macos_privacy_disable-personalized-ads": {
+        "name": "关闭 Apple 个性化广告",
+        "description": "不允许 Apple 根据账户和使用情况提供个性化广告"
+      },
+      "macos_sharing_disable-airdrop": {
+        "name": "关闭 AirDrop 接收",
+        "description": "停止发现和接收附近设备通过 AirDrop 发送的内容"
+      },
+      "macos_activity-monitor_show-all-processes": {
+        "name": "活动监视器显示所有进程",
+        "description": "默认显示当前用户和系统运行的全部进程"
+      },
+      "macos_app-store_enable-auto-updates": {
+        "name": "自动更新 App Store 应用",
+        "description": "允许 App Store 自动安装已购应用的可用更新"
+      },
+      "windows_explorer_show-status-bar": {
+        "name": "显示资源管理器状态栏",
+        "description": "在窗口底部显示项目数量和所选文件信息"
+      },
+      "windows_explorer_separate-process": {
+        "name": "文件夹窗口使用独立进程",
+        "description": "降低单个窗口崩溃的影响，但会增加少量内存占用"
+      },
+      "windows_explorer_restore-folders-at-login": {
+        "name": "登录后恢复文件夹窗口",
+        "description": "重新登录时打开上次未关闭的资源管理器窗口"
+      },
+      "windows_explorer_disable-sharing-wizard": {
+        "name": "关闭资源管理器共享向导",
+        "description": "使用高级权限界面管理文件和文件夹共享"
+      },
+      "windows_taskbar_hide-badges": {
+        "name": "隐藏任务栏应用徽章",
+        "description": "不在应用图标上显示未读数量和提醒标记"
+      },
+      "windows_taskbar_disable-flashing": {
+        "name": "关闭任务栏闪烁提醒",
+        "description": "应用请求注意时不再让任务栏图标闪烁"
+      },
+      "windows_taskbar_hide-window-sharing": {
+        "name": "隐藏任务栏窗口共享入口",
+        "description": "通话期间不从任务栏直接共享应用窗口"
+      },
+      "windows_taskbar_show-desktop-corner": {
+        "name": "启用任务栏角落显示桌面",
+        "description": "点击任务栏最右侧角落快速显示桌面"
+      },
+      "windows_personalization_disable-transparency": {
+        "name": "关闭透明效果",
+        "description": "减少开始菜单和任务栏的透明渲染效果"
+      },
+      "windows_search_disable-highlights": {
+        "name": "关闭搜索亮点",
+        "description": "不在 Windows 搜索中展示热点内容和推荐"
+      },
+      "windows_start_disable-recommendations": {
+        "name": "关闭开始菜单推荐",
+        "description": "减少开始菜单中的技巧、快捷方式和应用建议"
+      },
+      "windows_start_disable-account-notifications": {
+        "name": "关闭开始菜单账户提醒",
+        "description": "不在开始菜单显示微软账户和同步建议"
+      },
+      "macos_finder_warn-before-empty-trash": {
+        "name": "清空废纸篓前确认",
+        "description": "避免误清空仍需保留的文件"
+      },
+      "macos_dock_enable-spring-loading": {
+        "name": "拖放时自动打开目标",
+        "description": "拖动项目并悬停时自动展开 Dock 文件夹或应用"
+      },
+      "macos_dock_scroll-to-expose": {
+        "name": "在 Dock 图标上滚动显示窗口",
+        "description": "向上滚动应用图标即可查看该应用的所有窗口"
+      },
+      "macos_dock_fast-auto-hide-animation": {
+        "name": "加快 Dock 自动隐藏动画",
+        "description": "减少 Dock 显示和隐藏时的动画等待"
+      },
+      "macos_safari_disable-search-suggestions": {
+        "name": "关闭 Safari 搜索建议",
+        "description": "减少将输入内容发送给搜索建议服务"
+      },
+      "macos_safari_disable-top-hit-preload": {
+        "name": "关闭 Safari 热门结果预载",
+        "description": "避免在确认前预先加载搜索首选结果"
+      },
+      "macos_text_disable-text-completion": {
+        "name": "关闭文本补全",
+        "description": "避免系统自动补全正在输入的内容"
+      },
+      "macos_text_disable-inline-predictions": {
+        "name": "关闭行内预测",
+        "description": "不在光标后显示预测文本"
+      },
+      "macos_sound_disable-volume-feedback": {
+        "name": "关闭音量调节反馈音",
+        "description": "调节音量时不再播放提示音"
+      },
+      "macos_time-machine_hide-new-disk-prompts": {
+        "name": "不提示将新磁盘用于备份",
+        "description": "连接新磁盘时不再弹出 Time Machine 提示"
+      },
+      "macos_security_require-password-after-sleep": {
+        "name": "睡眠后需要密码",
+        "description": "防止他人在设备唤醒后直接访问"
+      },
+      "macos_security_lock-immediately-after-sleep": {
+        "name": "睡眠后立即锁定",
+        "description": "唤醒设备时立即要求验证身份"
+      },
+      "windows_explorer_confirm-file-delete": {
+        "name": "删除文件前确认",
+        "description": "移入回收站前显示确认提示，减少误操作"
+      },
+      "windows_explorer_use-manual-default-printer": {
+        "name": "保留手动选择的默认打印机",
+        "description": "阻止 Windows 根据最近使用情况更改默认打印机"
+      },
+      "windows_taskbar_show-on-all-displays": {
+        "name": "在所有显示器显示任务栏",
+        "description": "多显示器环境下每块屏幕都可直接使用任务栏"
+      },
+      "windows_gaming_disable-game-bar-controller": {
+        "name": "禁止控制器打开 Game Bar",
+        "description": "按下控制器按钮时不再意外打开游戏栏"
+      },
+      "windows_gaming_disable-game-bar-tips": {
+        "name": "关闭 Game Bar 提示",
+        "description": "不再显示游戏栏功能和录制建议"
+      },
+      "windows_gaming_disable-dynamic-lighting": {
+        "name": "关闭 Windows 动态光效",
+        "description": "不需要 RGB 灯效时减少系统控制和后台活动"
+      },
+      "windows_gaming_disable-app-lighting-control": {
+        "name": "禁止应用控制动态光效",
+        "description": "防止前台应用自动接管设备灯效"
+      },
+      "windows_start_hide-recently-added-apps": {
+        "name": "隐藏最近添加的应用",
+        "description": "不在开始菜单突出显示新安装的应用"
+      },
+      "windows_start_hide-most-used-apps": {
+        "name": "隐藏最常用应用",
+        "description": "不在开始菜单显示应用使用习惯"
+      },
+      "windows_start_hide-recent-items": {
+        "name": "隐藏最近打开的项目",
+        "description": "不在开始菜单和跳转列表显示最近文件"
+      },
+      "windows_edge_limit-diagnostic-data": {
+        "name": "Edge 仅发送必需诊断数据",
+        "description": "不发送可选的浏览器使用与网站诊断数据"
+      },
+      "windows_security_disable-autorun": {
+        "name": "关闭所有驱动器自动运行",
+        "description": "防止插入磁盘或光盘后自动执行程序"
+      },
+      "windows_network_disable-llmnr": {
+        "name": "关闭 LLMNR 名称解析",
+        "description": "减少局域网名称解析欺骗和凭据泄露风险"
+      },
+      "windows_update_enable-microsoft-product-updates": {
+        "name": "同时更新其他 Microsoft 产品",
+        "description": "通过 Windows Update 获取 Office 等产品更新"
+      },
+      "windows_update_enable-restart-notifications": {
+        "name": "更新需要重启时通知",
+        "description": "在完成更新前明确提醒需要重新启动"
+      }
+    }
+  },
+  "applicationClose": {
+    "title": "关闭运行中的应用（可选）",
+    "selectAll": "全选",
+    "clearAll": "取消全选",
+    "processCount": "{count} 个相关进程",
+    "closing": "正在等待所选应用关闭…",
+    "closeSelectedAndContinue": "关闭 {count} 个应用并继续",
+    "skipAndContinue": "跳过并继续",
+    "normalCloseFailed": "部分应用在等待后仍然运行",
+    "forceWarning": "强制结束可能导致未保存的文档或编辑内容丢失。请确认相关工作已经保存",
+    "forceAndContinue": "强制结束并继续"
+  },
+  "startup": {
+    "title": "启动项管理",
+    "scan": "扫描启动项",
+    "rescan": "重新扫描",
+    "scanning": "正在查找启动项",
+    "scanningDescription": "正在查找会自动运行的程序和服务，扫描不会修改任何设置",
+    "cancelling": "正在取消…",
+    "emptyTitle": "管理自动启动的程序",
+    "emptyDescription": "查看哪些程序会自动运行，并按需要开启或关闭",
+    "noMatchesTitle": "没有匹配的启动项",
+    "noMatchesDescription": "请调整搜索内容或筛选条件",
+    "searchPlaceholderCompact": "搜索程序或发布者",
+    "filterLabel": "启动项状态筛选",
+    "itemCount": "{count} 项",
+    "remainingResults": "还有 {count} 个结果",
+    "valueSeparator": "、",
+    "viewDetails": "查看 {name} 的启动项详情",
+    "showLocation": "打开所在文件夹",
+    "showNamedLocation": "打开 {name} 所在的文件夹",
+    "copyToClipboard": "复制到剪贴板",
+    "copyConfiguration": "复制 {name} 的启动配置",
+    "copyCommand": "复制 {name} 的执行内容",
+    "copiedToClipboard": "已复制到剪贴板",
+    "noManageableTitle": "没有可管理的启动项",
+    "noManageableDescription": "暂时没有发现可以直接开启或关闭的程序",
+    "summary": {
+      "programs": "{count} 个自动启动程序",
+      "permissionRequired": "部分启动项未显示，需要完全磁盘访问权限",
+      "openPrivacySettings": "打开完全磁盘访问权限设置",
+      "enabled": "已启用"
+    },
+    "permission": {
+      "title": "部分启动项未显示",
+      "description": "开启完全磁盘访问权限后，可以扫描更多启动项",
+      "instructions": "请在系统设置中为 MangoDisk 开启此权限，然后返回并重新扫描",
+      "skip": "暂时跳过",
+      "openSettings": "打开系统设置"
+    },
+    "filters": {
+      "all": "全部",
+      "enabled": "已启用",
+      "disabled": "已禁用"
+    },
+    "sourceKinds": {
+      "registryRun": "注册表启动",
+      "startupFolder": "启动文件夹",
+      "scheduledTask": "计划任务",
+      "service": "系统服务",
+      "packagedStartupTask": "商店应用任务",
+      "launchAgent": "用户后台启动项",
+      "launchDaemon": "系统后台启动项",
+      "loginItem": "登录时打开的程序",
+      "backgroundTask": "后台登录项",
+      "embeddedItem": "应用自带启动项",
+      "advancedAutoRun": "高级自动运行"
+    },
+    "configuredStates": {
+      "mixed": "部分启用",
+      "enabled": "已启用",
+      "disabled": "已禁用",
+      "removed": "已清除",
+      "unknown": "状态未知",
+      "notApplicable": "不适用"
+    },
+    "runtimeStates": {
+      "running": "正在运行",
+      "stopped": "已停止",
+      "loaded": "已加载",
+      "unloaded": "未加载",
+      "unknown": "未知"
+    },
+    "trustStates": {
+      "system": "系统组件",
+      "verified": "签名有效",
+      "invalid": "签名无效",
+      "unsigned": "未签名",
+      "unknown": "未知"
+    },
+    "scopes": {
+      "currentUser": "当前用户",
+      "user": "用户",
+      "allUsers": "所有用户",
+      "machine": "本机",
+      "system": "系统"
+    },
+    "diagnostics": {
+      "accessDenied": "访问被拒绝",
+      "invalidData": "配置数据无效",
+      "missingIdentity": "缺少程序身份信息",
+      "missingTarget": "目标文件不存在",
+      "stateUnavailable": "无法读取当前状态",
+      "unsupportedFormat": "暂不支持此配置格式"
+    },
+    "change": {
+      "title": "确认更改",
+      "checking": "正在检查启动项…",
+      "descriptions": {
+        "enabled": "将开启 {count} 个启动项",
+        "disabled": "将关闭 {count} 个启动项",
+        "removed": "将清除 {count} 个残留启动项"
+      },
+      "enableNamedGroup": "启用 {name}",
+      "disableNamedGroup": "禁用 {name}",
+      "futureOnly": "关闭自动启动不会停止当前正在运行的程序或服务",
+      "requiresElevation": "需要管理员权限",
+      "authorizationPromptMacos": "MangoDisk 需要管理员权限来更改启动项设置",
+      "confirm": "确定",
+      "applying": "正在应用…",
+      "refreshFailedResult": "操作已完成，列表暂未更新，请重新扫描",
+      "enableSuccessResult": "已开启“{name}”的自动启动",
+      "disableSuccessResult": "已关闭“{name}”的自动启动",
+      "partialEnableResult": "“{name}”已启用 {changed} 项，{failed} 项启用失败",
+      "partialDisableResult": "“{name}”已禁用 {changed} 项，{failed} 项禁用失败",
+      "warnings": {
+        "affectsOtherTriggers": "此计划任务还包含非启动触发条件；禁用会影响整个任务",
+        "itemCurrentlyRunning": "此项目当前正在运行，本次变更不会将它停止"
+      },
+      "skipReasons": {
+        "alreadyInDesiredState": "已经处于请求的状态",
+        "catalogExpired": "扫描会话已失效，请重新扫描",
+        "itemChanged": "扫描后系统配置发生了变化",
+        "itemMissing": "此项目已不存在",
+        "stateUnknown": "无法验证当前配置状态",
+        "unsupportedCapability": "此来源只读或由系统管理",
+        "requiresElevation": "需要管理员权限",
+        "targetUnavailable": "程序文件缺失或启动配置无效"
+      }
+    },
+    "cleanup": {
+      "action": "清除残留项",
+      "title": "清除残留启动项",
+      "guidance": "仅删除已失效的启动配置，不会删除其他程序文件",
+      "confirm": "清除",
+      "successResult": "已清除“{name}”的残留启动项",
+      "partialResult": "“{name}”已清除 {changed} 项，{failed} 项清除失败"
+    },
+    "detail": {
+      "timing": "何时启动",
+      "versionValue": "版本 {version}",
+      "systemManaged": "此项目由系统管理，可前往系统设置中的“登录项与扩展”进行更改",
+      "viewOnly": "此项目只能查看，无法在 MangoDisk 中直接更改",
+      "openLoginItemsSettings": "打开登录项设置",
+      "source": "启动类型",
+      "startTiming": {
+        "boot": "开机后自动运行",
+        "userLogon": "登录后自动运行",
+        "background": "在后台保持运行",
+        "automatic": "由程序或系统自动运行"
+      },
+      "configuration": "启动配置",
+      "command": "执行内容",
+      "runtime": "当前运行状态",
+      "trust": "数字签名",
+      "modified": "配置修改时间",
+      "diagnostics": "需要注意"
+    }
+  },
+  "common": {
+    "cancel": "取消",
+    "close": "关闭",
+    "open": "打开",
+    "showInFileManager": "在文件管理器中显示",
+    "deletePermanently": "彻底删除",
+    "minimize": "最小化",
+    "maximize": "最大化",
+    "restore": "还原",
+    "expandSidebar": "展开侧边栏",
+    "collapseSidebar": "收起侧边栏",
+    "safe": "低风险",
+    "operationFailed": "操作失败",
+    "filterFileCategory": "按文件类型筛选",
+    "estimatedRelease": "可释放空间",
+    "loadMore": "显示更多",
+    "limitedResults": "结果较多，当前仅显示占用空间最大的部分项目",
+    "fileCount": "{count} 个文件",
+    "itemCount": "{count} 项",
+    "locationCount": "{count} 个位置"
+  },
+  "errors": {
+    "operationBusy": "为避免降低磁盘性能，请等待当前任务完成，或取消后重试",
+    "invalidInput": "请求无效，请检查所选项目后重试",
+    "operationCancelled": "操作已取消",
+    "operationFailed": "操作未完成，请重试",
+    "permissionDenied": "MangoDisk 缺少完成此操作所需的权限",
+    "persistenceFailed": "无法保存操作数据，请重试",
+    "taskJoinFailed": "后台任务意外停止，请重试"
+  },
+  "errorTitles": {
+    "invalidInput": "请检查所选项目",
+    "operationBusy": "当前有磁盘任务正在进行",
+    "operationCancelled": "操作已取消",
+    "operationFailed": "操作失败",
+    "permissionDenied": "需要相关权限",
+    "persistenceFailed": "无法保存数据",
+    "taskJoinFailed": "后台任务已停止"
+  },
+  "errorReasons": {
+    "resourceBusy": {
+      "title": "项目正在使用",
+      "message": "此项目正被资源管理器或其他程序使用。请关闭相关窗口或程序后重试"
+    },
+    "accessDeniedOrBusy": {
+      "title": "无法访问此项目",
+      "message": "系统拒绝访问此项目。它可能正在被使用，也可能需要更高权限；请关闭相关程序后重试"
+    },
+    "itemChanged": {
+      "title": "项目刚刚发生变化",
+      "message": "此项目在删除准备期间发生了变化。为避免删除错误内容，操作已停止，请重新分析后再试"
+    }
+  },
+  "folderPicker": {
+    "commonFolders": "常用文件夹",
+    "standardFolders": {
+      "downloads": "下载",
+      "documents": "文档",
+      "pictures": "图片",
+      "videos": "视频",
+      "music": "音乐"
+    }
+  },
+  "scanScope": {
+    "label": "分析范围",
+    "chooseFolder": "选择文件夹…",
+    "removeFolder": "从历史记录中移除 {name}"
+  },
+  "overview": {
+    "startScan": "开始扫描",
+    "rescan": "重新扫描"
+  },
+  "cleanup": {
+    "title": "深度清理",
+    "diskUsageSummary": "{available} 可用",
+    "diskUsageDetails": "{name}：已用 {used}，可用 {available}，总容量 {total}",
+    "selected": "已选",
+    "totalSize": "共 {size}",
+    "selectAll": "全选",
+    "selectRule": "选择清理项目：{name}",
+    "categoryItemCount": "{count} 个项目",
+    "categoryTitles": {
+      "system": "系统缓存",
+      "userCache": "用户缓存文件",
+      "application": "应用缓存",
+      "browser": "浏览器数据",
+      "development": "开发工具",
+      "project": "项目构建产物",
+      "xcode": "Xcode 数据",
+      "applicationOptimization": "应用优化",
+      "ai": "AI 模型与缓存",
+      "container": "容器缓存"
+    },
+    "categoryDescriptions": {
+      "system": "系统产生的临时文件、诊断数据和缓存",
+      "userCache": "应用和开发工具保存在用户目录中的缓存",
+      "application": "应用运行过程中产生的缓存和临时内容",
+      "browser": "浏览器生成的临时网页数据",
+      "development": "开发工具产生的临时下载、索引和缓存",
+      "project": "项目可以重新生成的依赖和构建产物",
+      "xcode": "Xcode 生成的设备支持、归档和开发数据",
+      "applicationOptimization": "移除应用中当前 Mac 不需要的处理器架构代码，在不影响当前 Mac 正常使用的情况下减少应用占用空间",
+      "ai": "已下载的 AI 模型和临时传输文件",
+      "container": "容器工具产生的闲置构建缓存"
+    },
+    "selectSource": "选择清理位置：{path}",
+    "selectionState": {
+      "all": "已选择全部子项",
+      "partial": "已选择部分子项",
+      "none": "未选择"
+    },
+    "selectionMode": {
+      "label": "选择方式",
+      "smart": "智能推荐",
+      "all": "选择全部",
+      "none": "暂不选择",
+      "manual": "手动选择"
+    },
+    "estimated": "可释放空间",
+    "selectedSummary": "已选择项目",
+    "requiresClose": "需要关闭应用",
+    "clean": "清理",
+    "scanFirst": "查找可清理内容",
+    "emptyDescription": "扫描系统与应用缓存、日志及临时文件，查找可释放的磁盘空间",
+    "planDialogTitle": "确认清理",
+    "adjustSelection": "返回调整",
+    "execute": "开始清理",
+    "actualReleased": "已释放空间",
+    "resultDescription": "查看本次项目结果和空间变化",
+    "cancelledResultDescription": "已完成的项目保持清理结果，尚未开始的项目已跳过",
+    "previewCompleted": "检查完成",
+    "previewPassed": "检查完成，未删除文件",
+    "completed": "清理完成",
+    "completedWithWarnings": "清理完成，部分项目已跳过",
+    "completedDescription": "已处理 {count} 项，释放 {size}；{failed} 项跳过或失败",
+    "cancelled": "清理已取消",
+    "processedItems": "已处理项目",
+    "failedItems": "跳过或失败",
+    "cleanableFound": "发现可清理",
+    "summaryCount": "发现 {count} 项可清理内容",
+    "summarySpace": "最多可释放",
+    "noCleanableInGroup": "该分组已检查完成，暂未发现可清理内容",
+    "selectedItemCount": "已选择 {count} 项",
+    "appsToCloseCount": "需要关闭 {count} 个应用",
+    "closeAppsBeforeCleanup": "请先保存工作。选中的应用将在清理前关闭；仍被占用的清理项会自动跳过",
+    "requiresCloseProcesses": "需要关闭：{processes}",
+    "applicationComponentCount": "{count} 项可优化内容",
+    "sourceRequiresClose": "清理前需关闭应用",
+    "sourceAccessLimited": "无法完整读取，未加入清理",
+    "sourceFiles": "{count} 个文件",
+    "sourceModified": "最近修改 {time}",
+    "aggregateOnlyDetails": "当前仅提供清理范围、项目数和总大小，无法逐项列出文件",
+    "scanMode": {
+      "label": "选择扫描方式",
+      "standard": "标准扫描",
+      "standardDescription": "检查当前用户的可清理内容和开发项目",
+      "selectVolumes": "选择磁盘",
+      "selectVolumesDescription": "在其他磁盘中查找更多开发项目",
+      "volumeDialogTitle": "选择要搜索的磁盘",
+      "volumeDialogDescription": "系统盘始终扫描。选择其他磁盘，可查找其中的开发项目和构建产物",
+      "systemVolume": "系统盘 · 始终扫描",
+      "volumeCapacity": "可用 {available} / 共 {total}",
+      "noVolumes": "未发现可用磁盘",
+      "selectedVolumeCount": "已选择 {count} 个磁盘",
+      "startSelectedScan": "开始扫描"
+    }
+  },
+  "analysis": {
+    "title": "磁盘空间分析",
+    "pathLabel": "当前位置",
+    "start": "开始分析",
+    "analyzing": "正在扫描文件夹…",
+    "rescan": "重新分析",
+    "result": "当前文件夹",
+    "treemap": "矩形图",
+    "treemapRemainder": "较小项目 · {count} 项",
+    "treemapRemainderHint": "{count} 项较小内容共占用 {size}；完整明细可在列表中查看",
+    "details": "列表",
+    "back": "后退",
+    "forward": "前进",
+    "home": "返回本次分析起点",
+    "localDisk": "本地磁盘",
+    "name": "名称",
+    "size": "大小",
+    "fileCount": "文件数",
+    "modified": "最近修改",
+    "sortAscending": "升序排列",
+    "sortDescending": "降序排列",
+    "sortColumn": "{column}：{direction}",
+    "deleteTitle": "彻底删除此项目？",
+    "deleteDescription": "文件或文件夹将被立即彻底删除，无法恢复",
+    "deleteAction": "彻底删除",
+    "emptyTitle": "查看磁盘空间分布",
+    "emptyDescription": "分析所选位置中文件和文件夹的空间占用",
+    "folderFileSummary": "{folders} 个文件夹 · {files} 个文件",
+    "folderSpaceSummary": "{folders} 个文件夹 · {size}"
+  },
+  "largeFiles": {
+    "title": "大文件清理",
+    "start": "开始扫描",
+    "rescan": "重新扫描",
+    "emptyTitle": "查找大文件",
+    "emptyDescription": "扫描所选位置中大于等于 {size} 的文件",
+    "fileName": "文件名",
+    "location": "路径",
+    "size": "大小",
+    "minimumSize": "最小文件大小",
+    "modified": "修改时间",
+    "noResults": "当前范围没有符合条件的大文件",
+    "noResultsDescription": "可以降低大小条件、切换文件类型或重新选择扫描范围",
+    "summaryCount": "发现 {count} 个大于等于 {size} 的文件",
+    "summarySpace": "共占用",
+    "scanning": "正在扫描大文件…",
+    "scanHint": "扫描磁盘中的文件信息，并跳过受保护目录",
+    "deleteConfirmTitle": "彻底删除此文件？",
+    "deleteConfirmDescription": "删除后无法恢复",
+    "deleteConfirmAction": "彻底删除",
+    "selected": "已选择",
+    "selectAll": "全选当前结果",
+    "batchDelete": "彻底删除",
+    "batchDeleteTitle": "彻底删除所选大文件？",
+    "batchDeleteDescription": "所选文件删除后无法恢复",
+    "deleteSafetyNote": "文件发生变化或无法访问时会自动跳过",
+    "deleteCompleted": "大文件清理完成",
+    "deleteCompletedWithWarnings": "大文件清理已完成，部分项目未删除",
+    "deleteCompletedDescription": "已删除 {count} 个文件，释放 {size}，{failed} 个失败"
+  },
+  "fileCategories": {
+    "all": "全部",
+    "video": "视频",
+    "audio": "音频",
+    "document": "文档",
+    "archive": "压缩包",
+    "image": "图片",
+    "aiModel": "AI 模型",
+    "other": "其他"
+  },
+  "duplicateFiles": {
+    "title": "重复文件清理",
+    "start": "开始扫描",
+    "rescan": "重新扫描",
+    "emptyTitle": "查找重复文件",
+    "emptyDescription": "扫描所选位置中大于等于 {size} 的文件，查找内容完全相同的副本",
+    "scanning": "正在查找重复文件…",
+    "validatingCandidates": "正在检查可能重复的文件…",
+    "comparingContents": "正在比较文件内容…",
+    "scanHint": "按文件内容进行比较，大文件只在需要时完整读取",
+    "deleteCompleted": "重复文件清理完成",
+    "deleteCompletedWithWarnings": "重复文件清理已完成，部分项目未删除",
+    "deleteCompletedDescription": "已删除 {count} 个副本，释放 {size}，{failed} 个失败",
+    "summaryCount": "发现 {count} 组重复文件",
+    "summaryReclaimable": "最多可释放",
+    "summaryReclaimableScanning": "已发现可释放",
+    "minimumSize": "最小文件",
+    "smartSelect": "智能选择",
+    "smartSelectMenuLabel": "智能选择方式",
+    "smartSelectSafetyHint": "每组至少保留 1 个文件；切换方式会重新生成选择",
+    "keeperRuleLabels": {
+      "shortestPath": "保留路径最短的文件",
+      "shortestName": "保留文件名最短的文件",
+      "oldestModified": "保留最早修改的文件",
+      "newestModified": "保留最近修改的文件"
+    },
+    "clearSelection": "清除选择",
+    "selected": "已选择",
+    "noResults": "没有发现符合条件的重复文件",
+    "noResultsDescription": "可以切换文件类型、降低最小文件大小，或选择其他位置后重新扫描",
+    "selectGroup": "选择 {count} 个副本",
+    "selectGroupHint": "保留一个文件，并按当前设置选择其他副本",
+    "clearGroupSelectionHint": "取消选择此组中的副本",
+    "groupSelectionApplied": "已选择 {count} 个",
+    "batchDelete": "彻底删除",
+    "deleteSingleTitle": "彻底删除这个副本？",
+    "deleteSingleDescription": "删除后无法恢复",
+    "deleteTitle": "彻底删除所选重复副本？",
+    "deleteDescription": "所选副本删除后无法恢复",
+    "deleteSafetyNote": "每组至少保留 1 个文件；发生变化或无法访问的文件会自动跳过",
+    "copyCount": "{count} 个副本",
+    "groupCount": "{count} 组重复文件",
+    "groupSummary": "{count} 个副本 · 每个 {size} · 最多可释放 {reclaimable}",
+    "directoryGroupSummary": "{count} 个相同文件夹 · 每个包含 {files} · 最多可释放 {reclaimable}"
+  },
+  "applicationLeftovers": {
+    "categoryTitle": "应用残留",
+    "scanning": "正在查找已卸载应用留下的数据…",
+    "scanHint": "只显示能够明确关联到已卸载应用的数据，扫描不会修改文件",
+    "accessLimitedDescription": "请在“系统设置 → 隐私与安全性”中允许 MangoDisk 访问其他 App 的数据，然后重新扫描",
+    "incompleteDescription": "为避免误删，本次不显示残留内容，请稍后重试",
+    "emptyTitle": "没有发现可确认的应用残留",
+    "emptyDescription": "没有发现能够安全确认的应用残留",
+    "planSummary": "{applications} 个应用的 {locations} 个残留位置",
+    "planImpact": "所选应用残留将被彻底删除，无法恢复",
+    "selectCandidate": "选择 {name} 的残留数据",
+    "selectLocation": "选择{name}",
+    "locationCount": "{count} 个残留位置",
+    "executionSummary": "已彻底删除 {count} 项，释放 {size}；跳过 {failed} 项",
+    "sources": {
+      "sandboxContainer": "应用私有数据",
+      "applicationSupport": "应用支持文件",
+      "preferences": "偏好设置",
+      "logs": "应用日志",
+      "savedState": "窗口记录",
+      "webData": "网站与网络数据",
+      "applicationScripts": "应用脚本"
+    }
+  },
+  "applicationUninstall": {
+    "title": "应用卸载",
+    "startScan": "开始扫描",
+    "rescan": "重新扫描",
+    "scanning": "正在扫描已安装应用…",
+    "readingApplicationCatalog": "正在读取已安装应用",
+    "checkingProcesses": "正在检查运行中的应用",
+    "validatingApplications": "正在检查应用是否变化",
+    "inspectingApplication": "正在检查应用详情",
+    "currentScanStage": "当前步骤",
+    "currentApplicationSource": "当前检测来源",
+    "currentApplication": "正在检查应用",
+    "checkedApplications": "已检查应用",
+    "scannedApplicationData": "已核对数据",
+    "scanHint": "检查已安装应用和相关文件，扫描不会修改任何内容",
+    "searchPlaceholder": "搜索应用或开发者",
+    "all": "全部",
+    "ready": "可卸载",
+    "running": "正在运行",
+    "unavailable": "不可卸载",
+    "applicationName": "应用名称",
+    "status": "状态",
+    "applicationSize": "大小",
+    "applicationSizeUnavailable": "未知",
+    "windowsAppPackageSizeHint": "此估算不包含多个应用共用的文件",
+    "lastUsed": "上次使用",
+    "lastUsedUnavailable": "暂无记录",
+    "installedOrUpdated": "安装或更新",
+    "installDateUnavailable": "日期未知",
+    "sortByName": "按应用名称排序",
+    "sortByStatus": "按应用状态排序",
+    "sortBySize": "按应用大小排序",
+    "sortByDate": "按日期排序",
+    "summary": "发现 {count} 个应用",
+    "summarySpace": "共占用",
+    "selectVisible": "选择当前结果",
+    "selectApplication": "选择应用 {name}",
+    "selectComponent": "选择 {application} 的{component}",
+    "showApplicationLocation": "在文件夹中显示 {application}",
+    "showComponentLocation": "在文件夹中显示{component}",
+    "emptyTitle": "没有找到符合条件的应用",
+    "emptyDescription": "清除搜索条件或重新扫描已安装应用",
+    "incompleteTitle": "无法完整读取已安装应用",
+    "incompleteDescription": "为避免误删，本次无法卸载，请稍后重试",
+    "viewOnlyTitle": "当前系统无法卸载应用",
+    "viewOnlyDescription": "你可以查看已安装应用，但 MangoDisk 暂时无法卸载",
+    "applicationRunning": "需关闭应用",
+    "closeBeforeUninstallTitle": "关闭应用后卸载",
+    "closeBeforeUninstallDescription": "以下应用正在运行。选择要由 MangoDisk 正常关闭的应用；未选择的应用将从本次卸载中跳过",
+    "requiresElevation": "需管理员权限",
+    "requiresElevationDescriptionMacos": "卸载此应用时，macOS 将请求管理员授权。取消授权不会删除应用",
+    "authorizationPromptMacos": "MangoDisk 需要管理员权限来卸载此应用",
+    "readyForReview": "可卸载",
+    "viewOnly": "卸载入口不可用",
+    "orphanedRegistration": "应用文件缺失",
+    "version": "版本 {version}",
+    "showLocation": "在文件夹中显示",
+    "uninstallApplication": "卸载 {application}",
+    "expandApplicationDetails": "展开 {application} 的详细信息",
+    "collapseApplicationDetails": "收起 {application} 的详细信息",
+    "preflightFailed": "应用发生变化，请刷新列表后重试",
+    "batchPreflightFailedSummary": "部分应用发生变化，请刷新列表后重试",
+    "selectedApplicationsLabel": "已选择应用",
+    "selectedSizeLabel": "可释放空间",
+    "clearSelection": "清除选择",
+    "uninstallSelected": "卸载所选应用",
+    "uninstallEntryUnavailableDescription": "Windows 没有提供可用的卸载方式",
+    "orphanedRegistrationDescription": "Windows 仍显示此应用，但应用文件和卸载程序已经不存在",
+    "possibleRelatedLocations": "可能相关的用户数据目录",
+    "possibleRelatedLocationsDescription": "这些文件夹可能属于多个应用，仅供查看，不会被自动清理",
+    "showPossibleRelatedLocation": "查看可能与 {application} 相关的目录",
+    "confirmBatchTitle": "卸载选中的 {count} 个应用？",
+    "confirmBatchDescription": "所选应用和临时数据将被彻底删除，无法恢复",
+    "confirmBatchWithDataDescription": "所选应用和已确认的相关数据将被彻底删除，无法恢复，其中可能包含设置或本地文件",
+    "confirmNativeBatchTitle": "卸载选中的 {count} 个应用？",
+    "confirmNativeBatchDescription": "Windows 将依次卸载所选应用，期间可能显示额外的确认或进度窗口",
+    "preparingBatchSummary": "正在检查所选应用",
+    "confirmBatchSummary": "{count} 个应用已检查，可以卸载",
+    "validatingBatch": "正在复核所选应用",
+    "finalizingBatch": "正在汇总卸载结果",
+    "uninstallingApplicationTitle": "正在卸载 {name}",
+    "executionProgressDescription": "已完成 {completed} / {total} 个应用",
+    "cancellingBatch": "正在停止应用卸载…",
+    "cancellingBatchDescription": "当前系统卸载步骤可能仍会完成，之后不会再启动其他应用",
+    "executionProgressValue": "{completed} / {total}",
+    "uninstallItemList": "应用卸载进度",
+    "uninstallItemPending": "等待卸载",
+    "uninstallItemActive": "正在卸载",
+    "uninstallItemInteractive": "请在应用卸载窗口中完成操作",
+    "uninstallItemCompleted": "卸载完成",
+    "uninstallItemCancelled": "已在开始前跳过",
+    "uninstallItemFailed": "未能完成",
+    "uninstallItemStatus": {
+      "pending": "等待中",
+      "active": "卸载中",
+      "completed": "完成",
+      "cancelled": "已跳过",
+      "failed": "未完成"
+    },
+    "cancelExecutionAction": "取消卸载",
+    "cancellingAction": "正在取消…",
+    "cancelExecutionConfirmTitle": "停止本次应用卸载？",
+    "cancelExecutionConfirmDescription": "尚未开始的应用将不再卸载，已经卸载的应用不会恢复。当前系统卸载窗口可能仍会完成",
+    "stopExecutionAction": "停止卸载",
+    "executionCancelledTitle": "应用卸载已停止",
+    "executionCancelledDescription": "已卸载 {completed} 个应用，另有 {cancelled} 个应用未由 MangoDisk 确认完成",
+    "unknownApplication": "未知应用",
+    "confirmBatchAction": "确认卸载",
+    "cancelledTitle": "已取消卸载",
+    "cancelledDescription": "没有应用被卸载",
+    "completed": "应用卸载已完成",
+    "completedWithWarnings": "卸载未能全部完成",
+    "batchExecutionSummary": "已卸载 {count} 个应用，释放 {size}；{failed} 个未能完成",
+    "batchExecutionEstimateSummary": "已卸载 {count} 个应用，预计释放 {size}；{failed} 个未能完成",
+    "restartRequired": "Windows 提示需要重启后完成更改",
+    "componentKinds": {
+      "applicationBinary": "应用文件",
+      "nativeInstaller": "Windows 卸载程序",
+      "windowsAppPackage": "Microsoft Store 程序包",
+      "windowsMsiPackage": "Windows Installer 程序包",
+      "windowsScoopPackage": "Scoop 程序包",
+      "windowsChocolateyPackage": "Chocolatey 程序包",
+      "windowsRegisteredUninstaller": "已注册的卸载程序",
+      "cache": "应用缓存",
+      "applicationSupport": "应用支持文件",
+      "preferences": "偏好设置",
+      "logs": "应用日志",
+      "savedState": "窗口记录",
+      "sandboxContainer": "应用私有数据",
+      "webData": "网站与网络数据"
+    },
+    "executionModes": {
+      "silent": "卸载过程通常无需额外操作",
+      "interactive": "卸载时可能打开确认窗口",
+      "externalClient": "使用包管理器完成卸载"
+    },
+    "componentRisks": {
+      "required": "卸载必选",
+      "rebuildable": "可重新生成",
+      "userData": "可能含用户数据"
+    },
+    "initialTitle": "管理已安装应用",
+    "initialDescription": "查看应用占用空间，卸载时同时清理相关文件"
+  },
+  "history": {
+    "title": "操作历史",
+    "clear": "清空历史",
+    "clearConfirmTitle": "清空所有操作历史？",
+    "clearConfirmDescription": "所有操作记录将被永久移除，此操作无法撤销，但不会删除任何文件",
+    "clearConfirmAction": "清空历史",
+    "emptyTitle": "暂无操作历史",
+    "emptyDescription": "完成清理和系统管理操作后，记录会显示在这里",
+    "categories": {
+      "deepCleanup": "深度清理",
+      "largeFileCleanup": "大文件清理",
+      "duplicateFileCleanup": "重复文件清理",
+      "applicationUninstall": "应用卸载",
+      "startupManagement": "启动项管理",
+      "systemOptimization": "系统优化"
+    },
+    "operation": "操作",
+    "planned": "计划",
+    "expected": "预计",
+    "estimated": "估算",
+    "actual": "实际",
+    "notCounted": "未计入清理大小",
+    "resultSpace": "结果",
+    "statusWarnings": "部分项目已跳过",
+    "detailTitle": "操作详情",
+    "detailDescription": "查看本次操作的项目、空间变化和执行结果",
+    "cleanupItems": "清理项目",
+    "uninstalledApplications": "卸载的应用",
+    "affectedItems": "已处理项目",
+    "affectedApplications": "已卸载应用",
+    "failedItems": "跳过或失败",
+    "failedApplications": "未完成应用",
+    "deleted": "已彻底删除",
+    "deleteFailed": "未能删除",
+    "moreItemsOmitted": "另有 {count} 个项目未在详情中展开",
+    "duration": "执行用时",
+    "recordSummary": "{items} 个清理项 · 已处理 {files} 项",
+    "uninstallRecordSummary": "选择 {items} 个应用 · 已卸载 {files} 个",
+    "startupRecordSummary": "选择 {selected} 项 · 已变更 {changed} 项",
+    "systemOptimizationRecordSummary": "选择 {selected} 项 · 已变更 {changed} 项",
+    "selectedItems": "已选择项目",
+    "changedItems": "已变更项目",
+    "startupItems": "启动项",
+    "systemSettings": "系统设置",
+    "systemOptimizationApplied": "已应用优化",
+    "systemOptimizationChangeFailed": "更改失败",
+    "systemOptimizationRestored": "已恢复原始值",
+    "systemOptimizationStatuses": {
+      "changed": "已更改并验证",
+      "unchanged": "无需变更",
+      "failed": "变更失败"
+    },
+    "systemOptimizationFailureReasons": {
+      "settingChanged": "设置在确认后发生变化，未进行覆盖",
+      "permissionDenied": "权限被拒绝",
+      "userCancelled": "操作已取消",
+      "unsupported": "当前系统不再支持此设置",
+      "verificationFailed": "无法验证变更后的值",
+      "platformFailure": "系统操作失败"
+    },
+    "startupStatuses": {
+      "changed": "更改成功",
+      "unchanged": "无需变更",
+      "failed": "变更失败"
+    },
+    "startupFailureReasons": {
+      "itemChanged": "操作前系统配置发生了变化",
+      "permissionDenied": "权限被拒绝",
+      "userCancelled": "用户取消了授权",
+      "unsupported": "此来源不支持该操作",
+      "verificationFailed": "无法验证变更后的状态",
+      "platformFailure": "系统操作失败"
+    },
+    "applicationLeftoverStatuses": {
+      "previewed": "检查完成，未删除文件",
+      "completed": "已彻底删除",
+      "cancelled": "已在处理前取消",
+      "failed": "未能处理"
+    },
+    "applicationLeftoverReasons": {
+      "candidateChanged": "内容在确认后发生变化，已跳过",
+      "ownerReappeared": "相关应用或已安装应用列表发生变化，已跳过",
+      "applicationRunning": "相关应用仍在运行，已跳过",
+      "permanentDeleteFailed": "无法彻底删除此项目"
+    },
+    "applicationUninstallStatuses": {
+      "previewed": "检查完成，未删除文件",
+      "completed": "卸载已完成",
+      "cancelled": "已在卸载前取消",
+      "failed": "未能处理"
+    },
+    "applicationUninstallReasons": {
+      "applicationUnavailable": "应用已不存在或无法读取",
+      "applicationRunning": "应用仍在运行，已停止卸载",
+      "processStateUnavailable": "无法确认应用是否正在运行，已停止卸载",
+      "catalogChanged": "已安装应用发生变化，请重新检查",
+      "componentUnavailable": "所选卸载内容已不存在或无法读取",
+      "componentChanged": "所选卸载内容在确认后发生变化",
+      "unsupportedExecutor": "当前系统无法卸载应用",
+      "executionAborted": "前一项处理失败，后续内容未删除",
+      "externalUninstallerContinuing": "系统卸载窗口仍在运行，结果尚未确认",
+      "permanentDeleteFailed": "无法彻底删除此项目",
+      "recoveryRequired": "卸载未完整结束，请检查或恢复应用后再重试",
+      "nativeInstallerFailed": "Windows Installer 未能完成卸载",
+      "verificationFailed": "MangoDisk 无法确认卸载结果"
+    }
+  },
+  "settings": {
+    "title": "设置",
+    "generalSection": "常规",
+    "macosPermissionsSection": "macOS 权限",
+    "supportSection": "支持",
+    "aboutSection": "关于",
+    "languageTitle": "界面语言",
+    "languageDescription": "选择 MangoDisk 使用的界面语言",
+    "languageNames": {
+      "zhCN": "简体中文",
+      "zhTW": "繁體中文",
+      "jaJP": "日本語",
+      "enUS": "English"
+    },
+    "themeTitle": "显示主题",
+    "themeDescription": "选择亮色、暗色或跟随系统设置",
+    "themeLight": "亮色",
+    "themeDark": "暗色",
+    "themeSystem": "跟随系统",
+    "fullDiskAccessTitle": "完全磁盘访问权限",
+    "fullDiskAccessDescription": "允许 MangoDisk 扫描受保护的系统和应用数据，获得更完整的清理结果",
+    "openPrivacySettings": "系统设置",
+    "permissionStatus": {
+      "notChecked": "尚未检测",
+      "available": "访问正常",
+      "limited": "访问受限"
+    },
+    "feedbackTitle": "问题反馈",
+    "feedbackDescription": "发现问题或有建议时，前往 GitHub 提交反馈",
+    "feedbackAction": "提交反馈",
+    "diagnosticLogsTitle": "诊断日志",
+    "diagnosticLogsDescription": "查看 MangoDisk 运行日志，用于排查问题",
+    "openLogFolderAction": "打开文件夹",
+    "softwareUpdateTitle": "软件更新",
+    "updateCheckAction": "检查更新",
+    "updateChecking": "正在检查…",
+    "updateVersionAvailable": "版本 {version} 可用",
+    "updateDownloading": "正在下载…",
+    "updateDownloadingProgress": "正在下载 · {percent}%",
+    "updateReadyToInstall": "等待安装",
+    "updateInstalling": "正在安装…",
+    "updateRestartRequired": "需要重新启动",
+    "updateRestarting": "正在重新启动…",
+    "updateUpToDate": "已是最新版本",
+    "updateUpToDateWithVersion": "版本 {version} · 已是最新版本",
+    "updateRetry": "重试",
+    "updateCheckFailedTitle": "无法检查更新",
+    "updateCheckUnknownError": "更新服务返回了未知错误",
+    "versionUnknown": "正在读取…",
+    "aboutTitle": "关于 MangoDisk",
+    "aboutDescription": "开源、轻量、安全的跨平台磁盘清理与空间分析工具",
+    "projectLinksLabel": "项目链接",
+    "websiteAction": "官方网站",
+    "repositoryAction": "GitHub",
+    "licenseAction": "GPL-3.0 许可证",
+    "versionValue": "版本 {version}"
+  },
+  "updates": {
+    "availableTitle": "MangoDisk {version} 可用",
+    "currentVersionDescription": "当前版本 {version}",
+    "checkDescription": "检查是否有可用的新版本",
+    "checkingDescription": "正在连接更新服务…",
+    "upToDateDescription": "MangoDisk {version} 已是最新版本",
+    "releaseNotes": "本次更新",
+    "noReleaseNotes": "此版本包含体验优化和问题修复",
+    "downloadUpdate": "下载更新",
+    "downloadPortable": "下载单文件版",
+    "portableDescription": "单文件版需要手动更新。请下载新文件，退出 MangoDisk 后替换当前程序",
+    "continueInBackground": "转到后台下载",
+    "downloadedTitle": "MangoDisk {version} 已下载",
+    "installedTitle": "MangoDisk {version} 已安装",
+    "downloadComplete": "更新已下载 · 安装后 MangoDisk 将重新启动",
+    "installAndRestart": "安装并重新启动",
+    "restartRequired": "安装已完成 · 重新启动 MangoDisk 即可完成更新",
+    "restartNow": "立即重新启动",
+    "restarting": "正在重新启动 MangoDisk…",
+    "notNow": "暂不更新",
+    "later": "稍后安装",
+    "retry": "重试",
+    "downloading": "正在下载更新…",
+    "downloadProgress": "已下载 {downloaded} / {total}",
+    "installing": "正在安装更新…",
+    "downloadFailed": "下载失败",
+    "manualDownloadFailed": "无法打开下载地址",
+    "installFailed": "安装失败",
+    "restartFailed": "无法重新启动 MangoDisk",
+    "navigationNotice": "有新版本可用"
+  },
+  "loading": {
+    "starting": "正在读取磁盘信息…",
+    "scanning": "正在分析可清理内容…",
+    "cancelling": "正在取消扫描…",
+    "processing": "处理中",
+    "currentStage": "正在分析中",
+    "currentDirectory": "正在扫描",
+    "preparingDirectory": "正在准备扫描目录…",
+    "currentAnalysisDirectory": "当前对象",
+    "preparingAnalysisDirectory": "正在准备分析目录…",
+    "checkedItems": "已检查文件",
+    "accessibleRuleProgress": "已完成 {completed}/{total} 项检查，已扫描 {checked} 个文件和 {bytes} 数据",
+    "checkedChecks": "检查进度",
+    "traversedData": "已扫描数据",
+    "elapsed": "已用时间",
+    "cancelHint": "扫描只读取文件信息，取消不会删除或修改任何内容",
+    "cleaning": "正在清理所选项目…",
+    "cleaningCurrentItem": "正在清理 {name}",
+    "cleaningApplicationLeftovers": "正在清理所选应用数据…",
+    "cancelCleanupAction": "取消清理",
+    "cancelCleanupConfirmTitle": "停止本次清理？",
+    "cancelCleanupConfirmDescription": "尚未开始的项目将不再清理，已经完成的项目不会恢复。当前系统步骤可能仍会完成",
+    "stopCleanupAction": "停止清理",
+    "cancellingCleanupAction": "正在取消…",
+    "cancellingCleanup": "正在停止清理…",
+    "cancellingCleanupHint": "当前系统步骤可能会继续完成，尚未开始的项目不会再清理",
+    "previewing": "正在检查所选内容…",
+    "previewingCurrentItem": "正在检查 {name}",
+    "validating": "正在复核所选项目…",
+    "finalizing": "正在汇总清理结果…",
+    "cleaningSafetyHint": "正在按选择清理；内容如已变化或正在使用，会为避免误删而跳过",
+    "previewingSafetyHint": "正在核对所选项目，不会删除或修改任何内容",
+    "elapsedSeconds": "{count} 秒",
+    "cleanupItemList": "清理项目进度",
+    "cleanupItemWaiting": "等待清理",
+    "cleanupItemValidating": "正在核对当前清理范围",
+    "cleanupItemSystemProcessing": "系统正在处理此项目",
+    "cleanupItemCompleted": "已处理 {count} 项，释放 {size}",
+    "cleanupItemChecked": "检查完成，未修改内容",
+    "cleanupItemPartial": "已处理 {count} 项，释放 {size}，部分内容已跳过",
+    "cleanupItemSkipped": "此项目未处理，请在结果中查看原因",
+    "cleanupItemDone": "完成",
+    "cleanupItemSkippedLabel": "已跳过",
+    "cleanupItemActive": "处理中",
+    "cleanupItemPending": "等待中",
+    "ruleProgress": "项目进度",
+    "ruleProgressValue": "{completed} / {total}",
+    "cleanupProgressSummary": "已完成 {completed} / {total} 项",
+    "processedItems": "已处理",
+    "releasedSpace": "已释放",
+    "checkedData": "已检查数据",
+    "stepMayTakeMinutes": "可能需要几分钟"
+  },
+  "cleanupRules": {
+    "categories": {
+      "ai": "AI 模型与缓存",
+      "system": "系统",
+      "browser": "浏览器",
+      "container": "容器",
+      "dev": "开发工具",
+      "app": "应用"
+    },
+    "entries": {
+      "system.user-temp": {
+        "name": "用户临时文件",
+        "description": "Windows 与应用写入的临时工作文件",
+        "impact": "占用中的文件会被跳过；应用需要时会重新创建临时内容。"
+      },
+      "system.darwin-user-cache": {
+        "name": "长期未使用的系统缓存",
+        "description": "当前用户超过 7 天未更新的系统临时缓存",
+        "impact": "不会删除设置或个人文件，macOS 会在需要时重新生成缓存。"
+      },
+      "system.old-diagnostic-logs": {
+        "name": "旧的诊断日志",
+        "description": "超过 7 天未修改的用户级应用日志与崩溃诊断报告",
+        "impact": "只清理历史诊断信息，不影响应用数据；近期日志会保留用于排查问题。"
+      },
+      "system.quicklook-cache": {
+        "name": "QuickLook 预览缓存",
+        "description": "访达快速预览生成的缩略图与临时预览内容",
+        "impact": "不会删除原文件；首次重新预览时可能需要短暂生成缩略图。"
+      },
+      "system.help-cache": {
+        "name": "macOS 帮助缓存",
+        "description": "macOS 帮助中心使用的下载内容和搜索数据",
+        "impact": "不会删除帮助设置；下次打开帮助中心时可能重新加载。"
+      },
+      "system.geo-services-cache": {
+        "name": "地图与定位缓存",
+        "description": "地图和定位服务保存的地理数据缓存",
+        "impact": "不会修改定位权限；后续使用地图服务时可能重新下载。"
+      },
+      "system.apple-media-cache": {
+        "name": "Apple 媒体服务缓存",
+        "description": "App Store、音乐等 Apple 媒体服务使用的临时数据",
+        "impact": "不会删除购买记录或媒体资料库；后续访问时可能重新加载。"
+      },
+      "system.parsecd-cache": {
+        "name": "系统建议索引缓存",
+        "description": "macOS 智能建议服务生成的临时索引缓存",
+        "impact": "不会删除个人文件；系统会根据使用情况重新生成索引。"
+      },
+      "system.apple-intelligence-cache": {
+        "name": "Apple Intelligence 运行缓存",
+        "description": "本地 Apple Intelligence 服务生成的临时数据",
+        "impact": "不会删除模型或个人内容；后续功能启动时可能重新生成。"
+      },
+      "system.thumbnail-cache": {
+        "name": "缩略图与图标缓存",
+        "description": "资源管理器为文件预览和图标生成的缓存数据库",
+        "impact": "下次浏览文件夹时 Windows 会按需重新生成预览和图标。"
+      },
+      "system.directx-shader-cache": {
+        "name": "DirectX 着色器缓存",
+        "description": "显卡驱动与应用生成的 DirectX 着色器编译缓存",
+        "impact": "不会删除游戏或应用数据；首次启动图形应用时可能短暂重新编译。"
+      },
+      "system.crash-dumps": {
+        "name": "崩溃转储",
+        "description": "应用崩溃时生成的诊断文件",
+        "impact": "清理后无法再用这些旧转储排查崩溃。"
+      },
+      "system.error-reports": {
+        "name": "Windows 错误报告",
+        "description": "Windows 为当前用户和系统生成的错误诊断报告",
+        "impact": "不会影响 Windows 运行，但已删除的报告无法再用于排查问题。"
+      },
+      "system.stale-partial-downloads": {
+        "name": "过期的未完成下载",
+        "description": "下载目录中超过 7 天的浏览器与下载工具临时文件",
+        "impact": "清理后无法继续这些旧下载；近期任务和已完成文件不会受影响。"
+      },
+      "app.slack-cache": {
+        "name": "Slack 应用缓存",
+        "description": "Slack 生成的网页响应、脚本和图形渲染缓存",
+        "impact": "不会删除工作区、消息或登录状态；关闭 Slack 后清理。"
+      },
+      "app.lark-renderer-cache": {
+        "name": "飞书渲染缓存",
+        "description": "飞书生成的可重建网页响应、代码、GPU、着色器与 Service Worker 缓存",
+        "impact": "不会删除账号、消息、下载、工作区、浏览器存储或登录状态；关闭飞书后清理。"
+      },
+      "app.wechat-cache": {
+        "name": "微信应用缓存",
+        "description": "微信生成的可重建网页、代码、GPU、着色器与 Service Worker 响应缓存",
+        "impact": "不会删除账号、聊天、文件、小程序存储、浏览器数据或登录状态；关闭微信后清理。"
+      },
+      "app.wecom-cache": {
+        "name": "企业微信应用缓存",
+        "description": "企业微信生成的可重建 CEF 网页、代码、GPU、着色器、组件与 Service Worker 响应缓存",
+        "impact": "不会删除账号、消息、邮件、文档、下载、浏览器数据或登录状态；关闭企业微信后清理。"
+      },
+      "app.qq-cache": {
+        "name": "QQ 应用缓存",
+        "description": "QQ 生成的可重建网页、代码、GPU、着色器与分区渲染缓存",
+        "impact": "不会删除账号、消息、文件、组件包、浏览器数据或登录状态；关闭 QQ 后清理。"
+      },
+      "app.qq-update-cache": {
+        "name": "QQ 已下载更新",
+        "description": "QQ 解压热更新组件后保留的旧版更新压缩包",
+        "impact": "不会删除当前或待启用版本、账号、消息、文件或登录状态；移除的更新可能需要重新下载。"
+      },
+      "app.ollama-update-cache": {
+        "name": "Ollama 已下载更新",
+        "description": "Ollama 已下载且超过 7 天的 macOS 更新压缩包",
+        "impact": "不会删除模型、清单、设置、账号或已安装应用；移除的更新可能需要重新下载。"
+      },
+      "app.parallels-windows-image-cache": {
+        "name": "Parallels Windows 镜像",
+        "description": "Parallels Desktop 下载并保留的旧版 Windows ESD 安装镜像",
+        "impact": "不会删除虚拟机、快照、配置或用户文件；移除的安装镜像可能需要重新下载。"
+      },
+      "app.ynote-cache": {
+        "name": "有道云笔记缓存",
+        "description": "有道云笔记生成的可重建界面缓存、诊断日志与已下载更新数据",
+        "impact": "不会删除笔记、附件、备份、设置、浏览器存储或登录状态；关闭有道云笔记后清理。"
+      },
+      "app.qqlive-rendering-cache": {
+        "name": "腾讯视频界面缓存",
+        "description": "腾讯视频桌面界面生成的临时图片、图标、网页、代码、GPU 与着色器数据",
+        "impact": "不会删除运行组件、离线包、账号状态、设置或浏览器存储；关闭腾讯视频后清理。"
+      },
+      "app.flashvoice-cache": {
+        "name": "FlashVoice 缓存",
+        "description": "FlashVoice 生成的可重建 WebKit 或 WebView2 内容、代码、图形、组件与诊断缓存",
+        "impact": "不会删除语音模型、录音、转写、设置或应用文件；关闭 FlashVoice 后清理。"
+      },
+      "app.utools-rendering-cache": {
+        "name": "uTools 渲染缓存",
+        "description": "uTools 生成的可重建网页、代码、GPU、着色器、分区与诊断缓存",
+        "impact": "不会删除剪贴板历史、插件、数据库、设置或浏览器存储；关闭 uTools 后清理。"
+      },
+      "app.baidu-netdisk-rendering-cache": {
+        "name": "百度网盘渲染缓存",
+        "description": "百度网盘界面生成的可重建网页、代码、GPU 与着色器缓存",
+        "impact": "不会删除网盘文件、账号与传输数据库、同步状态、设置或浏览器存储；关闭百度网盘后清理。"
+      },
+      "app.manus-rendering-cache": {
+        "name": "Manus 渲染缓存",
+        "description": "Manus 生成的可重建网页、代码、GPU、着色器与字典缓存",
+        "impact": "不会删除任务、本地文件、凭据、设置、Cookie 或浏览器存储；关闭 Manus 后清理。"
+      },
+      "app.manus-update-cache": {
+        "name": "Manus 已下载更新",
+        "description": "Manus 缓存的桌面更新安装包与待更新元数据",
+        "impact": "不会删除任务、本地文件、凭据、设置或已安装应用；更新包之后可能需要重新下载。"
+      },
+      "app.workbuddy-rendering-cache": {
+        "name": "WorkBuddy 渲染缓存",
+        "description": "WorkBuddy 生成的可重建网页、代码、GPU、着色器与分区缓存",
+        "impact": "不会删除任务、项目、产物、数据库、技能、连接器、运行时、设置或浏览器状态；关闭 WorkBuddy 后清理。"
+      },
+      "app.clash-verge-diagnostic-cache": {
+        "name": "Clash Verge 诊断日志",
+        "description": "Clash Verge 生成的诊断日志数据",
+        "impact": "不会删除订阅配置、代理设置、运行组件、GeoIP 数据或浏览器存储；关闭 Clash Verge 后清理。"
+      },
+      "app.youdao-translation-cache": {
+        "name": "网易有道翻译缓存",
+        "description": "网易有道翻译生成的临时翻译、图片、WebKit 与崩溃数据",
+        "impact": "不会删除词典、历史记录、文档、偏好设置或账号状态；关闭网易有道翻译后清理。"
+      },
+      "app.gitmind-rendering-cache": {
+        "name": "GitMind 渲染缓存",
+        "description": "GitMind 生成的可重建 Electron 与 WebView2 内容、代码、GPU、着色器、组件和诊断缓存",
+        "impact": "不会删除思维导图、凭据、历史记录、设置、浏览器存储或更新包；关闭 GitMind 后清理。"
+      },
+      "app.whatsapp-rendering-cache": {
+        "name": "WhatsApp 渲染缓存",
+        "description": "WhatsApp 生成的可重建 WebView2 内容、代码、GPU、着色器、组件、字典与响应缓存",
+        "impact": "不会删除账号、消息、凭据、设置、历史记录、网络状态或浏览器存储；关闭 WhatsApp 后清理。"
+      },
+      "app.electron-updater-cache": {
+        "name": "Electron 应用更新缓存",
+        "description": "GoWhisper、WeFlow 与 GitMind 保留的已下载更新安装包",
+        "impact": "不会删除应用或应用数据；移除的更新包可能需要重新下载，清理前需关闭对应应用。"
+      },
+      "app.lobsterai-update-cache": {
+        "name": "LobsterAI 更新缓存",
+        "description": "LobsterAI 保留的自动更新磁盘映像",
+        "impact": "不会删除技能、集成、本地数据库或设置；移除的更新包可能需要重新下载。"
+      },
+      "app.qwenwork-cache": {
+        "name": "QwenWork 渲染缓存",
+        "description": "QwenWork 生成的可重建网页、代码、GPU、分区与诊断缓存",
+        "impact": "不会删除账号、对话、工作区、生成文件或意识记忆；关闭 QwenWork 后清理。"
+      },
+      "app.zenaion-cache": {
+        "name": "ZenAion 应用缓存",
+        "description": "ZenAion 生成的可重建元数据、日志、网页、代码、GPU、着色器与组件缓存",
+        "impact": "不会删除身份、账号、记忆、技能、Agent 状态、设置或浏览器存储；关闭 ZenAion 及其 Agent 主机后清理。"
+      },
+      "app.xmind-rendering-cache": {
+        "name": "Xmind 渲染缓存",
+        "description": "Xmind 生成的可重建网页、代码、GPU、着色器与崩溃报告缓存",
+        "impact": "不会删除思维导图、文档恢复缓存、设置、Cookie 或登录状态；关闭 Xmind 后清理。"
+      },
+      "app.dingtalk-content-cache": {
+        "name": "钉钉内容缓存",
+        "description": "钉钉标记为可清理的微应用、临时图片、卡片、主题与网页资源缓存",
+        "impact": "不会删除聊天、数据库、下载文件、设置或账号；钉钉重启后可能重新下载部分缓存内容。"
+      },
+      "app.tencent-meeting-cache": {
+        "name": "腾讯会议缓存",
+        "description": "腾讯会议生成的可重建网络响应、网页代码、图形、着色器与诊断日志缓存",
+        "impact": "不会删除账号、会议、录制、下载、模型、动态资源、数据库、首选项、HSTS 或浏览器存储；关闭腾讯会议后清理。"
+      },
+      "app.tencent-lemon-cache": {
+        "name": "腾讯柠檬缓存",
+        "description": "腾讯柠檬主程序、状态监控与更新组件生成的可重建网络和远程配置缓存",
+        "impact": "不会删除清理历史、扫描数据库、设置、监控状态、HTTP 数据、日志或启动配置；关闭腾讯柠檬和状态监控后清理。"
+      },
+      "app.thunder-cache": {
+        "name": "迅雷应用缓存",
+        "description": "迅雷生成的可重建网络响应、临时文件、诊断与系统网络缓存",
+        "impact": "不会删除下载任务、已下载文件、云盘数据库、账号、上传、偏好设置或浏览器存储；关闭迅雷后清理。"
+      },
+      "app.sogou-input-cache": {
+        "name": "搜狗输入法缓存",
+        "description": "搜狗输入法界面生成的网页响应与代码缓存",
+        "impact": "不会删除用户词库、个性化数据、备份、设置、模型、组件、更新或浏览器存储；退出搜狗输入法相关进程后清理。"
+      },
+      "app.wps-cache": {
+        "name": "WPS Office 应用缓存",
+        "description": "WPS Office 生成的可重建应用、系统网络与临时文件缓存",
+        "impact": "不会删除文档、恢复数据、模板、云文件、账号、偏好设置或浏览器存储；关闭 WPS Office 后清理。"
+      },
+      "app.wps-rendering-cache": {
+        "name": "WPS Office 渲染缓存",
+        "description": "WPS Office 网页界面生成的可重建网络响应与代码缓存",
+        "impact": "不会删除文档、恢复数据、云文件、账号、Cookie、数据库或浏览器持久化状态；关闭 WPS Office 后清理。"
+      },
+      "app.wps-diagnostic-cache": {
+        "name": "WPS Office 诊断日志",
+        "description": "WPS Office 生成的应用、渲染、云服务、工作区与崩溃诊断数据",
+        "impact": "不会删除文档、恢复数据、模板、云文件、账号或设置；旧日志清理后不能再用于排查问题。"
+      },
+      "app.wechat-rendering-cache": {
+        "name": "微信渲染缓存",
+        "description": "微信多个渲染分区生成的可重建网页、代码、GPU 与着色器缓存",
+        "impact": "不会删除账号、消息、文件、历史记录、Cookie 或登录状态；关闭微信后清理。"
+      },
+      "app.qq-rendering-cache": {
+        "name": "QQ 渲染缓存",
+        "description": "Windows QQ 生成的临时网页、代码、图形、日志与崩溃报告数据",
+        "impact": "不会删除账号、消息、文件、设置、浏览器存储或更新支持；关闭 QQ 后清理。"
+      },
+      "app.wecom-diagnostic-cache": {
+        "name": "企业微信诊断日志",
+        "description": "企业微信生成的加密诊断、网络、通话、框架与安装日志",
+        "impact": "不会删除账号、消息、小程序、设置或应用数据；关闭企业微信后清理。"
+      },
+      "app.discord-cache": {
+        "name": "Discord 应用缓存",
+        "description": "Discord 生成的网页响应、脚本和图形渲染缓存",
+        "impact": "不会删除账号、聊天或登录状态；关闭 Discord 后清理。"
+      },
+      "app.signal-cache": {
+        "name": "Signal 应用缓存",
+        "description": "Signal Desktop 生成的可重建代码、图形、字典、日志与崩溃报告缓存",
+        "impact": "不会删除账号、消息、附件、加密数据库、设置或登录状态；关闭 Signal 后清理。"
+      },
+      "app.postman-cache": {
+        "name": "Postman 渲染缓存",
+        "description": "Postman 生成的可重建网页、脚本、GPU 和分区渲染缓存",
+        "impact": "不会删除工作区、请求、环境、Cookie 或登录状态；关闭 Postman 后清理。"
+      },
+      "app.notion-cache": {
+        "name": "Notion 渲染缓存",
+        "description": "Notion 生成的可重建网页、脚本、GPU、字典、日志与分区渲染缓存",
+        "impact": "不会删除页面、离线内容、账号、Cookie、数据库、设置或登录状态；关闭 Notion 后清理。"
+      },
+      "app.netease-cloud-music-cache": {
+        "name": "网易云音乐缓存",
+        "description": "网易云音乐生成的可重建网页、脚本、GPU 与诊断日志缓存",
+        "impact": "不会删除音乐下载、音频缓存、曲库数据、歌单、账号、Cookie 或设置；关闭网易云音乐后清理。"
+      },
+      "app.zoom-cache": {
+        "name": "Zoom 应用缓存",
+        "description": "Zoom 保存的临时文件",
+        "impact": "不会删除录制、聊天文件或设置；关闭 Zoom 后清理。"
+      },
+      "app.teams-cache": {
+        "name": "Microsoft Teams 缓存",
+        "description": "新版与经典版 Teams 的网页和图形渲染缓存",
+        "impact": "不会删除聊天、账号或下载文件；关闭 Teams 后清理。"
+      },
+      "app.chatgpt-cache": {
+        "name": "ChatGPT 应用缓存",
+        "description": "ChatGPT 与 Codex 桌面应用保存的可重建渲染缓存和诊断数据",
+        "impact": "不会删除对话、项目、凭据、浏览器状态或登录状态；关闭 ChatGPT 后清理。"
+      },
+      "app.claude-cache": {
+        "name": "Claude 应用缓存",
+        "description": "Claude Desktop 生成的可重建网页、代码、GPU、着色器、字典与分区缓存",
+        "impact": "不会删除会话、凭据、本地 Agent 工作、配置、浏览器存储、日志或扩展；关闭 Claude 后清理。"
+      },
+      "app.lm-studio-cache": {
+        "name": "LM Studio 应用缓存",
+        "description": "LM Studio 在 macOS 标准缓存目录中生成的内容",
+        "impact": "不会删除模型、聊天或旧版数据目录；关闭 LM Studio 后清理。"
+      },
+      "app.figma-cache": {
+        "name": "Figma 应用缓存",
+        "description": "Figma 桌面应用的网页、脚本和图形渲染缓存",
+        "impact": "不会删除本地草稿或设计文件；关闭 Figma 后清理。"
+      },
+      "app.adobe-media-cache": {
+        "name": "Adobe 媒体缓存",
+        "description": "Adobe 创意应用生成的媒体分析和预览缓存",
+        "impact": "不会删除项目素材或预设；下次打开项目可能需要重新分析媒体。"
+      },
+      "app.office-cache": {
+        "name": "Microsoft Office 缓存",
+        "description": "Word、Excel 与 PowerPoint 的标准应用缓存",
+        "impact": "不会删除文档、自动恢复或云端同步内容；关闭 Office 应用后清理。"
+      },
+      "app.media-cache": {
+        "name": "影音应用缓存",
+        "description": "音乐、播客和视频播放器生成的标准系统缓存",
+        "impact": "不会删除资料库、离线内容或媒体文件；关闭相关应用后清理。"
+      },
+      "app.media-analysis-cache": {
+        "name": "媒体分析缓存",
+        "description": "照片和媒体分析服务在沙盒内生成的缓存与临时文件",
+        "impact": "不会删除照片或视频；后台分析服务可能重新生成部分内容。"
+      },
+      "app.core-device-cache": {
+        "name": "CoreDevice 设备缓存",
+        "description": "Apple 设备连接服务生成的本地缓存",
+        "impact": "不会删除设备备份；下次连接设备时可能重新建立缓存。"
+      },
+      "app.wallpaper-agent-cache": {
+        "name": "壁纸服务运行缓存",
+        "description": "壁纸代理在沙盒内生成的运行缓存",
+        "impact": "只处理 Caches 目录，不删除壁纸资源和系统设置中的预览封面。"
+      },
+      "app.google-updater-cache": {
+        "name": "Google 更新器缓存",
+        "description": "GoogleUpdater 下载的扩展更新与临时安装缓存",
+        "impact": "不会卸载应用；需要更新时会重新下载对应内容。"
+      },
+      "app.electron-cache": {
+        "name": "桌面应用缓存",
+        "description": "常用桌面应用产生的临时显示数据和日志",
+        "impact": "不会删除账户、会话、数据库或本地文档；关闭相关应用后清理。"
+      },
+      "app.telegram-temporary-cache": {
+        "name": "Telegram 临时文件",
+        "description": "Telegram Desktop 生成的通知图片、托盘图标、日历导出临时文件和崩溃转储",
+        "impact": "需要完全退出 Telegram；账户、聊天、已下载媒体、设置和表情资源会保留。"
+      },
+      "app.vlc-cache": {
+        "name": "VLC 封面与崩溃缓存",
+        "description": "VLC media player 生成的封面图片缓存和崩溃转储",
+        "impact": "需要关闭 VLC；偏好设置、播放列表、媒体库和媒体文件会保留，封面之后可能重新提取或下载。"
+      },
+      "app.ea-rendering-cache": {
+        "name": "EA app 渲染缓存",
+        "description": "EA app 界面使用的临时浏览器缓存和 QML 编译缓存",
+        "impact": "需要关闭 EA app；账户、已安装游戏、下载、离线状态和浏览器存储会保留，界面缓存之后会重建。"
+      },
+      "app.steam-rendering-cache": {
+        "name": "Steam 界面渲染缓存",
+        "description": "Steam 的 Chromium 界面使用的临时网页、代码、GPU 与着色器数据",
+        "impact": "需要完全退出 Steam；账户、Cookie、历史、设置、已安装游戏、下载和游戏着色器缓存会保留，界面内容之后可能重新下载或编译。"
+      },
+      "app.battlenet-cache": {
+        "name": "Battle.net 缓存",
+        "description": "Battle.net 使用的启动器下载内容、Blizzard 临时文件和界面渲染缓存",
+        "impact": "需要关闭 Battle.net 和 Agent；账户、浏览器会话、启动器设置、已安装游戏、下载和补丁状态会保留，界面内容之后可能重新下载。"
+      },
+      "app.spotify-rendering-cache": {
+        "name": "Spotify 界面渲染缓存",
+        "description": "Spotify 桌面界面生成的临时网页、代码、GPU 与着色器数据",
+        "impact": "需要关闭 Spotify；账户、历史、设置、流媒体存储、离线下载和应用文件会保留，界面内容之后可能重新下载或编译。"
+      },
+      "app.dropbox-rendering-cache": {
+        "name": "Dropbox 界面缓存",
+        "description": "Dropbox 桌面界面生成的临时网页、代码、GPU 与着色器数据",
+        "impact": "需要关闭 Dropbox；账户、同步文件、浏览器存储、会话、设置和同步恢复缓存会保留，界面内容之后可重新生成。"
+      },
+      "app.game-launcher-cache": {
+        "name": "游戏启动器缓存",
+        "description": "受支持的游戏启动器生成的可丢弃商店界面与网页缓存",
+        "impact": "需要关闭对应启动器；账户、已安装游戏、下载、清单、补丁状态和安装包会保留，商店内容之后可能重新下载。"
+      },
+      "container.docker-desktop-rendering-cache": {
+        "name": "Docker Desktop 界面缓存",
+        "description": "Docker Desktop 控制面板生成的临时网页、代码、GPU 与着色器数据",
+        "impact": "需要关闭 Docker Desktop；镜像、容器、卷、构建缓存、设置、项目、诊断、日志和虚拟机磁盘会保留，控制面板内容之后可重新生成。"
+      },
+      "container.docker-desktop-diagnostic-cache": {
+        "name": "Docker Desktop 旧日志",
+        "description": "超过 7 天的宿主机与虚拟机诊断日志",
+        "impact": "需要关闭 Docker Desktop；镜像、容器、卷、构建缓存、设置、项目、虚拟机磁盘和近期诊断信息会保留。"
+      },
+      "app.douyin-live-updater-cache": {
+        "name": "抖音直播伴侣更新缓存",
+        "description": "抖音直播伴侣下载后留下的旧安装包",
+        "impact": "不会卸载应用或删除直播内容；需要更新时会重新下载安装包。"
+      },
+      "app.wechat-diagnostic-cache": {
+        "name": "微信日志与临时缓存",
+        "description": "微信和 WeChat 生成的诊断日志与少量临时显示数据",
+        "impact": "不会删除消息、账号、插件或用户文件；关闭微信后清理。"
+      },
+      "browser.chrome-cache": {
+        "name": "Chrome 缓存",
+        "description": "Chrome 生成的临时网页、代码、GPU 与着色器缓存",
+        "impact": "不会清理 Cookie、密码、历史、扩展或书签；关闭浏览器后清理，下次使用时会按需重建。"
+      },
+      "browser.uc-cache": {
+        "name": "UC 浏览器缓存",
+        "description": "UC 浏览器保存的临时网页、代码、GPU、着色器和组件下载缓存",
+        "impact": "不会清理 Cookie、密码、历史、扩展、书签、下载或会话；关闭 UC 浏览器后清理，缓存之后会按需重建或重新下载。"
+      },
+      "browser.360-speed-cache": {
+        "name": "360 极速浏览器缓存",
+        "description": "360 极速浏览器保存的临时网页、代码、GPU、着色器和组件下载缓存",
+        "impact": "不会清理 Cookie、密码、历史、扩展、书签、下载或会话；关闭 360 极速浏览器后清理，缓存之后会按需重建或重新下载。"
+      },
+      "browser.sogou-cache": {
+        "name": "搜狗高速浏览器缓存",
+        "description": "搜狗高速浏览器保存的临时网页、代码、GPU、Dawn 和着色器缓存",
+        "impact": "不会清理 Cookie、密码、历史、扩展、书签、下载或会话；关闭搜狗高速浏览器后清理，缓存之后会按需重建。"
+      },
+      "browser.360-safe-cache": {
+        "name": "360 安全浏览器缓存",
+        "description": "360 安全浏览器保存的临时网页、代码、GPU、Dawn 和着色器缓存",
+        "impact": "不会清理 Cookie、密码、历史、扩展、书签、下载或会话；关闭 360 安全浏览器后清理，缓存之后会按需重建。"
+      },
+      "browser.2345-cache": {
+        "name": "2345 浏览器缓存",
+        "description": "2345 浏览器保存的临时网页、代码、GPU、Dawn 和着色器缓存",
+        "impact": "不会清理 Cookie、密码、历史、扩展、书签、下载或会话；关闭 2345 浏览器后清理，缓存之后会按需重建。"
+      },
+      "browser.edge-cache": {
+        "name": "Edge 缓存",
+        "description": "Edge 保存的临时网页和启动文件",
+        "impact": "不会清理 Cookie、密码、历史、扩展或书签；关闭浏览器后清理，下次使用时会按需重建。"
+      },
+      "browser.edge-offline-cache": {
+        "name": "Edge 离线缓存",
+        "description": "Edge 为加速访问或离线使用保存的网站数据",
+        "impact": "不会删除密码、历史或书签；部分网站之后需要重新下载离线内容。"
+      },
+      "browser.chrome-offline-cache": {
+        "name": "Chrome 离线缓存",
+        "description": "Chrome 为加速访问或离线使用保存的网站数据",
+        "impact": "不会删除密码、历史或书签；部分网站之后需要重新下载离线内容。"
+      },
+      "browser.brave-cache": {
+        "name": "Brave 缓存",
+        "description": "Brave 保存的临时网页和启动文件",
+        "impact": "不会清理 Cookie、密码、历史、扩展或书签；关闭浏览器后清理，下次使用时会按需重建。"
+      },
+      "browser.arc-cache": {
+        "name": "Arc 缓存",
+        "description": "Arc 保存的临时网页和启动文件",
+        "impact": "不会清理空间、Cookie、密码、历史、扩展或书签；关闭浏览器后清理，下次使用时会按需重建。"
+      },
+      "browser.vivaldi-cache": {
+        "name": "Vivaldi 缓存",
+        "description": "Vivaldi 保存的临时网页和启动文件",
+        "impact": "不会清理 Cookie、密码、历史、扩展或书签；关闭浏览器后清理，下次使用时会按需重建。"
+      },
+      "browser.chromium-cache": {
+        "name": "Chromium 缓存",
+        "description": "Chromium 保存的临时网页和启动文件",
+        "impact": "不会清理 Cookie、密码、历史、扩展或书签；关闭浏览器后清理，下次使用时会按需重建。"
+      },
+      "browser.firefox-cache": {
+        "name": "Firefox 缓存",
+        "description": "Firefox 保存的临时网页和启动文件",
+        "impact": "不会清理 Cookie、密码、历史或扩展数据；下次使用时会按需重建。"
+      },
+      "browser.opera-cache": {
+        "name": "Opera 缓存",
+        "description": "Opera 保存的临时网页和启动文件",
+        "impact": "不会清理 Cookie、密码、历史或扩展数据；下次使用时会按需重建。"
+      },
+      "dev.xcode-derived-data": {
+        "name": "Xcode 构建缓存",
+        "description": "Xcode DerivedData、索引与中间构建产物",
+        "impact": "不会删除项目源码；下次构建与索引可能需要更长时间。"
+      },
+      "dev.xcode-auxiliary-cache": {
+        "name": "Xcode 文档与设备日志",
+        "description": "超过 14 天的 Xcode 文档索引与 iOS、watchOS 设备日志",
+        "impact": "不会删除源码或归档；旧文档索引可能在后续使用时重新生成。"
+      },
+      "special.xcode-device-support": {
+        "name": "Xcode DeviceSupport",
+        "description": "Xcode 为真机调试准备的系统支持文件",
+        "impact": "再次调试对应系统版本的设备时，Xcode 需要重新准备支持文件。"
+      },
+      "special.xcode-simulator-runtime": {
+        "name": "Simulator Runtime",
+        "description": "Xcode 安装的 iOS、watchOS、tvOS 与 visionOS 模拟运行环境",
+        "impact": "移除后将无法运行对应系统版本的模拟器，需要时可通过 Xcode 重新下载。"
+      },
+      "special.xcode-archives": {
+        "name": "Xcode 应用归档",
+        "description": "用于发布、导出和符号化崩溃日志的 Xcode Archives",
+        "impact": "仅供查看，不会加入清理；请在确认不再需要分发和符号文件后，通过 Xcode Organizer 管理。"
+      },
+      "special.additional-user-caches": {
+        "name": "其他用户缓存",
+        "description": "未单独列出的其他应用缓存",
+        "impact": "默认不选择，并会跳过正在使用或无法安全检查的缓存；应用之后可能重新生成这些内容。"
+      },
+      "dev.npm-cache": {
+        "name": "npm 下载缓存",
+        "description": "npm 已下载的软件包缓存",
+        "impact": "不会删除项目依赖，后续安装时可能重新下载。"
+      },
+      "dev.npx-cache": {
+        "name": "npx 临时工具缓存",
+        "description": "npx 临时下载和执行的软件包目录",
+        "impact": "不会删除项目依赖；下次执行对应工具时可能重新下载。"
+      },
+      "dev.node-gyp-cache": {
+        "name": "node-gyp 构建缓存",
+        "description": "Node.js 原生模块编译所需的头文件与临时构建缓存",
+        "impact": "不会删除项目源码；后续编译原生模块时可能重新下载头文件。"
+      },
+      "dev.pnpm-cache": {
+        "name": "pnpm 存储缓存",
+        "description": "pnpm 的本地内容寻址存储",
+        "impact": "现有项目文件不删除，后续安装依赖时可能重新下载。"
+      },
+      "dev.yarn-cache": {
+        "name": "Yarn 下载缓存",
+        "description": "Yarn 已下载的软件包缓存",
+        "impact": "不会删除项目依赖，后续安装时可能重新下载。"
+      },
+      "dev.pip-cache": {
+        "name": "pip 下载缓存",
+        "description": "Python pip 已下载的安装包与轮子缓存",
+        "impact": "不会删除虚拟环境，后续安装时可能重新下载。"
+      },
+      "dev.python-cache": {
+        "name": "Python 工具缓存",
+        "description": "Python 开发工具保存的依赖下载与代码分析缓存",
+        "impact": "不会删除虚拟环境或解释器；后续操作可能重新下载依赖。"
+      },
+      "dev.pyinstaller-cache": {
+        "name": "PyInstaller 二进制缓存",
+        "description": "PyInstaller 为后续构建保存的已处理二进制副本",
+        "impact": "不会删除项目、spec 文件或构建产物；后续构建可能需要重新处理二进制文件。"
+      },
+      "dev.python-tooling-cache": {
+        "name": "Python 工具链缓存",
+        "description": "Poetry 与 pyenv-win 保存的包和安装缓存",
+        "impact": "不会删除虚拟环境或已安装解释器；后续操作可能重新下载依赖。"
+      },
+      "dev.uv-cache": {
+        "name": "uv 缓存",
+        "description": "uv 保存的依赖下载与构建缓存",
+        "impact": "不会删除项目、虚拟环境或托管的 Python；后续操作可能重新下载或构建依赖。"
+      },
+      "dev.dart-analysis-cache": {
+        "name": "Dart 分析缓存",
+        "description": "Dart 与 Flutter 工具生成的代码分析缓存",
+        "impact": "不会删除项目或 SDK；编辑器和分析工具可能需要重新建立索引。"
+      },
+      "dev.node-tooling-cache": {
+        "name": "Node.js 工具链缓存",
+        "description": "Corepack、nvm、Bun、node-gyp 与 Electron 下载的工具链缓存",
+        "impact": "不会删除项目依赖；后续构建可能重新下载运行时或原生编译资源。"
+      },
+      "dev.cargo-cache": {
+        "name": "Cargo 与 Rustup 缓存",
+        "description": "Cargo 注册表、Git 依赖及 Rustup 下载缓存",
+        "impact": "不会删除项目源代码或已安装工具链；后续构建可能重新下载依赖。"
+      },
+      "dev.cargo-extracted-sources": {
+        "name": "Cargo 解压源码缓存",
+        "description": "Cargo 为本地构建解压的依赖源码副本",
+        "impact": "不会删除项目或已下载的依赖压缩包；后续构建可能重新解压或下载源码。"
+      },
+      "dev.go-cache": {
+        "name": "Go 构建缓存",
+        "description": "Go 编译器生成的本机构建产物缓存",
+        "impact": "不会删除源代码或模块；后续构建可能重新编译。"
+      },
+      "dev.go-module-cache": {
+        "name": "Go 模块下载缓存",
+        "description": "Go 模块代理下载的压缩包与校验数据",
+        "impact": "不会删除源代码；后续构建可能重新下载模块。"
+      },
+      "dev.homebrew-cache": {
+        "name": "Homebrew 下载缓存",
+        "description": "Homebrew 下载的软件包与源码归档",
+        "impact": "不会卸载软件包；后续安装时可能重新下载。"
+      },
+      "dev.cocoapods-cache": {
+        "name": "CocoaPods 下载缓存",
+        "description": "CocoaPods 保存的依赖下载缓存",
+        "impact": "不会删除项目 Pods 目录或依赖声明；后续安装时可能重新下载。"
+      },
+      "dev.swiftpm-cache": {
+        "name": "Swift Package Manager 缓存",
+        "description": "Swift 包管理器保存的下载与解析缓存",
+        "impact": "不会删除项目源码；后续构建可能重新解析和下载依赖。"
+      },
+      "dev.vscode-cache": {
+        "name": "VS Code 缓存",
+        "description": "VS Code 的临时显示与编译代码数据、已下载扩展包和崩溃报告",
+        "impact": "不会删除源码、设置、已安装扩展、工作区状态、账户或备份；关闭 VS Code 后清理，部分内容之后会重建或重新下载。"
+      },
+      "dev.editor-cache": {
+        "name": "代码编辑器缓存",
+        "description": "代码编辑器的临时搜索、显示和日志数据",
+        "impact": "不会删除扩展、设置、工作区或登录状态；关闭编辑器后清理，下次启动会重建。"
+      },
+      "dev.qoder-rendering-cache": {
+        "name": "Qoder 渲染缓存",
+        "description": "Qoder 各版本生成的代码、扩展包、网页、GPU、着色器和诊断缓存",
+        "impact": "不会删除项目、设置、扩展、备份、工作区或登录状态；关闭两个 Qoder 版本后清理。"
+      },
+      "dev.browser-automation-cache": {
+        "name": "浏览器自动化运行时缓存",
+        "description": "Playwright、Puppeteer、Cypress 与 Selenium 下载的浏览器运行时",
+        "impact": "清理后相关测试工具需要重新下载浏览器，离线环境下可能暂时不可用。"
+      },
+      "dev.visual-studio-cache": {
+        "name": "Visual Studio 缓存",
+        "description": "Visual Studio 的临时搜索、显示和日志数据",
+        "impact": "不会删除解决方案或扩展；关闭 Visual Studio 后清理，下次启动会重建索引。"
+      },
+      "dev.jetbrains-cache": {
+        "name": "JetBrains IDE 缓存",
+        "description": "JetBrains IDE 与 Android Studio 的临时搜索、显示和日志数据",
+        "impact": "不会删除项目或设置；关闭相关 IDE 后清理，下次启动会重新索引。"
+      },
+      "dev.android-cache": {
+        "name": "Android SDK 临时缓存",
+        "description": "Android SDK 管理器下载和解压时生成的临时缓存",
+        "impact": "不会删除已安装 SDK、模拟器或项目；后续安装组件时可能重新下载。"
+      },
+      "dev.android-user-cache": {
+        "name": "Android 用户缓存",
+        "description": "Android 工具生成的下载和构建缓存",
+        "impact": "不会删除 SDK、模拟器或项目；后续操作可能重新下载或生成资源。"
+      },
+      "dev.package-manager-cache": {
+        "name": "其他包管理器缓存",
+        "description": "Composer、Deno 与 vcpkg 保存的下载和二进制包缓存",
+        "impact": "不会删除项目源代码；后续安装或构建可能重新下载依赖。"
+      },
+      "dev.nuget-cache": {
+        "name": "NuGet 包与请求缓存",
+        "description": "NuGet 保存的全局包与 HTTP 请求缓存",
+        "impact": "不会删除项目源代码，后续还原依赖时可能重新下载。"
+      },
+      "dev.qclaw-compile-cache": {
+        "name": "QClaw 编译缓存",
+        "description": "QClaw 的 Node.js 运行时生成的模块编译缓存",
+        "impact": "不会删除工作区、记忆、插件或设置；请先关闭 QClaw，清理后首次启动可能稍慢。"
+      },
+      "dev.maven-cache": {
+        "name": "Maven 本地仓库",
+        "description": "Maven 下载或本地安装到本地仓库的构件",
+        "impact": "不会删除项目和 Maven 设置；仅存在于本地的构件需要重新构建或安装。"
+      },
+      "dev.gradle-cache": {
+        "name": "Gradle 构建缓存",
+        "description": "Gradle 下载的依赖、Wrapper 发行包、构建缓存和临时文件",
+        "impact": "不会删除项目、Gradle 设置或已安装的 JDK；关闭 Gradle 和 Java 后清理，后续构建可能重新下载或生成相关数据。"
+      },
+      "dev.user-tool-cache": {
+        "name": "用户级开发工具缓存",
+        "description": "Bun、Corepack、node-gyp、pyenv、代码检查器与浏览器自动化缓存",
+        "impact": "不会删除项目、虚拟环境或配置；后续使用时可能重新下载或生成。"
+      },
+      "dev.build-accelerator-cache": {
+        "name": "构建加速与基础设施缓存",
+        "description": "sccache 与 Terraform 插件下载缓存",
+        "impact": "不会删除项目或 Terraform 状态；后续构建和初始化可能重新下载或生成。"
+      },
+      "dev.sccache-cache": {
+        "name": "sccache 编译缓存",
+        "description": "sccache 为 Rust、C/C++ 等编译任务保存的可重建编译产物",
+        "impact": "不会删除源代码或工具配置；后续构建可能重新编译。"
+      },
+      "dev.jvm-tooling-cache": {
+        "name": "JVM 工具链缓存",
+        "description": "SBT 与 Ivy 下载的 JVM、启动组件和依赖缓存",
+        "impact": "不会删除项目源代码；后续构建可能重新下载依赖或启动组件。"
+      },
+      "ai.huggingface-xet-cache": {
+        "name": "Hugging Face 下载缓存",
+        "description": "用于加快 Hugging Face 下载和上传的临时文件",
+        "impact": "不会删除模型、数据集或未完成的上传任务，之后传输时可能重新下载这些文件。"
+      },
+      "special.ai-model-hugging-face": {
+        "name": "Hugging Face 本地模型",
+        "description": "Hugging Face Hub 下载到本机的模型权重与快照",
+        "impact": "只会移除你明确勾选的模型；相关应用下次使用时需要重新下载。"
+      },
+      "special.ai-model-whisper": {
+        "name": "Whisper 语音识别模型",
+        "description": "OpenAI Whisper 下载到本机的语音识别模型权重",
+        "impact": "只会移除你明确勾选的模型；再次转写时需要重新下载。"
+      },
+      "special.ai-model-pytorch": {
+        "name": "PyTorch Hub 模型",
+        "description": "PyTorch Hub 下载的模型检查点与权重文件",
+        "impact": "只会移除你明确勾选的检查点；相关程序下次运行时可能重新下载。"
+      },
+      "special.ai-cache-pytorch-hub-repositories": {
+        "name": "PyTorch Hub 模型仓库缓存",
+        "description": "PyTorch Hub 为加载预训练模型而下载的模型定义代码仓库",
+        "impact": "只会移除你明确勾选的仓库缓存，不会清理检查点；再次加载相关模型时需要重新下载。"
+      },
+      "special.ai-model-modelscope": {
+        "name": "ModelScope 本地模型",
+        "description": "魔搭社区 SDK、FunASR、Qwen 与相关框架下载的模型仓库",
+        "impact": "只会移除你明确勾选的模型，不会清理数据集或训练结果；再次使用时需要重新下载。"
+      },
+      "special.ai-model-keras": {
+        "name": "Keras 预训练模型",
+        "description": "Keras Applications 自动下载的预训练权重",
+        "impact": "只会移除你明确勾选的权重，不会清理 Keras 数据集；再次使用时需要重新下载。"
+      },
+      "special.ai-model-openai-clip": {
+        "name": "OpenAI CLIP 视觉模型",
+        "description": "OpenAI CLIP 自动下载的图文理解模型权重",
+        "impact": "只会移除你明确勾选的模型；再次使用 CLIP 时需要重新下载。"
+      },
+      "special.ai-model-tensorflow-hub": {
+        "name": "TensorFlow Hub 模型",
+        "description": "TensorFlow Hub 下载并解压到本机的模型模块",
+        "impact": "只会移除你明确勾选的模块；相关程序下次运行时需要重新下载并解压。"
+      },
+      "special.ai-model-lm-studio": {
+        "name": "LM Studio 本地模型",
+        "description": "LM Studio 模型目录中的大语言模型和量化权重",
+        "impact": "请先关闭 LM Studio；只会移除你明确勾选的模型，之后需要重新下载。"
+      },
+      "special.ai-model-ollama": {
+        "name": "Ollama 本地模型库",
+        "description": "已下载 Ollama 模型包含的文件",
+        "impact": "Ollama 的多个模型会共用文件，因此所选模型库需要整体清理。请先关闭 Ollama，之后需要重新下载模型。"
+      },
+      "special.ai-model-coqui-tts": {
+        "name": "Coqui TTS 语音模型",
+        "description": "Coqui TTS 下载的语音合成与声码器模型",
+        "impact": "只会移除你明确勾选的模型；再次合成语音时需要重新下载。"
+      },
+      "special.ai-model-gpt4all": {
+        "name": "GPT4All 本地模型",
+        "description": "GPT4All 默认下载目录中的 GGUF 大语言模型",
+        "impact": "请先关闭 GPT4All；只会移除你明确勾选的模型，不会清理聊天或本地文档。"
+      },
+      "special.ai-model-jan": {
+        "name": "Jan 本地模型",
+        "description": "Jan 数据目录中由应用管理的本地模型",
+        "impact": "请先关闭 Jan；只会移除你明确勾选的模型，不会清理对话、助手、设置或日志。"
+      },
+      "project.rust-build-artifacts": {
+        "name": "Rust 构建产物",
+        "description": "Cargo 项目中的 target 与跨平台编译缓存",
+        "impact": "源代码和 Cargo 配置会保留；下次构建需要重新编译。"
+      },
+      "project.node-build-artifacts": {
+        "name": "Node.js 构建产物",
+        "description": "Node.js 项目的依赖目录与框架构建缓存",
+        "impact": "源代码和锁文件会保留；依赖与缓存需要重新安装或生成。"
+      },
+      "project.react-native-build-artifacts": {
+        "name": "React Native 构建产物",
+        "description": "React Native 项目的 Android、iOS、Expo 与 Metro 缓存",
+        "impact": "项目源代码会保留；后续移动端构建会重新生成缓存。"
+      },
+      "project.python-build-artifacts": {
+        "name": "Python 构建产物",
+        "description": "Python 项目的测试、类型检查与字节码缓存",
+        "impact": "源码与虚拟环境不会被删除；工具会按需重新生成缓存。"
+      },
+      "project.maven-build-artifacts": {
+        "name": "Maven 构建产物",
+        "description": "Maven 项目 target 目录中的编译输出",
+        "impact": "源码与 pom.xml 会保留；下次构建需要重新编译。"
+      },
+      "project.gradle-build-artifacts": {
+        "name": "Gradle 构建产物",
+        "description": "Gradle 项目的 build 输出与项目级缓存",
+        "impact": "源码与构建脚本会保留；下次构建会重新生成内容。"
+      },
+      "project.sbt-build-artifacts": {
+        "name": "SBT 构建产物",
+        "description": "SBT 项目的 target 编译输出",
+        "impact": "Scala 源码和构建定义会保留；下次构建需要重新编译。"
+      },
+      "project.dotnet-build-artifacts": {
+        "name": ".NET 构建产物",
+        "description": ".NET 项目的 bin 与 obj 编译目录",
+        "impact": "项目文件和源代码会保留；下次构建需要重新编译。"
+      },
+      "project.swift-build-artifacts": {
+        "name": "Swift 构建产物",
+        "description": "Swift Package Manager 生成的 .build 目录",
+        "impact": "Package.swift 和源码会保留；依赖与目标需要重新构建。"
+      },
+      "project.flutter-build-artifacts": {
+        "name": "Flutter 构建产物",
+        "description": "Flutter 与 Dart 项目的构建输出和工具缓存",
+        "impact": "项目源码会保留；Flutter 工具会重新生成相关目录。"
+      },
+      "project.cmake-build-artifacts": {
+        "name": "CMake 构建产物",
+        "description": "CMake 项目常见的独立构建目录",
+        "impact": "CMakeLists.txt 和源码会保留；需要重新配置并构建。"
+      },
+      "project.zig-build-artifacts": {
+        "name": "Zig 构建产物",
+        "description": "Zig 项目的本地编译缓存",
+        "impact": "build.zig 和源码会保留；下次构建会重新编译。"
+      },
+      "project.godot-build-artifacts": {
+        "name": "Godot 构建产物",
+        "description": "Godot 项目生成的导入与编辑器缓存",
+        "impact": "项目资源与配置会保留；重新打开项目时会再次导入。"
+      },
+      "project.elixir-build-artifacts": {
+        "name": "Elixir 构建产物",
+        "description": "Mix 编译输出与语言服务缓存",
+        "impact": "Elixir 源码和 mix.exs 会保留；工具会重新生成缓存。"
+      },
+      "project.terraform-build-artifacts": {
+        "name": "Terraform 工具目录",
+        "description": "Terraform 项目下载的 Provider 与模块工作目录",
+        "impact": "配置、状态和锁文件会保留；下次初始化可能重新下载依赖。"
+      },
+      "project.unity-build-artifacts": {
+        "name": "Unity 构建产物",
+        "description": "Unity 项目的 Library、Temp、Obj 与诊断目录",
+        "impact": "Assets 和 ProjectSettings 会保留；重新打开项目可能需要较长时间重新导入。"
+      },
+      "project.unreal-build-artifacts": {
+        "name": "Unreal 构建产物",
+        "description": "Unreal 项目的二进制、中间文件与派生数据缓存",
+        "impact": "项目内容与配置会保留；下次打开或构建会重新生成内容。"
+      },
+      "project.cocoapods-build-artifacts": {
+        "name": "CocoaPods 项目依赖",
+        "description": "由 Podfile 安装到项目中的 Pods 目录",
+        "impact": "源码、Podfile 与锁文件会保留；需要再次执行依赖安装。"
+      },
+      "project.haskell-build-artifacts": {
+        "name": "Haskell 构建产物",
+        "description": "Stack 与 Cabal 项目的本地构建目录",
+        "impact": "Haskell 源码和项目配置会保留；下次构建需要重新编译。"
+      },
+      "project.composer-build-artifacts": {
+        "name": "Composer 项目依赖",
+        "description": "PHP Composer 项目安装的 vendor 依赖目录",
+        "impact": "源码、composer.json 与锁文件会保留；依赖需要重新安装。"
+      },
+      "project.jupyter-build-artifacts": {
+        "name": "Jupyter 笔记本检查点",
+        "description": "Jupyter 在笔记本旁自动生成的检查点目录",
+        "impact": "笔记本会保留；继续编辑时 Jupyter 会重新生成检查点。"
+      },
+      "project.pixi-build-artifacts": {
+        "name": "Pixi 项目环境",
+        "description": "根据 Pixi 项目清单生成的本地环境目录",
+        "impact": "源码、pixi.toml 与锁文件会保留；环境需要重新恢复。"
+      },
+      "special.docker-build-cache": {
+        "name": "Docker 构建缓存",
+        "description": "Docker 标记为未使用且未被镜像共享的构建缓存",
+        "impact": "不会删除镜像、容器、网络或卷；后续构建可能重新下载或生成缓存。"
+      },
+      "special.conda-cache": {
+        "name": "Conda 下载缓存",
+        "description": "Conda 检测到的已下载软件包和临时数据",
+        "impact": "不会删除环境或已安装的软件包，之后可能重新下载这些文件。"
+      },
+      "special.codex-archived-sessions": {
+        "name": "较早的 Codex 归档会话",
+        "description": "超过 30 天未修改的 Codex 已归档对话记录",
+        "impact": "只会永久移除明确选择的归档会话；清理后无法再次打开或恢复。"
+      },
+      "special.rust-toolchains": {
+        "name": "附加 Rust 工具链",
+        "description": "未被默认、当前活动、目录覆盖或已发现项目配置使用的 Rust 版本",
+        "impact": "只会通过 rustup 卸载明确选择的版本；仍需要这些版本的项目之后必须重新下载。"
+      },
+      "special.dropbox-cache": {
+        "name": "Dropbox 临时缓存",
+        "description": "根据 Dropbox 账户位置发现的上传、下载和恢复临时文件",
+        "impact": "需要完全退出 Dropbox；同步文件和账户设置会保留，临时文件之后可能重新生成。"
+      },
+      "special.windows-recycle-bin": {
+        "name": "回收站",
+        "description": "当前账户在 Windows 回收站中的所有项目",
+        "impact": "清空后这些文件和文件夹将无法从回收站恢复；此项不会默认勾选。"
+      },
+      "special.windows-system-logs": {
+        "name": "Windows 日志文件",
+        "description": "Windows 目录下 Panther、Logs 和 System32\\LogFiles 中超过 3 天的安装、升级和诊断日志",
+        "impact": "只处理固定系统日志目录和日志类型；占用中或当前账户无权访问的文件会被跳过。"
+      },
+      "special.windows-internet-cache": {
+        "name": "Internet 临时文件",
+        "description": "Windows 可清理的临时网络数据",
+        "impact": "不会删除密码和浏览历史，部分页面之后需要重新加载。"
+      },
+      "special.windows-delivery-optimization": {
+        "name": "传递优化文件",
+        "description": "Windows 不再需要的更新传递缓存",
+        "impact": "不会删除已安装的更新，之后可能重新下载部分更新数据。"
+      },
+      "special.windows-defender-cache": {
+        "name": "Microsoft Defender 缓存",
+        "description": "Windows 可清理的 Defender 临时数据",
+        "impact": "不会删除保护设置、隔离内容和当前安全定义。"
+      },
+      "special.windows-update-cleanup": {
+        "name": "Windows 更新清理",
+        "description": "Windows 可清理的旧版更新文件",
+        "impact": "已安装的更新会保留；清理旧文件后，部分更新可能无法回退。"
+      },
+      "special.macos-universal-binaries": {
+        "name": "通用二进制文件",
+        "description": "兼容应用中额外包含的 Intel 或 Apple 芯片代码",
+        "impact": "会保留当前 Mac 需要的代码，并在清理前后检查应用。正在运行或无法安全修改的应用会被跳过。重新安装或更新应用可恢复对两种处理器的支持。"
+      }
+    },
+    "actionMessages": {
+      "blocked": "请关闭相关应用后重试",
+      "previewed": "检查完成，未删除任何文件",
+      "completed": "清理完成",
+      "partial": "正在使用或无权限的文件已安全跳过",
+      "failed": "清理未能完成，没有删除其他文件"
+    },
+    "actionReasons": {
+      "runningProcesses": "请关闭 {processes} 后重试",
+      "itemsSkipped": "正在使用或无权限的文件已安全跳过",
+      "requiredToolUnavailable": "未找到清理所需的应用或工具，未做任何更改",
+      "preflightFailed": "无法安全检查所选文件，未做任何更改",
+      "executionFailed": "清理未能完成，没有删除其他文件",
+      "verificationFailed": "清理已执行，但 MangoDisk 无法确认结果，请重新扫描",
+      "cleanerUnavailable": "此清理功能暂时不可用，未做任何更改"
+    }
+  }
+}

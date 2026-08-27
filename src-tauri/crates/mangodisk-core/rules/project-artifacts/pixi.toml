@@ -1,0 +1,19 @@
+id = "project.pixi-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["pixi.toml"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".pixi"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://pixi.sh/latest/workspace/multi_environment/"]
+verified_at = "2026-07-31"

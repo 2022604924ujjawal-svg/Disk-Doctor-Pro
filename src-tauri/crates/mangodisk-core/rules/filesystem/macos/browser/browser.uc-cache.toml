@@ -1,0 +1,64 @@
+# UC keeps Chromium profile state beside renderer caches. Whole-profile roots
+# are intentionally excluded so bookmarks, credentials, extensions, browsing
+# history, cookies, and sessions remain outside the cleanup boundary.
+id = "browser.uc-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["UC", "UC Helper", "UC Helper (GPU)", "UC Helper (Renderer)"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["org.uc.UC", "UC"] },
+  { kind = "anyRootExists" },
+]
+
+# The signed Apple-silicon build stores its network and code cache under the
+# platform cache root rather than inside Application Support.
+[[roots]]
+template = "${user_library}/Caches/UC"
+
+[[roots]]
+template = "${user_library}/Caches/org.uc.UC"
+
+[[roots]]
+template = "${application_support}/UC/ShaderCache"
+
+[[roots]]
+template = "${application_support}/UC/GrShaderCache"
+
+[[roots]]
+template = "${application_support}/UC/GraphiteDawnCache"
+
+# Chromium's component CRX cache contains downloaded component packages, not
+# the installed extensions or their profile-scoped settings.
+[[roots]]
+template = "${application_support}/UC/component_crx_cache"
+
+[[roots]]
+template = "${application_support}/UC"
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Media Cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed UC 1.1.0.22 on Apple silicon reproduced dedicated web, code, GPU, shader, and component-package caches; real cleanup preserved profile databases, credentials, history, bookmarks, extensions, sessions, and settings"
+verified_at = "2026-08-14"
+verified_platform = "macos"
+references = [
+  "https://www.uc.cn/zh-cn/browser/pc.html",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

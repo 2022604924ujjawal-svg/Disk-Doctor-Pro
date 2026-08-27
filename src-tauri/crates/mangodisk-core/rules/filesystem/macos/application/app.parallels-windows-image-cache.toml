@@ -1,0 +1,45 @@
+# Parallels downloads Windows ESD installation media into its private Downloads
+# directory. Match only old top-level ESD images; virtual-machine bundles,
+# snapshots, configuration, and user files live outside this boundary.
+id = "app.parallels-windows-image-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.parallels.desktop.console", "Parallels Desktop"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Parallels/Downloads"
+verified_rebuildable = true
+
+[matcher]
+kind = "allOf"
+items = [
+  { kind = "extensionIn", values = ["esd"] },
+  { kind = "olderThan", days = 7 },
+  { kind = "maxDepth", depth = 1 },
+]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Parallels Desktop 19.1 downloaded a valid Windows ARM ESD into its private Downloads directory. A running VM used its PVM bundle without opening old images; only top-level ESD files older than seven days are selected"
+verified_at = "2026-08-21"
+verified_platform = "macos"
+references = [
+  "https://kb.parallels.com/en/129607",
+  "https://kb.parallels.com/en/130126",
+]

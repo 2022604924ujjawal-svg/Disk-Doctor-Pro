@@ -1,0 +1,46 @@
+# WPS stores documents, recovery data, cloud files, templates, account state,
+# add-ons, and settings beside one fixed application cache directory. Only the
+# dedicated cache root is removed after every WPS owner process has stopped.
+id = "app.wps-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = [
+  "wpsoffice.exe",
+  "wps.exe",
+  "et.exe",
+  "wpp.exe",
+  "wpspdf.exe",
+  "wpscloudsvr.exe",
+  "wpscenter.exe",
+  "promecefpluginhost.exe",
+  "ksomisc.exe",
+  "wpsupdate.exe",
+]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Kingsoft.WPSOffice.CN", "WPS Office", "WPS Office CN"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/Kingsoft/office6/cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed WPS Office 12.1.0.28043 reproduced a dedicated application cache. Documents, recovery data, backups, cloud files, templates, add-ons, accounts, preferences, and browser storage remain outside this root"
+verified_at = "2026-08-11"
+verified_platform = "windows"
+references = ["https://www.wps.cn/product/wpswin"]

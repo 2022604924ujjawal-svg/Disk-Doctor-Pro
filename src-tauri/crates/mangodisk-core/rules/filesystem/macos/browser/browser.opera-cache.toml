@@ -1,0 +1,40 @@
+id = "browser.opera-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Opera"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.operasoftware.Opera", "Opera"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.operasoftware.Opera"
+
+[[roots]]
+template = "${application_support}/com.operasoftware.Opera/ShaderCache"
+
+[[roots]]
+template = "${application_support}/com.operasoftware.Opera/GrShaderCache"
+
+[[roots]]
+template = "${application_support}/com.operasoftware.Opera/GraphiteDawnCache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Opera keeps rebuildable macOS and Chromium rendering caches outside passwords, cookies, history, and extension state"
+verified_at = "2026-07-30"
+verified_platform = "macos"

@@ -1,0 +1,28 @@
+id = "app.google-updater-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${application_support}/Google/GoogleUpdater/crx_cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The selected crx_cache contains downloaded updater payloads under GoogleUpdater; Chrome documentation identifies GoogleUpdater as the component that retrieves and installs updates"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://support.google.com/chrome/answer/14697318?hl=en"]

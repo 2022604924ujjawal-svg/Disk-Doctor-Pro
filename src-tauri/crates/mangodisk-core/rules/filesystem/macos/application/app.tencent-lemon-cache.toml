@@ -1,0 +1,45 @@
+# Tencent Lemon stores cleanup history, scan databases, preferences, monitor
+# state, HTTP storage, and diagnostic logs outside three dedicated Foundation
+# cache containers. Only those cache roots are removed after their real owners
+# stop; the privileged daemon does not hold files inside these user caches.
+id = "app.tencent-lemon-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Tencent Lemon", "LemonMonitor", "LemonUpdate"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.tencent.Lemon", "Tencent Lemon"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.tencent.Lemon"
+
+[[roots]]
+template = "${user_library}/Caches/com.tencent.LemonMonitor"
+
+[[roots]]
+template = "${user_library}/Caches/com.tencent.LemonUpdate"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed and notarized Tencent Lemon 5.3.4 reproduced three dedicated cache containers. Cleanup history, scan databases, settings, monitor state, HTTP storage, logs, launch configuration, and sandbox data are excluded"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://lemon.qq.com/",
+  "https://developer.apple.com/documentation/foundation/url/cachesdirectory",
+]

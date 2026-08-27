@@ -1,0 +1,19 @@
+id = "project.rebar-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["rebar.config"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "_build"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://rebar3.org/docs/workflow/"]
+verified_at = "2026-07-18"

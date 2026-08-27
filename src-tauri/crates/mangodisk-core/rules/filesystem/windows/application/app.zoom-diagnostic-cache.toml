@@ -1,0 +1,35 @@
+# Zoom recordings and meeting downloads are user content and remain excluded.
+# Only diagnostic logs older than two weeks are eligible for cleanup.
+id = "app.zoom-diagnostic-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Zoom.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Zoom", "Zoom Workplace"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/Zoom/logs"
+
+[matcher]
+kind = "olderThan"
+days = 14
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Zoom documents AppData/Roaming/Zoom/logs as its Windows troubleshooting-log directory; the rule retains the newest fourteen days and excludes recordings, chat files, downloads, configuration, and account data"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0066286"]

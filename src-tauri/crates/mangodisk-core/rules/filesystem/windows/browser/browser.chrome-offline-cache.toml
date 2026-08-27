@@ -1,0 +1,38 @@
+id = "browser.chrome-offline-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "browser"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Google Chrome", "chrome.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.google.Chrome", "Google Chrome"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Google/Chrome/User Data"
+verified_rebuildable = true
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["Service Worker/CacheStorage", "Service Worker/ScriptCache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only Service Worker CacheStorage, ScriptCache, and Shared Dictionary cache below discovered Chrome profiles; cookies, history, passwords, bookmarks, extensions, Local Storage, and IndexedDB are excluded"
+verified_at = "2026-07-27"
+verified_platform = "windows"
+references = ["https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md"]

@@ -1,0 +1,19 @@
+id = "project.dune-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["dune-project", "dune-workspace"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "_build"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://dune.readthedocs.io/en/latest/usage.html"]
+verified_at = "2026-07-18"

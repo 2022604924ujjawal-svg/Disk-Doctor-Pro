@@ -1,0 +1,54 @@
+id = "system.directx-shader-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "system"
+risk = "safe"
+default_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${local_app_data}/D3DSCache"
+
+[[roots]]
+template = "${local_app_data}/NVIDIA/DXCache"
+
+[[roots]]
+template = "${local_app_data}/NVIDIA/GLCache"
+
+[[roots]]
+template = "${local_app_data}/NVIDIA Corporation/NV_Cache"
+
+[[roots]]
+template = "${local_app_data}/AMD/DxCache"
+
+[[roots]]
+template = "${local_app_data}/AMD/DxcCache"
+
+[[roots]]
+template = "${local_app_data}/AMD/GLCache"
+
+[[roots]]
+template = "${local_app_data}/AMD/VkCache"
+
+[[roots]]
+template = "${local_app_data}/Intel/ShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Intel/D3DSCache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only explicitly named per-user Direct3D, OpenGL, Vulkan, and vendor shader-cache directories; driver packages, control-panel settings, game saves, and application data remain outside the roots"
+verified_at = "2026-07-18"
+verified_platform = "windows"

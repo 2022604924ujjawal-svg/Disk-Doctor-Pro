@@ -1,0 +1,35 @@
+# Windows browsers and download managers use these temporary extensions. Only
+# files older than seven days are eligible, and the rule remains recoverable
+# and unselected by default.
+id = "system.stale-partial-downloads"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "system"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${home}/Downloads"
+
+[matcher]
+kind = "allOf"
+items = [
+  { kind = "olderThan", days = 7 },
+  { kind = "extensionIn", values = ["crdownload", "download", "partial", "part"] },
+  { kind = "maxDepth", depth = 3 },
+]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The matcher selects only files ending in crdownload, download, partial, or part within three levels of Downloads and applies MangoDisk's seven-day age gate; completed downloads and recent partial transfers are excluded"
+verified_at = "2026-07-17"
+verified_platform = "windows"

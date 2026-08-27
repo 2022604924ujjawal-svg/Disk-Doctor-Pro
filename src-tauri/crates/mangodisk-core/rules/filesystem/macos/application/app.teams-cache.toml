@@ -1,0 +1,44 @@
+# New and classic Teams use different cache roots. Only explicit Caches, Cache,
+# Code Cache, and GPUCache directories are included; accounts, chats,
+# databases, and downloaded files are preserved.
+id = "app.teams-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["MSTeams", "Microsoft Teams"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.microsoft.teams2", "Microsoft Teams"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.microsoft.teams2"
+
+[[roots]]
+template = "${application_support}/Microsoft/Teams/Cache"
+
+[[roots]]
+template = "${application_support}/Microsoft/Teams/Code Cache"
+
+[[roots]]
+template = "${application_support}/Microsoft/Teams/GPUCache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Microsoft documents clearing Teams cache and rebuilding it on restart; the rule limits classic Teams to Cache, Code Cache, and GPUCache and new Teams to its Library/Caches bundle directory while account, chat, and downloaded data are excluded"
+verified_at = "2026-07-17"
+verified_platform = "macos"
+references = ["https://learn.microsoft.com/en-us/troubleshoot/microsoftteams/teams-administration/clear-teams-cache"]

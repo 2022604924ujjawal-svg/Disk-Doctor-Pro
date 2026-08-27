@@ -1,0 +1,31 @@
+id = "app.obs-diagnostic-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["obs64.exe", "obs32.exe"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${roaming_app_data}"
+kind = "childDirectories"
+child_names = ["obs-studio", "wxobs-studio"]
+suffixes = ["logs", "profiler_data", "crashes"]
+
+[matcher]
+kind = "olderThan"
+days = 14
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule expands only known OBS profile directories and selects logs, profiler_data, and crash reports older than fourteen days; recordings, scenes, profiles, plugins, and settings are excluded"
+verified_at = "2026-07-18"
+verified_platform = "windows"

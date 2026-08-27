@@ -1,0 +1,19 @@
+id = "project.composer-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["composer.json"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "vendor"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://getcomposer.org/doc/03-cli.md#install-i"]
+verified_at = "2026-07-31"

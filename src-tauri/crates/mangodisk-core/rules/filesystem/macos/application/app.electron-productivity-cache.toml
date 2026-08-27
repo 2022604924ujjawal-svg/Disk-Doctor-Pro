@@ -1,0 +1,37 @@
+# Common Electron applications share the same rendering-cache layout. Storage,
+# cookies, IndexedDB, workspace data, and application databases are excluded.
+id = "app.electron-productivity-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Insomnia", "Notion", "Obsidian", "GitHub Desktop"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${application_support}"
+kind = "childDirectories"
+child_names = ["Insomnia", "Notion", "obsidian", "GitHub Desktop"]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache", "logs", "Crashpad/reports"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Known Electron product roots select only fixed rendering-cache suffixes. Settings, workspaces, cookies, Local Storage, and IndexedDB are excluded; Postman uses a dedicated rule for its dynamic partitions"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://www.electronjs.org/docs/latest/api/app#appgetpathname",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

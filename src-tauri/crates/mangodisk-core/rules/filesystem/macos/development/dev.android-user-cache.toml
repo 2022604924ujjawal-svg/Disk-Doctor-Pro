@@ -1,0 +1,41 @@
+id = "dev.android-user-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["Android Studio", "adb"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+# The .android root also contains signing keys, device-pairing keys, AVDs, and
+# emulator data. The rule deliberately owns only named rebuildable caches.
+[[roots]]
+template = "${home}/.android/cache"
+verified_rebuildable = true
+
+[[roots]]
+template = "${home}/.android/build-cache"
+verified_rebuildable = true
+
+[[roots]]
+template = "${home}/.android/breakpad"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Android development state such as AVDs and keys is stored outside the selected cache, build-cache, and crash-report directories"
+verified_at = "2026-07-30"
+verified_platform = "macos"
+references = [
+  "https://developer.android.com/studio/command-line/variables",
+]

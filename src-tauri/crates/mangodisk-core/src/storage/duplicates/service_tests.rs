@@ -1,0 +1,1413 @@
+use super::super::candidates::{
+    load_file_identity, modified_ms, normalize_roots, remove_physical_aliases, validate_open_file,
+    FileCandidate, FileIdentity, FileIdentitySource,
+};
+use super::super::hash_cache;
+use super::*;
+use crate::shared::operation::OPERATION_CANCELLED_ERROR;
+use crate::storage::duplicates::session::DUPLICATE_RESULT_PAGE_SIZE;
+use mangodisk_platform::PlatformCancellation;
+use std::{
+    collections::{HashMap, HashSet},
+    fs::{self, File},
+    io::{Read, Seek, SeekFrom},
+    path::{Path, PathBuf},
+    sync::{
+        atomic::{AtomicUsize, Ordering},
+        Arc, Mutex,
+    },
+    thread,
+    time::{Instant, UNIX_EPOCH},
+};
+
+const SAMPLE_BENCHMARK_RUNS: usize = 5;
+const SAMPLE_BENCHMARK_PLANS: [SamplePlan; 4] = [
+    SamplePlan::Head4KiB,
+    SamplePlan::HeadTail8KiB,
+    SamplePlan::HeadMiddleTail16KiB,
+    SamplePlan::HeadMiddleTail256KiB,
+];
+
+fn never_cancelled() -> PlatformCancellation {
+    PlatformCancellation::new(|| false)
+}
+
+#[test]
+fn delete_validation_failures_have_stable_diagnostic_reasons() {
+    assert_eq!(
+        duplicate_delete_validation_reason("the duplicate-file result session expired; scan again"),
+        "session_expired"
+    );
+    assert_eq!(
+        duplicate_delete_validation_reason("a duplicate item is outside the current scan roots"),
+        "outside_scan_roots"
+    );
+    assert_eq!(
+        duplicate_delete_validation_reason("an unexpected validation failure"),
+        "unknown"
+    );
+}
+
+fn result_signature(result: &DuplicateFilesResult) -> Vec<(String, u64, u64, Vec<String>)> {
+    result
+        .groups
+        .iter()
+        .map(|group| {
+            (
+                group.hash.clone(),
+                group.bytes_per_file,
+                group.reclaimable_bytes,
+                group
+                    .entries
+                    .iter()
+                    .map(|entry| entry.path.clone())
+                    .collect(),
+            )
+        })
+        .collect()
+}
+
+#[test]
+fn scan_root_order_is_independent_of_user_insertion_order() {
+    let sandbox = std::env::temp_dir().join(format!(
+        "mangodisk-duplicate-root-order-{}-{}",
+        std::process::id(),
+        now_ms()
+    ));
+    let alpha = sandbox.join("alpha");
+    let beta = sandbox.join("beta");
+    let nested = beta.join("nested");
+    fs::create_dir_all(&alpha).expect("the first scan root should be created");
+    fs::create_dir_all(&nested).expect("the nested scan root should be created");
+
+    let forward = normalize_roots(vec![
+        display_path(&nested),
+        display_path(&beta),
+        display_path(&alpha),
+    ])
+    .expect("forward-ordered scan roots should normalize");
+    let reversed = normalize_roots(vec![
+        display_path(&alpha),
+        display_path(&beta),
+        display_path(&nested),
+    ])
+    .expect("reverse-ordered scan roots should normalize");
+
+    assert_eq!(
+        forward, reversed,
+        "reordering the same root set must preserve cache identity"
+    );
+    assert_eq!(
+        forward.len(),
+        2,
+        "the parent root must consistently subsume the duplicate nested root"
+    );
+    fs::remove_dir_all(sandbox).expect("the scan-root ordering fixture should be removed");
+}
+
+fn benchmark_sample_plans(case_name: &str, root: &Path) {
+    let mut expected_signature = None;
+    for plan in SAMPLE_BENCHMARK_PLANS {
+        let mut elapsed_samples = Vec::with_capacity(SAMPLE_BENCHMARK_RUNS);
+        for run in 1..=SAMPLE_BENCHMARK_RUNS {
+            let started = Instant::now();
+            let (result, diagnostics) = DuplicateFileService::find_with_options_diagnostics(
+                vec![display_path(root)],
+                1,
+                plan,
+                Some(1),
+                |_| {},
+            )
+            .expect("the sample-plan scan should succeed");
+            let elapsed_ms = u64::try_from(started.elapsed().as_millis()).unwrap_or(u64::MAX);
+            let signature = result_signature(&result);
+            if let Some(expected) = &expected_signature {
+                assert_eq!(
+                    &signature, expected,
+                    "sample plans must not change the final full-hash result"
+                );
+            } else {
+                expected_signature = Some(signature);
+            }
+            elapsed_samples.push(elapsed_ms);
+            println!(
+                    "duplicate_sample_plan case={} plan={} run={} total_ms={} size_candidates={} aliases_filtered={} sample_candidates={} sample_bytes={} full_candidates={} full_bytes={} groups={} reclaimable_bytes={}",
+                    case_name,
+                    diagnostics.sample_plan,
+                    run,
+                    elapsed_ms,
+                    diagnostics.size_group_candidate_count,
+                    diagnostics.physical_alias_filtered_count,
+                    diagnostics.sample_hash_candidate_count,
+                    diagnostics.sample_hash_bytes,
+                    diagnostics.full_hash_candidate_count,
+                    diagnostics.full_hash_bytes,
+                    result.total_group_count,
+                    result.reclaimable_bytes
+                );
+        }
+        elapsed_samples.sort_unstable();
+        println!(
+                "duplicate_sample_plan_summary case={} plan={} runs={} median_ms={} min_ms={} max_ms={}",
+                case_name,
+                plan.name(),
+                SAMPLE_BENCHMARK_RUNS,
+                elapsed_samples[SAMPLE_BENCHMARK_RUNS / 2],
+                elapsed_samples[0],
+                elapsed_samples[SAMPLE_BENCHMARK_RUNS - 1]
+            );
+    }
+}
+
+fn benchmark_worker_counts(case_name: &str, root: &Path) {
+    let mut expected_signature = None;
+    for worker_count in [1, 2, 4] {
+        let mut elapsed_samples = Vec::with_capacity(SAMPLE_BENCHMARK_RUNS);
+        for run in 1..=SAMPLE_BENCHMARK_RUNS {
+            let started = Instant::now();
+            let (result, diagnostics) = DuplicateFileService::find_with_options_diagnostics(
+                vec![display_path(root)],
+                1,
+                PRODUCTION_SAMPLE_PLAN,
+                Some(worker_count),
+                |_| {},
+            )
+            .expect("the worker-count scan should succeed");
+            let elapsed_ms = u64::try_from(started.elapsed().as_millis()).unwrap_or(u64::MAX);
+            let signature = result_signature(&result);
+            if let Some(expected) = &expected_signature {
+                assert_eq!(
+                    &signature, expected,
+                    "worker counts must not change the full-hash result"
+                );
+            } else {
+                expected_signature = Some(signature);
+            }
+            elapsed_samples.push(elapsed_ms);
+            println!(
+                    "duplicate_worker_count case={} workers={} run={} total_ms={} group_identity_ms={} identity_workers={} identity_peak={} sample_workers={} sample_peak={} full_workers={} full_peak={} queue_capacity={} groups={} reclaimable_bytes={}",
+                    case_name,
+                    worker_count,
+                    run,
+                    elapsed_ms,
+                    diagnostics.group_and_identity_ms,
+                    diagnostics.identity_worker_count,
+                    diagnostics.identity_peak_in_flight,
+                    diagnostics.sample_hash_worker_count,
+                    diagnostics.sample_hash_peak_in_flight,
+                    diagnostics.full_hash_worker_count,
+                    diagnostics.full_hash_peak_in_flight,
+                    diagnostics.hash_result_queue_capacity,
+                    result.total_group_count,
+                    result.reclaimable_bytes
+                );
+        }
+        elapsed_samples.sort_unstable();
+        println!(
+                "duplicate_worker_count_summary case={} workers={} runs={} median_ms={} min_ms={} max_ms={}",
+                case_name,
+                worker_count,
+                SAMPLE_BENCHMARK_RUNS,
+                elapsed_samples[SAMPLE_BENCHMARK_RUNS / 2],
+                elapsed_samples[0],
+                elapsed_samples[SAMPLE_BENCHMARK_RUNS - 1]
+            );
+    }
+}
+
+fn write_sparse_marker_file(path: &Path, bytes: u64, offset: u64, marker: [u8; 8]) {
+    use std::io::Write;
+
+    let mut file = File::create(path).expect("the sampling fixture should be created");
+    file.set_len(bytes)
+        .expect("the sampling fixture length should be set");
+    file.seek(SeekFrom::Start(offset))
+        .expect("the sampling fixture should seek to the marker");
+    file.write_all(&marker)
+        .expect("the sampling marker should be written");
+}
+
+#[test]
+fn staged_hashing_only_reports_identical_content() {
+    let _operation_lock = crate::shared::operation::test_operation_lock();
+    let root = std::env::temp_dir().join(format!(
+        "mangodisk-duplicate-test-{}-{}",
+        std::process::id(),
+        now_ms()
+    ));
+    fs::create_dir_all(&root).expect("the duplicate-file fixture should be created");
+    let matching = vec![b'a'; 1024 * 1024];
+    let different = vec![b'b'; matching.len()];
+    fs::write(root.join("first.bin"), &matching)
+        .expect("the first matching file should be written");
+    fs::write(root.join("second.bin"), &matching)
+        .expect("the second matching file should be written");
+    fs::write(root.join("same-size.bin"), &different)
+        .expect("the same-size unique file should be written");
+    fs::create_dir_all(root.join(".dependency-cache"))
+        .expect("the hidden dependency directory should be created");
+    fs::write(root.join(".dependency-cache/dependency.bin"), &matching)
+        .expect("the hidden dependency fixture should be written");
+    fs::create_dir_all(root.join(".python-cache"))
+        .expect("the hidden Python cache directory should be created");
+    fs::write(root.join(".python-cache/module.cpython-314.pyc"), &matching)
+        .expect("the hidden Python cache fixture should be written");
+
+    let result = DuplicateFileService::find_with_progress(vec![display_path(&root)], 1, |_| {})
+        .expect("the duplicate-file scan should succeed");
+
+    assert_eq!(result.groups.len(), 1);
+    assert_eq!(result.groups[0].entries.len(), 2);
+    assert_eq!(result.reclaimable_bytes, matching.len() as u64);
+    assert!(result.groups[0]
+        .entries
+        .iter()
+        .all(|entry| entry.name != "same-size.bin"));
+    assert!(result.groups[0]
+        .entries
+        .iter()
+        .all(|entry| entry.name != "dependency.bin"));
+    assert!(result.groups[0]
+        .entries
+        .iter()
+        .all(|entry| entry.name != "module.cpython-314.pyc"));
+    fs::remove_dir_all(root).expect("the duplicate-file fixture should be removed");
+}
+
+#[test]
+fn exact_duplicate_directories_replace_nested_file_groups() {
+    let _operation_lock = crate::shared::operation::test_operation_lock();
+    let root = std::env::temp_dir().join(format!(
+        "mangodisk-duplicate-directory-service-{}-{}",
+        std::process::id(),
+        now_ms()
+    ));
+    let first = root.join("first-copy");
+    let second = root.join("second-copy");
+    fs::create_dir_all(first.join("nested"))
+        .expect("the first duplicate directory should be created");
+    fs::create_dir_all(second.join("nested"))
+        .expect("the second duplicate directory should be created");
+    for directory in [&first, &second] {
+        fs::write(directory.join("manifest.json"), br#"{"name":"fixture"}"#)
+            .expect("the duplicate manifest should be written");
+        fs::write(directory.join("nested/payload.bin"), vec![7_u8; 4096])
+            .expect("the duplicate payload should be written");
+    }
+
+    let result = DuplicateFileService::find_paged_with_progress(
+        vec![display_path(&root)],
+        1,
+        |_| {},
+        |_| {},
+    )
+    .expect("the directory aggregation scan should succeed");
+
+    assert_eq!(result.total_group_count, 1);
+    assert_eq!(result.groups[0].kind, DuplicateGroupKind::Directory);
+    assert_eq!(result.groups[0].entries.len(), 2);
+    assert_eq!(result.groups[0].file_count_per_entry, 2);
+    assert_eq!(result.groups[0].bytes_per_file, 4114);
+    assert_eq!(result.groups[0].reclaimable_bytes, 4114);
+    let selected = &result.groups[0].entries[0];
+    let selected_path = PathBuf::from(&selected.path);
+    let retained_path = PathBuf::from(&result.groups[0].entries[1].path);
+    assert!(
+        selected_path.starts_with(&result.roots[0]),
+        "selected path {:?} should belong to scan roots {:?}",
+        selected.path,
+        result.roots
+    );
+    let deletion = DuplicateFileService::delete_files_permanently(
+        result.scan_id,
+        vec![PermanentDeleteCandidate {
+            path: selected.path.clone(),
+            expected_bytes: selected.bytes,
+            expected_modified_at_ms: selected.modified_at_ms,
+        }],
+    )
+    .expect("an aggregated directory from the current scan root should remain deletable");
+    assert_eq!(deletion.removed_paths.len(), 1);
+    assert!(!selected_path.exists());
+    assert!(retained_path.exists());
+    clear_result_session().expect("the duplicate directory result session should be cleared");
+    fs::remove_dir_all(root).expect("the directory aggregation fixture should be removed");
+}
+
+#[test]
+fn streamed_full_hash_groups_match_the_final_result() {
+    let _operation_lock = crate::shared::operation::test_operation_lock();
+    let root = std::env::temp_dir().join(format!(
+        "mangodisk-duplicate-stream-{}-{}",
+        std::process::id(),
+        now_ms()
+    ));
+    fs::create_dir_all(&root).expect("the streaming duplicate fixture should be created");
+    for (name, content) in [
+        ("alpha-a.bin", vec![1_u8; 1024]),
+        ("alpha-b.bin", vec![1_u8; 1024]),
+        ("beta-a.bin", vec![2_u8; 2048]),
+        ("beta-b.bin", vec![2_u8; 2048]),
+        ("same-size-unique.bin", vec![3_u8; 2048]),
+    ] {
+        fs::write(root.join(name), content)
+            .expect("the streaming duplicate fixture should be written");
+    }
+    let batches = Arc::new(Mutex::new(Vec::<DuplicateGroupBatch>::new()));
+    let batches_for_callback = Arc::clone(&batches);
+    let (result, diagnostics) = DuplicateFileService::find_with_stream_diagnostics(
+        vec![display_path(&root)],
+        1,
+        |_| {},
+        move |batch| {
+            batches_for_callback
+                .lock()
+                .expect("the streaming batch lock should not be poisoned")
+                .push(batch);
+        },
+    )
+    .expect("the streaming duplicate scan should succeed");
+    let batches = batches
+        .lock()
+        .expect("streaming batches should remain readable");
+    let mut streamed = batches
+        .iter()
+        .flat_map(|batch| batch.groups.clone())
+        .collect::<Vec<_>>();
+    streamed.sort_by(|left, right| {
+        right
+            .reclaimable_bytes
+            .cmp(&left.reclaimable_bytes)
+            .then_with(|| left.hash.cmp(&right.hash))
+    });
+
+    assert_eq!(result.groups.len(), 2);
+    let final_hashes = result
+        .groups
+        .iter()
+        .map(|group| group.hash.as_str())
+        .collect::<HashSet<_>>();
+    assert!(
+            !streamed.is_empty()
+                && streamed
+                    .iter()
+                    .all(|group| final_hashes.contains(group.hash.as_str())),
+            "throttling may defer groups to the final response, but events must contain only final groups"
+        );
+    assert_eq!(
+        diagnostics.streamed_group_count,
+        u64::try_from(streamed.len()).unwrap_or(u64::MAX)
+    );
+    assert!(streamed.iter().all(|group| group.entries.len() == 2));
+    assert!(streamed.iter().all(|group| {
+        group
+            .entries
+            .iter()
+            .all(|entry| entry.name != "same-size-unique.bin")
+    }));
+    fs::remove_dir_all(root).expect("the streaming duplicate fixture should be removed");
+}
+
+#[test]
+fn paginated_sessions_are_scan_scoped_and_recomputed_after_removal() {
+    let _operation_lock = crate::shared::operation::test_operation_lock();
+    let root = std::env::temp_dir().join(format!(
+        "mangodisk-duplicate-page-{}-{}",
+        std::process::id(),
+        now_ms()
+    ));
+    fs::create_dir_all(&root).expect("the duplicate pagination fixture should be created");
+    for index in 0..45_u8 {
+        let content = vec![index.saturating_add(1); 1024 + usize::from(index)];
+        fs::write(root.join(format!("group-{index:02}-a.bin")), &content)
+            .expect("the original pagination fixture should be written");
+        fs::write(root.join(format!("group-{index:02}-b.bin")), &content)
+            .expect("the duplicate pagination fixture should be written");
+    }
+
+    let result = DuplicateFileService::find_paged_with_progress(
+        vec![display_path(&root)],
+        1,
+        |_| {},
+        |_| {},
+    )
+    .expect("the paginated duplicate scan should succeed");
+    assert_eq!(result.total_group_count, 45);
+    assert_eq!(result.returned_group_count, 45);
+    assert_eq!(result.groups.len(), DUPLICATE_RESULT_PAGE_SIZE);
+    assert!(
+        DuplicateFileService::page(result.scan_id, 0, 0).is_err(),
+        "a zero page size must be rejected"
+    );
+    assert!(
+        DuplicateFileService::page(result.scan_id.saturating_add(1), 0, 1).is_err(),
+        "a session identifier from another scan must be rejected"
+    );
+    assert!(
+        DuplicateFileService::page(result.scan_id, result.returned_group_count + 1, 1).is_err(),
+        "an offset beyond the result total must be rejected"
+    );
+    let capped_page = DuplicateFileService::page(result.scan_id, 0, u64::MAX)
+        .expect("an oversized page limit should be bounded safely");
+    assert_eq!(capped_page.groups.len(), 45);
+
+    let last_page = DuplicateFileService::page(
+        result.scan_id,
+        DUPLICATE_RESULT_PAGE_SIZE as u64,
+        DUPLICATE_RESULT_PAGE_SIZE as u64,
+    )
+    .expect("the final page should be readable");
+    assert_eq!(last_page.groups.len(), 5);
+    assert_eq!(last_page.next_offset, None);
+
+    let removed = result.groups[0].entries[0].clone();
+    let deletion = DuplicateFileService::delete_files_permanently(
+        result.scan_id,
+        vec![crate::filesystem::PermanentDeleteCandidate {
+            path: removed.path,
+            expected_bytes: removed.bytes,
+            expected_modified_at_ms: removed.modified_at_ms,
+        }],
+    )
+    .expect("deletion should update the paginated session in the same Core operation");
+    assert_eq!(deletion.removed_paths.len(), 1);
+    let updated = DuplicateFileService::page(result.scan_id, 0, u64::MAX)
+        .expect("the synchronized first page should remain readable");
+    assert_eq!(updated.total_count, 44);
+    assert_eq!(updated.groups.len(), 44);
+    let updated_last_page = DuplicateFileService::page(
+        result.scan_id,
+        DUPLICATE_RESULT_PAGE_SIZE as u64,
+        DUPLICATE_RESULT_PAGE_SIZE as u64,
+    )
+    .expect("the final page should be readable after the update");
+    assert_eq!(updated_last_page.groups.len(), 4);
+
+    clear_result_session().expect("the pagination test session should be cleared");
+    assert!(
+        DuplicateFileService::page(result.scan_id, 0, 1).is_err(),
+        "an invalidated session must not remain readable across scans"
+    );
+    fs::remove_dir_all(root).expect("the duplicate pagination fixture should be removed");
+}
+
+#[test]
+fn multiple_workers_emit_progress_once_per_throttle_window() {
+    let callback_count = Arc::new(AtomicUsize::new(0));
+    let callback_count_for_progress = Arc::clone(&callback_count);
+    let progress = DuplicateProgress::new(1, move |_| {
+        callback_count_for_progress.fetch_add(1, Ordering::Relaxed);
+    });
+    const WORKERS: usize = 8;
+    let barrier = Arc::new(std::sync::Barrier::new(WORKERS + 1));
+    thread::scope(|scope| {
+        for _ in 0..WORKERS {
+            let barrier = Arc::clone(&barrier);
+            let progress = &progress;
+            scope.spawn(move || {
+                barrier.wait();
+                progress.emit(
+                    TraversalStage::Analyzing,
+                    Path::new("/benchmark/progress"),
+                    false,
+                    0,
+                    0,
+                );
+            });
+        }
+        barrier.wait();
+    });
+    assert_eq!(
+        callback_count.load(Ordering::Relaxed),
+        1,
+        "exactly one worker may emit progress in a throttle window"
+    );
+}
+
+#[test]
+fn io_before_a_read_failure_remains_in_diagnostics() {
+    struct PartialReader {
+        first_read: bool,
+    }
+
+    impl Read for PartialReader {
+        fn read(&mut self, buffer: &mut [u8]) -> std::io::Result<usize> {
+            if self.first_read {
+                return Err(std::io::Error::other("expected read failure"));
+            }
+            self.first_read = true;
+            buffer[..4].copy_from_slice(&[1, 2, 3, 4]);
+            Ok(4)
+        }
+    }
+
+    let mut reader = PartialReader { first_read: false };
+    let mut buffer = [0_u8; 8];
+    let mut bytes_read = 0_u64;
+    let error = read_up_to(&mut reader, &mut buffer, &mut bytes_read)
+        .expect_err("the second read should return the diagnostic error");
+    assert_eq!(error.kind(), std::io::ErrorKind::Other);
+    assert_eq!(bytes_read, 4);
+}
+
+#[test]
+fn every_cached_file_fact_must_match_exactly() {
+    let identity = FileIdentity {
+        volume: u64::MAX,
+        index: 42,
+    };
+    let candidate = FileCandidate {
+        root_ordinal: 1,
+        path: PathBuf::from("/cache/root/file.bin"),
+        bytes: 1024,
+        modified_at: UNIX_EPOCH.checked_add(std::time::Duration::new(123, 100_000)),
+        modified_at_ms: Some(123_000),
+        identity: Some(identity),
+        identity_source: Some(FileIdentitySource::FileHandle),
+    };
+    let cached = DuplicateHashCacheFile {
+        root_ordinal: candidate.root_ordinal,
+        path: candidate.path.clone(),
+        bytes: candidate.bytes,
+        modified_at: candidate.modified_at,
+        identity: encode_file_identity(identity),
+        sample_hash: [3; 32],
+        full_hash: Some([5; 32]),
+    };
+    assert!(duplicate_cache_file_matches(&candidate, &cached));
+
+    let mut changed = cached.clone();
+    changed.root_ordinal = 0;
+    assert!(!duplicate_cache_file_matches(&candidate, &changed));
+    changed = cached.clone();
+    changed.path.push("replacement");
+    assert!(!duplicate_cache_file_matches(&candidate, &changed));
+    changed = cached.clone();
+    changed.bytes += 1;
+    assert!(!duplicate_cache_file_matches(&candidate, &changed));
+    changed = cached.clone();
+    changed.modified_at = UNIX_EPOCH.checked_add(std::time::Duration::new(123, 200_000));
+    assert!(!duplicate_cache_file_matches(&candidate, &changed));
+    changed = cached;
+    changed.identity[15] ^= 1;
+    assert!(!duplicate_cache_file_matches(&candidate, &changed));
+}
+
+#[test]
+fn verified_hash_cache_eliminates_reads_in_both_stages_without_changing_results() {
+    let _operation_lock = crate::shared::operation::test_operation_lock();
+    let root = std::env::temp_dir().join(format!(
+        "mangodisk-duplicate-pipeline-cache-{}-{}",
+        std::process::id(),
+        now_ms()
+    ));
+    fs::create_dir_all(&root).expect("the hash-cache fixture should be created");
+    let content = vec![9_u8; 1024 * 1024];
+    for name in ["first.bin", "second.bin", "third.bin"] {
+        fs::write(root.join(name), &content).expect("the hash-cache fixture should be written");
+    }
+    let candidates = ["first.bin", "second.bin", "third.bin"]
+        .into_iter()
+        .map(|name| {
+            let path = root.join(name);
+            let metadata =
+                fs::symlink_metadata(&path).expect("cached candidate metadata should be read");
+            let identity = load_file_identity(&path, metadata.len());
+            FileCandidate {
+                root_ordinal: 0,
+                path: path.clone(),
+                bytes: metadata.len(),
+                modified_at: metadata.modified().ok(),
+                modified_at_ms: modified_ms(&metadata),
+                identity,
+                identity_source: identity.map(|_| FileIdentitySource::FileHandle),
+            }
+        })
+        .collect::<Vec<_>>();
+    let operation = OperationGuard::start(CoordinatedOperationKind::DuplicateFiles)
+        .expect("the cache test operation should start");
+    let progress = DuplicateProgress::new(operation.id(), |_| {});
+    let mut ignore_group = |_, _| {};
+    let fresh = execute_hash_pipeline(
+        &candidates,
+        PRODUCTION_SAMPLE_PLAN,
+        None,
+        &operation,
+        &progress,
+        2,
+        &mut ignore_group,
+    )
+    .expect("the fresh hash pipeline should succeed");
+    assert!(fresh.diagnostics.sample_hash_bytes > 0);
+    assert!(fresh.diagnostics.full_hash_bytes > 0);
+
+    let cache = candidates
+        .iter()
+        .enumerate()
+        .map(|(index, candidate)| {
+            let identity = candidate
+                .identity
+                .expect("a cached candidate must have physical identity");
+            (
+                candidate.path.clone(),
+                DuplicateHashCacheFile {
+                    root_ordinal: candidate.root_ordinal,
+                    path: candidate.path.clone(),
+                    bytes: candidate.bytes,
+                    modified_at: candidate.modified_at,
+                    identity: encode_file_identity(identity),
+                    sample_hash: *fresh.sample_hashes[index]
+                        .expect("fresh sampling should succeed")
+                        .as_bytes(),
+                    full_hash: fresh.full_hashes[index].map(|hash| *hash.as_bytes()),
+                },
+            )
+        })
+        .collect::<HashMap<_, _>>();
+    let cached = execute_hash_pipeline(
+        &candidates,
+        PRODUCTION_SAMPLE_PLAN,
+        Some(&cache),
+        &operation,
+        &progress,
+        2,
+        &mut ignore_group,
+    )
+    .expect("the cached hash pipeline should succeed");
+    assert_eq!(cached.full_groups, fresh.full_groups);
+    assert_eq!(cached.diagnostics.sample_hash_cache_hit_count, 3);
+    assert_eq!(cached.diagnostics.full_hash_cache_hit_count, 3);
+    assert_eq!(cached.diagnostics.sample_hash_bytes, 0);
+    assert_eq!(cached.diagnostics.full_hash_bytes, 0);
+    assert_eq!(cached.skipped_count, 0);
+
+    operation.complete();
+    fs::remove_dir_all(root).expect("the hash-cache fixture should be removed");
+}
+
+/// This fixture must use real FSEvents or USN Journal history instead of a fake monitor.
+/// Continuous change history must invalidate a cached digest even when a file restores its
+/// original size and modification time. The test is ignored by default and should run in an
+/// isolated process during cross-platform validation to avoid shared cache and operation state.
+#[test]
+#[ignore = "requires real macOS FSEvents or Windows NTFS USN Journal history"]
+fn real_file_changes_make_the_memory_duplicate_hash_cache_fail_closed() {
+    use std::time::Duration;
+
+    const FILE_BYTES: usize = 1024 * 1024;
+    const EVENT_TIMEOUT: Duration = Duration::from_secs(5);
+    const EVENT_POLL_INTERVAL: Duration = Duration::from_millis(25);
+
+    let _operation_lock = crate::shared::operation::test_operation_lock();
+    hash_cache::clear().expect("the memory hash cache should clear before the fixture");
+    let root = std::env::temp_dir().join(format!(
+        "mangodisk-duplicate-history-{}-{}",
+        std::process::id(),
+        now_ms()
+    ));
+    fs::create_dir_all(&root).expect("the real change-history fixture should be created");
+    let original_content = vec![7_u8; FILE_BYTES];
+    for name in ["first.bin", "second.bin", "third.bin"] {
+        fs::write(root.join(name), &original_content)
+            .expect("the duplicate-file fixture should be written");
+    }
+    let roots = vec![display_path(&root)];
+    let scan = || {
+        DuplicateFileService::find_with_diagnostics(roots.clone(), 1, |_| {})
+            .expect("the real change-history scan should succeed")
+    };
+    let assert_fresh_read = |diagnostics: &DuplicateScanDiagnostics, stage: &str| {
+        assert_eq!(
+            diagnostics.sample_hash_cache_hit_count, 0,
+            "{stage} must not reuse a stale sample digest"
+        );
+        assert_eq!(
+            diagnostics.full_hash_cache_hit_count, 0,
+            "{stage} must not reuse a stale full digest"
+        );
+        assert!(
+            diagnostics.sample_hash_bytes > 0,
+            "{stage} must reread real sample content"
+        );
+    };
+    let mutate_and_wait = |mutate: &mut dyn FnMut()| {
+        let previous = current_platform()
+            .capture_filesystem_change_token(&root)
+            .expect("the token before mutation should be captured")
+            .expect("the test volume must support continuous change history");
+        mutate();
+        let deadline = Instant::now() + EVENT_TIMEOUT;
+        loop {
+            let current = current_platform()
+                .capture_filesystem_change_token(&root)
+                .expect("the token after mutation should be captured")
+                .expect("the test volume must continue to support change history");
+            if current != previous {
+                break;
+            }
+            assert!(
+                Instant::now() < deadline,
+                "the platform did not publish a filesystem change cursor before the deadline"
+            );
+            thread::sleep(EVENT_POLL_INTERVAL);
+        }
+    };
+
+    let (fresh_result, fresh_diagnostics) = scan();
+    assert_eq!(fresh_result.duplicate_file_count, 3);
+    assert_eq!(fresh_diagnostics.cache_snapshot_found, 0);
+    assert!(fresh_diagnostics.sample_hash_bytes > 0);
+    assert!(fresh_diagnostics.full_hash_bytes > 0);
+
+    let (cached_result, cached_diagnostics) = scan();
+    assert_eq!(
+        result_signature(&cached_result),
+        result_signature(&fresh_result)
+    );
+    assert_eq!(cached_diagnostics.cache_snapshot_found, 1);
+    assert_eq!(cached_diagnostics.sample_hash_cache_hit_count, 3);
+    assert_eq!(cached_diagnostics.full_hash_cache_hit_count, 3);
+    assert_eq!(cached_diagnostics.sample_hash_bytes, 0);
+    assert_eq!(cached_diagnostics.full_hash_bytes, 0);
+
+    // Restoring the original size and modification time makes the per-file facts look equal
+    // again. Only real change history can prevent a stale full digest from being reauthorized.
+    let changed_path = root.join("third.bin");
+    let original_modified = fs::metadata(&changed_path)
+        .and_then(|metadata| metadata.modified())
+        .expect("the original modification time should be available");
+    mutate_and_wait(&mut || {
+        fs::write(&changed_path, vec![8_u8; FILE_BYTES])
+            .expect("the file should be rewritten with equal-size content");
+        File::options()
+            .write(true)
+            .open(&changed_path)
+            .and_then(|file| {
+                file.set_times(std::fs::FileTimes::new().set_modified(original_modified))
+            })
+            .expect("the original modification time should be restored");
+    });
+    assert_eq!(
+        fs::metadata(&changed_path)
+            .and_then(|metadata| metadata.modified())
+            .expect("the restored modification time should be verified"),
+        original_modified
+    );
+    let (modified_result, modified_diagnostics) = scan();
+    assert_eq!(modified_result.duplicate_file_count, 2);
+    assert_eq!(modified_result.reclaimable_bytes, FILE_BYTES as u64);
+    assert_fresh_read(
+        &modified_diagnostics,
+        "an equal-size rewrite with restored modification time",
+    );
+
+    let created_path = root.join("created.bin");
+    mutate_and_wait(&mut || {
+        fs::write(&created_path, vec![9_u8; FILE_BYTES])
+            .expect("an equal-size unique file should be created");
+    });
+    let (_, created_diagnostics) = scan();
+    assert_fresh_read(&created_diagnostics, "file creation");
+
+    let renamed_path = root.join("renamed-first.bin");
+    mutate_and_wait(&mut || {
+        fs::rename(root.join("first.bin"), &renamed_path)
+            .expect("the duplicate file should be renamed");
+    });
+    let (_, renamed_diagnostics) = scan();
+    assert_fresh_read(&renamed_diagnostics, "file rename");
+
+    mutate_and_wait(&mut || {
+        fs::remove_file(&created_path).expect("the newly created file should be removed");
+    });
+    let (deleted_result, deleted_diagnostics) = scan();
+    assert_eq!(deleted_result.duplicate_file_count, 2);
+    assert_fresh_read(&deleted_diagnostics, "file deletion");
+
+    let (recached_result, recached_diagnostics) = scan();
+    assert_eq!(
+        result_signature(&recached_result),
+        result_signature(&deleted_result)
+    );
+    assert_eq!(recached_diagnostics.sample_hash_bytes, 0);
+    assert_eq!(recached_diagnostics.full_hash_bytes, 0);
+    assert!(recached_diagnostics.sample_hash_cache_hit_count > 0);
+    assert!(recached_diagnostics.full_hash_cache_hit_count > 0);
+
+    hash_cache::invalidate_containing(&root);
+    fs::remove_dir_all(root).expect("the real change-history fixture should be removed");
+}
+
+#[test]
+fn unreadable_file_identity_fails_closed() {
+    let candidates = ["first.bin", "second.bin"]
+        .into_iter()
+        .map(|name| FileCandidate {
+            root_ordinal: 0,
+            path: PathBuf::from("/missing").join(name),
+            bytes: 1024,
+            modified_at: None,
+            modified_at_ms: None,
+            identity: None,
+            identity_source: None,
+        })
+        .collect();
+    let filtered = remove_physical_aliases(candidates, 4, &never_cancelled(), |_| Ok(()))
+        .expect("filter aliases");
+    assert!(filtered.candidates.is_empty());
+    assert_eq!(filtered.alias_count, 0);
+    assert_eq!(filtered.unavailable_count, 2);
+    #[cfg(windows)]
+    {
+        assert_eq!(filtered.hint_fallback_directory_count, 1);
+        assert_eq!(filtered.hint_failure_samples.len(), 1);
+        assert_eq!(filtered.hint_failure_samples[0].diagnostic_digest.len(), 64);
+        assert!(!filtered.hint_failure_samples[0]
+            .diagnostic_digest
+            .contains("missing"));
+    }
+}
+
+#[test]
+fn physical_identity_validation_propagates_cancellation() {
+    let candidates = vec![FileCandidate {
+        root_ordinal: 0,
+        path: PathBuf::from("/missing/candidate.bin"),
+        bytes: 1024,
+        modified_at: None,
+        modified_at_ms: None,
+        identity: None,
+        identity_source: None,
+    }];
+    let result = remove_physical_aliases(candidates, 4, &never_cancelled(), |_| {
+        Err("operation cancelled".to_string())
+    });
+    assert!(matches!(result, Err(error) if error == "operation cancelled"));
+}
+
+#[test]
+fn physical_identity_validation_observes_preloaded_and_fallback_candidates() {
+    use std::sync::atomic::{AtomicUsize, Ordering};
+
+    let observed = AtomicUsize::new(0);
+    let candidates = vec![
+        FileCandidate {
+            root_ordinal: 0,
+            path: PathBuf::from("preloaded.bin"),
+            bytes: 8,
+            modified_at: None,
+            modified_at_ms: None,
+            identity: Some(FileIdentity {
+                volume: 1,
+                index: 1,
+            }),
+            identity_source: Some(FileIdentitySource::FileHandle),
+        },
+        FileCandidate {
+            root_ordinal: 0,
+            path: PathBuf::from("fallback.bin"),
+            bytes: 8,
+            modified_at: None,
+            modified_at_ms: None,
+            identity: None,
+            identity_source: None,
+        },
+    ];
+
+    remove_physical_aliases(candidates, 4, &never_cancelled(), |_| {
+        observed.fetch_add(1, Ordering::Relaxed);
+        Ok(())
+    })
+    .expect("filter aliases");
+
+    assert_eq!(observed.load(Ordering::Relaxed), 2);
+}
+
+#[test]
+fn colliding_directory_hints_are_verified_before_alias_filtering() {
+    let root = std::env::temp_dir().join(format!(
+        "mangodisk-duplicate-hint-collision-{}-{}",
+        std::process::id(),
+        now_ms()
+    ));
+    fs::create_dir_all(&root).expect("create the identity hint collision fixture");
+    let candidates = ["first.bin", "second.bin"]
+        .into_iter()
+        .map(|name| {
+            let path = root.join(name);
+            fs::write(&path, b"independent files")
+                .expect("write an identity hint collision candidate");
+            let metadata = fs::symlink_metadata(&path)
+                .expect("read identity hint collision candidate metadata");
+            FileCandidate {
+                root_ordinal: 0,
+                path,
+                bytes: metadata.len(),
+                modified_at: metadata.modified().ok(),
+                modified_at_ms: modified_ms(&metadata),
+                identity: Some(FileIdentity {
+                    volume: 7,
+                    index: 11,
+                }),
+                identity_source: Some(FileIdentitySource::DirectoryHint),
+            }
+        })
+        .collect::<Vec<_>>();
+
+    let filtered = remove_physical_aliases(candidates, 4, &never_cancelled(), |_| Ok(()))
+        .expect("verify colliding identity hints");
+
+    assert_eq!(filtered.candidates.len(), 2);
+    assert_eq!(filtered.alias_count, 0);
+    assert_eq!(filtered.verified_hint_count, 2);
+    assert!(filtered
+        .candidates
+        .iter()
+        .all(|candidate| candidate.identity_source == Some(FileIdentitySource::FileHandle)));
+    fs::remove_dir_all(root).expect("remove the identity hint collision fixture");
+}
+
+#[test]
+fn directory_identity_hint_loading_honors_platform_cancellation() {
+    let candidates = vec![FileCandidate {
+        root_ordinal: 0,
+        path: PathBuf::from("cancelled-parent/candidate.bin"),
+        bytes: 8,
+        modified_at: None,
+        modified_at_ms: None,
+        identity: None,
+        identity_source: None,
+    }];
+    let cancellation = PlatformCancellation::new(|| true);
+
+    let result = remove_physical_aliases(candidates, 4, &cancellation, |_| Ok(()));
+
+    assert!(matches!(result, Err(error) if error == OPERATION_CANCELLED_ERROR));
+}
+
+#[test]
+fn hash_failure_logging_keeps_only_bounded_redacted_samples() {
+    let mut failures = HashFailureDiagnostics::default();
+    for index in 0..5 {
+        failures.record(
+            Path::new(&format!("/private/user/failure-{index}.bin")),
+            &format!("failure-{index}"),
+        );
+    }
+    assert_eq!(failures.count, 5);
+    assert_eq!(failures.samples.len(), HASH_FAILURE_SAMPLE_LIMIT);
+    assert!(failures
+        .samples
+        .iter()
+        .all(|sample| !sample.contains("/private/user")));
+}
+
+#[test]
+fn internal_validation_preserves_sub_millisecond_modification_precision() {
+    use std::time::Duration;
+
+    let root = std::env::temp_dir().join(format!(
+        "mangodisk-duplicate-mtime-{}-{}",
+        std::process::id(),
+        now_ms()
+    ));
+    fs::create_dir_all(&root).expect("the modification-time fixture should be created");
+    let path = root.join("candidate.bin");
+    fs::write(&path, b"mtime precision")
+        .expect("the modification-time fixture file should be written");
+    let metadata =
+        fs::symlink_metadata(&path).expect("the fixture file metadata should be available");
+    let identity = load_file_identity(&path, metadata.len());
+    let candidate = FileCandidate {
+        root_ordinal: 0,
+        path: path.clone(),
+        bytes: metadata.len(),
+        modified_at: metadata
+            .modified()
+            .ok()
+            // Windows `SystemTime` uses 100 ns ticks. Both platforms represent 100 µs, while
+            // it remains below the public DTO's 1 ms precision boundary.
+            .map(|value| value + Duration::from_micros(100)),
+        modified_at_ms: modified_ms(&metadata),
+        identity,
+        identity_source: identity.map(|_| FileIdentitySource::FileHandle),
+    };
+    let file = File::open(&path).expect("the modification-time fixture should be opened");
+    validate_open_file(&candidate, &file, true)
+        .expect_err("a sub-millisecond modification-time mismatch must fail closed");
+    fs::remove_dir_all(root).expect("the modification-time fixture should be removed");
+}
+
+#[test]
+fn sample_ranges_are_deduplicated_and_bounded_for_small_files() {
+    assert_eq!(
+        SamplePlan::Head4KiB.offsets(1024, 1024),
+        [Some(0), None, None]
+    );
+    assert_eq!(
+        SamplePlan::HeadTail8KiB.offsets(1024, 1024),
+        [Some(0), Some(0), None]
+    );
+    assert_eq!(
+        SamplePlan::HeadMiddleTail16KiB.offsets(32 * 1024, 16 * 1024),
+        [Some(0), Some(8 * 1024), Some(16 * 1024)]
+    );
+    assert_eq!(
+        SamplePlan::HeadMiddleTail256KiB.offsets(2 * 1024 * 1024, 256 * 1024),
+        [Some(0), Some(896 * 1024), Some(1792 * 1024)]
+    );
+}
+
+#[test]
+fn full_hashing_rejects_equal_size_files_replaced_after_enumeration() {
+    let _operation_lock = crate::shared::operation::test_operation_lock();
+    let root = std::env::temp_dir().join(format!(
+        "mangodisk-duplicate-replacement-{}-{}",
+        std::process::id(),
+        now_ms()
+    ));
+    fs::create_dir_all(&root).expect("the file-replacement fixture should be created");
+    let path = root.join("candidate.bin");
+    fs::write(&path, vec![1_u8; 1024 * 1024])
+        .expect("the original candidate file should be written");
+    let metadata =
+        fs::symlink_metadata(&path).expect("the original candidate metadata should be read");
+    let identity = load_file_identity(&path, metadata.len());
+    let candidate = FileCandidate {
+        root_ordinal: 0,
+        path: path.clone(),
+        bytes: metadata.len(),
+        modified_at: metadata.modified().ok(),
+        modified_at_ms: modified_ms(&metadata),
+        identity,
+        identity_source: identity.map(|_| FileIdentitySource::FileHandle),
+    };
+
+    fs::remove_file(&path).expect("the original candidate file should be removed");
+    fs::write(&path, vec![2_u8; 1024 * 1024])
+        .expect("the equal-size replacement file should be written");
+    let operation = OperationGuard::start(CoordinatedOperationKind::DuplicateFiles)
+        .expect("the duplicate-file test operation should start");
+    let error = full_hash(&candidate, &operation, &mut Vec::new(), &mut 0)
+        .expect_err("a path replaced after enumeration must fail closed");
+    assert!(error.contains("changed") || error.contains("different object"));
+    operation.complete();
+    fs::remove_dir_all(root).expect("the file-replacement fixture should be removed");
+}
+
+#[test]
+fn single_and_multiple_workers_return_the_same_stable_result() {
+    let _operation_lock = crate::shared::operation::test_operation_lock();
+    let root = std::env::temp_dir().join(format!(
+        "mangodisk-duplicate-workers-{}-{}",
+        std::process::id(),
+        now_ms()
+    ));
+    fs::create_dir_all(&root).expect("the worker-consistency fixture should be created");
+    for index in 0..4 {
+        fs::write(
+            root.join(format!("duplicate-{index}.bin")),
+            vec![7_u8; 2 * 1024 * 1024],
+        )
+        .expect("the real duplicate file should be written");
+        fs::write(
+            root.join(format!("unique-{index}.bin")),
+            vec![
+                u8::try_from(index).expect("the fixture index should fit in u8") + 20;
+                2 * 1024 * 1024
+            ],
+        )
+        .expect("the equal-size unique file should be written");
+    }
+
+    let (serial, serial_diagnostics) = DuplicateFileService::find_with_options_diagnostics(
+        vec![display_path(&root)],
+        1,
+        PRODUCTION_SAMPLE_PLAN,
+        Some(1),
+        |_| {},
+    )
+    .expect("the single-worker scan should succeed");
+    let (parallel, parallel_diagnostics) = DuplicateFileService::find_with_options_diagnostics(
+        vec![display_path(&root)],
+        1,
+        PRODUCTION_SAMPLE_PLAN,
+        Some(4),
+        |_| {},
+    )
+    .expect("the multi-worker scan should succeed");
+
+    assert_eq!(result_signature(&serial), result_signature(&parallel));
+    assert_eq!(serial.reclaimable_bytes, parallel.reclaimable_bytes);
+    assert_eq!(serial_diagnostics.sample_hash_worker_count, 1);
+    let expected_parallel_workers = thread::available_parallelism()
+        .map(|value| value.get())
+        .unwrap_or(1)
+        .min(4);
+    assert_eq!(
+        parallel_diagnostics.sample_hash_worker_count,
+        expected_parallel_workers as u64
+    );
+    assert_eq!(
+        parallel_diagnostics.full_hash_worker_count,
+        expected_parallel_workers as u64
+    );
+    assert!(parallel_diagnostics.sample_hash_peak_in_flight <= expected_parallel_workers as u64);
+    assert!(parallel_diagnostics.full_hash_peak_in_flight <= expected_parallel_workers as u64);
+    fs::remove_dir_all(root).expect("the worker-consistency fixture should be removed");
+}
+
+#[test]
+fn duplicate_hash_scheduling_uses_one_worker_for_non_solid_state_media() {
+    let root = PathBuf::from("/benchmark/root");
+    let volume = |scan_concurrency| VolumeInfo {
+        name: "benchmark".to_string(),
+        mount_point: "/benchmark".to_string(),
+        total_bytes: 1,
+        available_bytes: 1,
+        used_bytes: 0,
+        scan_concurrency,
+    };
+    let solid_state = duplicate_hash_worker_config_from_volumes(
+        std::slice::from_ref(&root),
+        &[volume(mangodisk_platform::ScanConcurrency::solid_state())],
+        8,
+    );
+    assert_eq!(solid_state.worker_count, 4);
+    assert_eq!(solid_state.identity_worker_count, 4);
+    assert_eq!(solid_state.device_classes, "solid_state");
+
+    for scheduling in [
+        mangodisk_platform::ScanConcurrency::rotational(),
+        mangodisk_platform::ScanConcurrency::conservative(ScanDeviceClass::Removable),
+        mangodisk_platform::ScanConcurrency::conservative(ScanDeviceClass::Network),
+        mangodisk_platform::ScanConcurrency::conservative(ScanDeviceClass::Unknown),
+    ] {
+        let conservative = duplicate_hash_worker_config_from_volumes(
+            std::slice::from_ref(&root),
+            &[volume(scheduling)],
+            8,
+        );
+        assert_eq!(conservative.worker_count, 1);
+        let expected_identity_workers = if scheduling.class == ScanDeviceClass::Rotational {
+            2
+        } else {
+            1
+        };
+        assert_eq!(
+            conservative.identity_worker_count,
+            expected_identity_workers
+        );
+    }
+}
+
+#[cfg(windows)]
+#[test]
+fn duplicate_hash_scheduling_matches_verbatim_windows_roots() {
+    let root = PathBuf::from(r"\\?\C:\benchmark\fixture");
+    let volume = VolumeInfo {
+        name: "benchmark".to_string(),
+        mount_point: r"C:\".to_string(),
+        total_bytes: 1,
+        available_bytes: 1,
+        used_bytes: 0,
+        scan_concurrency: mangodisk_platform::ScanConcurrency::solid_state(),
+    };
+    let scheduling = duplicate_hash_worker_config_from_volumes(&[root], &[volume], 8);
+
+    assert_eq!(scheduling.worker_count, 4);
+    assert_eq!(scheduling.identity_worker_count, 4);
+    assert_eq!(scheduling.device_classes, "solid_state");
+}
+
+#[test]
+fn hard_links_do_not_inflate_duplicate_counts_or_reclaimable_space() {
+    let _operation_lock = crate::shared::operation::test_operation_lock();
+    let root = std::env::temp_dir().join(format!(
+        "mangodisk-duplicate-hardlink-{}-{}",
+        std::process::id(),
+        now_ms()
+    ));
+    fs::create_dir_all(&root).expect("the hard-link fixture should be created");
+    let original = root.join("original.bin");
+    let alias = root.join("alias.bin");
+    let copy = root.join("copy.bin");
+    let content = vec![9_u8; 1024 * 1024];
+    fs::write(&original, &content).expect("the hard-link source file should be written");
+    fs::hard_link(&original, &alias).expect("the test filesystem should support hard links");
+    fs::write(&copy, &content).expect("the independent content copy should be written");
+
+    let (result, diagnostics) =
+        DuplicateFileService::find_with_diagnostics(vec![display_path(&root)], 1, |_| {})
+            .expect("the hard-link fixture scan should succeed");
+
+    assert_eq!(result.total_group_count, 1);
+    assert_eq!(result.duplicate_file_count, 2);
+    assert_eq!(result.reclaimable_bytes, content.len() as u64);
+    assert_eq!(diagnostics.physical_alias_filtered_count, 1);
+    #[cfg(windows)]
+    assert_eq!(diagnostics.identity_hint_verified_count, 2);
+    #[cfg(unix)]
+    assert_eq!(diagnostics.identity_hint_verified_count, 0);
+    fs::remove_dir_all(root).expect("the hard-link fixture should be removed");
+}
+
+/// Full hashing checks cancellation after each 1 MiB read. This capacity diagnostic remains
+/// ignored to avoid creating a 2 GiB sparse file during regular tests. Cross-platform
+/// validation should run five samples and record the slowest observed latency.
+#[test]
+#[ignore = "requires an explicit large-file cancellation latency diagnostic"]
+fn full_hash_cancellation_latency_is_below_250_ms() {
+    use std::{sync::mpsc::channel, time::Duration};
+
+    const FILE_BYTES: u64 = 2 * 1024 * 1024 * 1024;
+    const RUNS: usize = 5;
+    const CANCEL_DELAY_MS: u64 = 10;
+    const MAX_CANCEL_LATENCY_MS: u64 = 250;
+
+    let _operation_lock = crate::shared::operation::test_operation_lock();
+    let root = std::env::temp_dir().join(format!(
+        "mangodisk-duplicate-cancel-{}-{}",
+        std::process::id(),
+        now_ms()
+    ));
+    fs::create_dir_all(&root).expect("the cancellation-latency fixture should be created");
+    let path = root.join("large-sparse.bin");
+    let file = File::create(&path).expect("the cancellation-latency sparse file should be created");
+    file.set_len(FILE_BYTES)
+        .expect("the cancellation-latency sparse file length should be set");
+    drop(file);
+    let metadata =
+        fs::symlink_metadata(&path).expect("the cancellation-latency file metadata should be read");
+    let identity = load_file_identity(&path, metadata.len());
+    let candidate = FileCandidate {
+        root_ordinal: 0,
+        path: path.clone(),
+        bytes: metadata.len(),
+        modified_at: metadata.modified().ok(),
+        modified_at_ms: modified_ms(&metadata),
+        identity,
+        identity_source: identity.map(|_| FileIdentitySource::FileHandle),
+    };
+    let mut latency_samples = Vec::with_capacity(RUNS);
+
+    for run in 1..=RUNS {
+        let (ready_sender, ready_receiver) = channel();
+        let hash_candidate = candidate.clone();
+        let worker = thread::spawn(move || {
+            let operation = OperationGuard::start(CoordinatedOperationKind::DuplicateFiles)
+                .expect("the cancellation-latency test operation should start");
+            ready_sender
+                .send(())
+                .expect("the hash task start should be reported");
+            full_hash(&hash_candidate, &operation, &mut Vec::new(), &mut 0)
+        });
+        ready_receiver.recv().expect("the hash task should start");
+        thread::sleep(Duration::from_millis(CANCEL_DELAY_MS));
+        let cancelled_at = Instant::now();
+        DuplicateFileService::cancel();
+        let error = worker
+            .join()
+            .expect("the cancellation-latency worker should not panic")
+            .expect_err("large-file hashing should respond to cancellation");
+        let latency_ms = u64::try_from(cancelled_at.elapsed().as_millis()).unwrap_or(u64::MAX);
+        assert_eq!(error, OPERATION_CANCELLED_ERROR);
+        latency_samples.push(latency_ms);
+        println!("duplicate_cancel_latency run={run} latency_ms={latency_ms}");
+    }
+    latency_samples.sort_unstable();
+    let observed_p95_ms = latency_samples[RUNS - 1];
+    println!("duplicate_cancel_latency_summary runs={RUNS} observed_p95_ms={observed_p95_ms}");
+    assert!(
+        observed_p95_ms < MAX_CANCEL_LATENCY_MS,
+        "the slowest observed cancellation latency of {observed_p95_ms} ms exceeds the limit"
+    );
+    fs::remove_dir_all(root).expect("the cancellation-latency fixture should be removed");
+}
+
+/// This diagnostic compares four sample plans through the same production scan pipeline. It is
+/// ignored by default to avoid reading a large fixture during regular tests.
+/// `MANGODISK_DUPLICATE_BENCHMARK_ROOT` must point to the fixed dataset's core directory. Output
+/// contains only plan, count, byte, and duration metrics and never persists absolute paths.
+#[test]
+#[ignore = "requires an explicit MANGODISK_DUPLICATE_BENCHMARK_ROOT"]
+fn real_duplicate_sample_plans_match_and_report_read_volume() {
+    let _operation_lock = crate::shared::operation::test_operation_lock();
+    let root = std::env::var("MANGODISK_DUPLICATE_BENCHMARK_ROOT")
+        .expect("MANGODISK_DUPLICATE_BENCHMARK_ROOT must be set before the sample benchmark");
+    benchmark_sample_plans("fixed-v1", Path::new(&root));
+}
+
+/// This diagnostic compares the complete duplicate pipeline with one, two, and four workers on a
+/// caller-owned fixture. The worker override also disables the memory hash cache, so every run
+/// performs the same identity and content reads. Output contains only counts and durations.
+#[test]
+#[ignore = "requires an explicit MANGODISK_DUPLICATE_BENCHMARK_ROOT"]
+fn real_duplicate_worker_counts_preserve_results() {
+    let _operation_lock = crate::shared::operation::test_operation_lock();
+    let root = std::env::var("MANGODISK_DUPLICATE_BENCHMARK_ROOT")
+        .expect("MANGODISK_DUPLICATE_BENCHMARK_ROOT must be set before the worker benchmark");
+    benchmark_worker_counts("external", Path::new(&root));
+}
+
+/// The dedicated collision fixture places differences at the head, middle, tail, and outside
+/// every sampled range. Sparse files only reduce fixture construction cost; hashing still reads
+/// all logical bytes so the diagnostic compares smaller samples with more full hashes against
+/// larger samples with more random reads.
+#[test]
+#[ignore = "requires an explicit duplicate-mix performance diagnostic"]
+fn dedicated_collision_dataset_compares_sample_rejection_power() {
+    const COLLISION_FILE_BYTES: u64 = 2 * 1024 * 1024;
+    const DUPLICATE_FILE_BYTES: u64 = 8 * 1024 * 1024;
+    const FILES_PER_CASE: u8 = 24;
+    const UNSAMPLED_FILES: u8 = 8;
+
+    let _operation_lock = crate::shared::operation::test_operation_lock();
+    let root = std::env::temp_dir().join(format!(
+        "mangodisk-duplicate-mix-{}-{}",
+        std::process::id(),
+        now_ms()
+    ));
+    fs::create_dir_all(&root).expect("the duplicate-mix fixture should be created");
+    let middle_offset = SamplePlan::HeadMiddleTail16KiB.offsets(COLLISION_FILE_BYTES, 16 * 1024)[1]
+        .expect("the three-range sample plan must include a middle offset");
+
+    for index in 0..FILES_PER_CASE {
+        write_sparse_marker_file(
+            &root.join(format!("head-{index:02}.bin")),
+            COLLISION_FILE_BYTES,
+            0,
+            [1, index, 0, 0, 0, 0, 0, 0],
+        );
+        write_sparse_marker_file(
+            &root.join(format!("middle-{index:02}.bin")),
+            COLLISION_FILE_BYTES,
+            middle_offset,
+            [2, index, 0, 0, 0, 0, 0, 0],
+        );
+        write_sparse_marker_file(
+            &root.join(format!("tail-{index:02}.bin")),
+            COLLISION_FILE_BYTES,
+            COLLISION_FILE_BYTES - 8,
+            [3, index, 0, 0, 0, 0, 0, 0],
+        );
+    }
+    for index in 0..UNSAMPLED_FILES {
+        write_sparse_marker_file(
+            &root.join(format!("unsampled-{index:02}.bin")),
+            COLLISION_FILE_BYTES,
+            384 * 1024,
+            [4, index, 0, 0, 0, 0, 0, 0],
+        );
+    }
+    for index in 0..4 {
+        let file = File::create(root.join(format!("duplicate-{index}.bin")))
+            .expect("the real duplicate file should be created");
+        file.set_len(DUPLICATE_FILE_BYTES)
+            .expect("the real duplicate file length should be set");
+    }
+
+    benchmark_sample_plans("duplicate-mix", &root);
+    benchmark_worker_counts("duplicate-mix", &root);
+    fs::remove_dir_all(root).expect("the duplicate-mix fixture should be removed");
+}

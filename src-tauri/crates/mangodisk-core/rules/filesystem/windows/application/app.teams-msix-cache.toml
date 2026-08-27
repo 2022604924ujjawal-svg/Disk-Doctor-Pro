@@ -1,0 +1,49 @@
+# New Teams stores WebView2 data in an MSIX LocalCache. The selected paths are
+# rendering caches only; IndexedDB, Local Storage, cookies, and account state
+# are intentionally excluded.
+id = "app.teams-msix-cache"
+schema_version = 3
+rule_version = 3
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["ms-teams.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["MSTeams", "Microsoft Teams"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Packages/MSTeams_8wekyb3d8bbwe/LocalCache/Microsoft/MSTeams/EBWebView"
+kind = "childDirectories"
+child_names = ["Default"]
+child_prefixes = ["Profile "]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache"]
+
+[[roots]]
+template = "${local_app_data}/Packages/MSTeams_8wekyb3d8bbwe/LocalCache/Microsoft/MSTeams/EBWebView/ShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/MSTeams_8wekyb3d8bbwe/LocalCache/Microsoft/MSTeams/EBWebView/GrShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/MSTeams_8wekyb3d8bbwe/LocalCache/Microsoft/MSTeams/EBWebView/GraphiteDawnCache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Microsoft documents the new Teams MSIX LocalCache root and rebuilding cache on restart; the rule selects only EBWebView cache, shader, and Dawn directories while accounts, chats, downloads, and settings remain excluded"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://learn.microsoft.com/en-us/troubleshoot/microsoftteams/teams-administration/clear-teams-cache"]

@@ -1,0 +1,41 @@
+id = "project.node-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["package.json"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "node_modules"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".angular/cache"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".next/cache"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".nuxt"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".turbo"
+
+[verification]
+lifecycle = "verified"
+evidence = [
+  "https://docs.npmjs.com/cli/v11/configuring-npm/folders#node-modules",
+  "https://angular.dev/cli/cache",
+  "https://nextjs.org/docs/app/guides/ci-build-caching",
+  "https://nuxt.com/docs/3.x/directory-structure/nuxt",
+  "https://turborepo.com/docs/crafting-your-repository/caching",
+]
+verified_at = "2026-07-31"

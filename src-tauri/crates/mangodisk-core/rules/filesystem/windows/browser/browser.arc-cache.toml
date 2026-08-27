@@ -1,0 +1,47 @@
+# Arc for Windows is distributed as an MSIX package. Only Chromium rendering
+# caches are selected; Arc profiles, spaces, sessions, and account data remain.
+id = "browser.arc-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Arc.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["The Browser Company Arc", "Arc"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Packages/TheBrowserCompany.Arc_ttt1ap7aakyb4/LocalCache/Local/Arc/User Data/ShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/TheBrowserCompany.Arc_ttt1ap7aakyb4/LocalCache/Local/Arc/User Data/GrShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/TheBrowserCompany.Arc_ttt1ap7aakyb4/LocalCache/Local/Arc/User Data/GraphiteDawnCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/TheBrowserCompany.Arc_ttt1ap7aakyb4/LocalCache/Local/Arc/User Data"
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Media Cache", "Shared Dictionary/cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule is confined to Arc's MSIX LocalCache user-data tree and selects only named Chromium profile, renderer, shader, media, and extension-package caches; persistent browser profile data remains excluded"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md"]

@@ -1,0 +1,55 @@
+# Electron editors share generated renderer and V8 caches, but keep settings,
+# workspaces, authentication, backups, and installed extensions in neighboring
+# paths. The suffix allowlist is intentionally explicit; the VS Code source tag
+# verifies the two product-specific download/code-cache names and the remaining
+# suffixes follow Electron/Chromium-owned cache boundaries.
+id = "dev.editor-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["Code.exe", "Cursor.exe", "Windsurf.exe", "VSCodium.exe"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${roaming_app_data}"
+kind = "childDirectories"
+child_names = ["Code", "Cursor", "Windsurf", "VSCodium"]
+suffixes = [
+  "Cache",
+  "Code Cache",
+  "GPUCache",
+  "CachedData",
+  "CachedExtensions",
+  "CachedExtensionVSIXs",
+  "DawnCache",
+  "DawnGraphiteCache",
+  "DawnWebGPUCache",
+  "GrShaderCache",
+  "GraphiteDawnCache",
+  "Shared Dictionary/cache",
+  "Crashpad/reports",
+  "logs",
+]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "VS Code 1.132.0 source identifies CachedData as generated code and CachedExtensionVSIXs as a download cache. Only explicit renderer, GPU, report, and log leaves are selected; settings, workspaces, extensions, sessions, storage, and backups are excluded"
+verified_at = "2026-08-10"
+verified_platform = "windows"
+references = [
+  "https://github.com/microsoft/vscode/tree/1.132.0",
+  "https://code.visualstudio.com/docs/configure/command-line#_advanced-cli-options",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

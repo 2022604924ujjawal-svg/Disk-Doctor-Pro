@@ -1,0 +1,43 @@
+id = "dev.node-tooling-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["node.exe", "npm.cmd"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/node/corepack"
+verified_rebuildable = true
+
+[[roots]]
+template = "${local_app_data}/node-gyp/Cache"
+
+[[roots]]
+template = "${local_app_data}/electron/Cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Corepack, node-gyp, and Electron download package-manager releases, Node SDK headers, or Electron runtime archives into the selected cache directories; npm configuration, signing data, projects, and installed runtimes remain outside the roots"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = [
+  "https://github.com/nodejs/corepack#environment-variables",
+  "https://github.com/nodejs/node-gyp#command-options",
+  "https://github.com/electron/get#how-it-works",
+]

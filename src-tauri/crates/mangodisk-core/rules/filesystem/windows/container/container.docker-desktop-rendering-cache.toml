@@ -1,0 +1,65 @@
+# Docker Desktop's dashboard is an Electron profile under Roaming AppData.
+# Only fixed Chromium renderer-cache leaves are selected. Docker's documented
+# settings store, VM disk, images, containers, volumes, build cache, projects,
+# sessions, notifications, diagnostics, and engine logs remain outside the
+# cleanup boundary.
+id = "container.docker-desktop-rendering-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "container"
+risk = "safe"
+default_selected = false
+required_stopped_processes = ["Docker Desktop.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Docker Desktop", "Docker.DockerDesktop"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/Docker Desktop/Cache"
+
+[[roots]]
+template = "${roaming_app_data}/Docker Desktop/Code Cache"
+
+[[roots]]
+template = "${roaming_app_data}/Docker Desktop/GPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/Docker Desktop/DawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/Docker Desktop/DawnGraphiteCache"
+
+[[roots]]
+template = "${roaming_app_data}/Docker Desktop/DawnWebGPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/Docker Desktop/GrShaderCache"
+
+[[roots]]
+template = "${roaming_app_data}/Docker Desktop/GraphiteDawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/Docker Desktop/Shared Dictionary/cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed Docker Desktop 4.29.0 reproduced the selected renderer leaves. Docker's settings store, VM disk, images, containers, volumes, build cache, projects, sessions, notifications, diagnostics, and engine logs are excluded"
+verified_at = "2026-08-10"
+verified_platform = "windows"
+references = [
+  "https://docs.docker.com/desktop/settings-and-maintenance/settings/",
+  "https://docs.docker.com/desktop/settings-and-maintenance/backup-and-restore/",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

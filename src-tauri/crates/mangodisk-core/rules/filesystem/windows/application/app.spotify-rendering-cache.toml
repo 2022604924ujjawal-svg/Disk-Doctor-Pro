@@ -1,0 +1,85 @@
+# Spotify's current desktop client keeps Chromium profiles beside its media
+# Storage directory. The official storage guidance distinguishes cache from
+# offline downloads and permits a custom cache location, so this rule does not
+# claim or delete Spotify's streamed-media cache. It selects only fixed
+# Chromium renderer-cache leaves reproduced by the installed client; account
+# databases, browser storage, preferences, offline content, and the application
+# binaries under Roaming AppData stay outside the cleanup boundary.
+id = "app.spotify-rendering-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Spotify.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Spotify", "Spotify.Spotify"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Spotify/Browser/Cache"
+
+[[roots]]
+template = "${local_app_data}/Spotify/Browser/Code Cache"
+
+[[roots]]
+template = "${local_app_data}/Spotify/Browser/GPUCache"
+
+[[roots]]
+template = "${local_app_data}/Spotify/Browser/DawnGraphiteCache"
+
+[[roots]]
+template = "${local_app_data}/Spotify/Browser/DawnWebGPUCache"
+
+[[roots]]
+template = "${local_app_data}/Spotify/Browser/Shared Dictionary/cache"
+
+[[roots]]
+template = "${local_app_data}/Spotify/Default/Cache"
+
+[[roots]]
+template = "${local_app_data}/Spotify/Default/Code Cache"
+
+[[roots]]
+template = "${local_app_data}/Spotify/Default/GPUCache"
+
+[[roots]]
+template = "${local_app_data}/Spotify/Default/DawnGraphiteCache"
+
+[[roots]]
+template = "${local_app_data}/Spotify/Default/DawnWebGPUCache"
+
+[[roots]]
+template = "${local_app_data}/Spotify/Default/Shared Dictionary/cache"
+
+[[roots]]
+template = "${local_app_data}/Spotify/GraphiteDawnCache"
+
+[[roots]]
+template = "${local_app_data}/Spotify/GrShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Spotify/ShaderCache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Spotify documents a separate cache and offline-download model. Spotify 1.2.95.453 reproduced the selected Chromium leaves; Storage, profiles, credentials, history, preferences, browser storage, offline content, and application files are excluded"
+verified_at = "2026-08-10"
+verified_platform = "windows"
+references = [
+  "https://support.spotify.com/us/article/storage-information/",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

@@ -1,0 +1,70 @@
+# Discord uses Electron cache directories. User sessions, Local Storage,
+# IndexedDB, and downloads are excluded, and Discord must be closed first.
+id = "app.discord-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["Discord"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.hnc.Discord", "Discord"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.hnc.Discord"
+
+[[roots]]
+template = "${application_support}/discord/Cache"
+
+[[roots]]
+template = "${application_support}/discord/Code Cache"
+
+[[roots]]
+template = "${application_support}/discord/GPUCache"
+
+[[roots]]
+template = "${application_support}/discord/DawnCache"
+
+[[roots]]
+template = "${application_support}/discord/DawnGraphiteCache"
+
+[[roots]]
+template = "${application_support}/discord/DawnWebGPUCache"
+
+[[roots]]
+template = "${application_support}/discord/GrShaderCache"
+
+[[roots]]
+template = "${application_support}/discord/GraphiteDawnCache"
+
+[[roots]]
+template = "${application_support}/discord/Shared Dictionary/cache"
+
+[[roots]]
+template = "${application_support}/discord/logs"
+
+[[roots]]
+template = "${application_support}/discord/Crashpad/reports"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Discord 0.0.388 reproduced bundle, renderer, Dawn, Shared Dictionary, and log caches. Fixed roots exclude account, session, Local Storage, IndexedDB, Service Worker, Network, and downloaded files"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://www.electronjs.org/docs/latest/api/app#appgetpathname",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

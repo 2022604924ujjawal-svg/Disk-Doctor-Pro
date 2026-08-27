@@ -1,0 +1,27 @@
+id = "project.zig-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["build.zig"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".zig-cache"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "zig-cache"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "zig-out"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://ziglang.org/learn/build-system/#installing-build-artifacts"]
+verified_at = "2026-07-31"

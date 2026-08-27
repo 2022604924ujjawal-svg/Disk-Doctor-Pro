@@ -1,0 +1,45 @@
+# This rule only uses standard macOS Office bundle caches. Outlook data,
+# document AutoRecover data, OneDrive sync content, and OfficeFileCache are
+# outside the boundary.
+id = "app.office-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "application"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Microsoft Word", "Microsoft Excel", "Microsoft PowerPoint"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.microsoft.Word", "com.microsoft.Excel", "com.microsoft.Powerpoint"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.microsoft.Word"
+verified_rebuildable = true
+
+[[roots]]
+template = "${user_library}/Caches/com.microsoft.Excel"
+verified_rebuildable = true
+
+[[roots]]
+template = "${user_library}/Caches/com.microsoft.Powerpoint"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only Word, Excel, and PowerPoint bundle directories under Library/Caches, which Apple designates for discardable files; recovery, sync, templates, accounts, and documents remain outside the roots"
+verified_at = "2026-07-17"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/url/cachesdirectory"]

@@ -1,0 +1,38 @@
+# Bun keeps downloaded registry packages below this cache. The Bun executable,
+# global configuration, and project-local node_modules directories are outside
+# the rule boundary.
+id = "dev.bun-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["bun"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${home}/.bun/install/cache"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Bun documents the global package cache as downloaded registry content that is repopulated by package installation"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = [
+  "https://bun.sh/docs/pm/global-cache",
+]

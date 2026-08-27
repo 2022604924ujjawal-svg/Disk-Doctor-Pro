@@ -1,0 +1,38 @@
+# CoreSimulator shared caches can be regenerated from installed runtimes.
+# Simulator device data remains outside this rule.
+id = "dev.xcode-simulator-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["Xcode", "Simulator", "CoreSimulatorService", "xcodebuild", "xctest"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.apple.dt.Xcode", "Xcode"] },
+  { kind = "executableAvailable", names = ["xcodebuild", "simctl"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Developer/CoreSimulator/Caches"
+
+[[roots]]
+template = "${user_library}/Developer/CoreSimulator/Temp"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only CoreSimulator's explicitly named Caches and Temp directories; simulator Devices, installed runtimes, device data, and Xcode projects remain outside the roots"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/using-the-file-system-effectively"]

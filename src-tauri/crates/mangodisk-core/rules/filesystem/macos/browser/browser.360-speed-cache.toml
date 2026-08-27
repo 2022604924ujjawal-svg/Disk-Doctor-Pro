@@ -1,0 +1,60 @@
+# 360 Extreme Browser keeps Chromium profile state beside renderer caches.
+# Whole-profile roots are intentionally excluded so browsing data and account
+# state remain outside the cleanup boundary.
+id = "browser.360-speed-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["360Chrome", "360Chrome Helper", "360Chrome Helper (GPU)", "360Chrome Helper (Renderer)"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["net.qihoo.360browser", "360Chrome"] },
+  { kind = "anyRootExists" },
+]
+
+# The macOS build stores HTTP and code cache data under Library/Caches.
+[[roots]]
+template = "${user_library}/Caches/360Chrome"
+
+[[roots]]
+template = "${application_support}/360Chrome/ShaderCache64"
+
+[[roots]]
+template = "${application_support}/360Chrome/GrShaderCache64"
+
+[[roots]]
+template = "${application_support}/360Chrome/GraphiteDawnCache"
+
+# Chromium's component CRX cache contains downloaded component packages, not
+# installed extensions or their profile-scoped settings.
+[[roots]]
+template = "${application_support}/360Chrome/component_crx_cache"
+
+[[roots]]
+template = "${application_support}/360Chrome"
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["GPUCache64", "DawnGraphiteCache", "DawnWebGPUCache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed 360 Extreme Browser Pro 16.0.1098.0 on Apple silicon reproduced dedicated web, code, GPU, shader, and component caches; real cleanup preserved profile databases, credentials, history, extensions, sessions, local storage, and settings"
+verified_at = "2026-08-14"
+verified_platform = "macos"
+references = [
+  "https://browser.360.cn/ee/mac/index.html",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

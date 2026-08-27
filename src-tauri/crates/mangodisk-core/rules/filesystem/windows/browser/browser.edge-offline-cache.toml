@@ -1,0 +1,38 @@
+id = "browser.edge-offline-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "browser"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Microsoft Edge", "msedge.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Microsoft Edge", "Microsoft Edge Update"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Microsoft/Edge/User Data"
+verified_rebuildable = true
+kind = "childDirectories"
+child_names = ["Default", "Guest Profile", "System Profile"]
+child_prefixes = ["Profile "]
+suffixes = ["Service Worker/CacheStorage", "Service Worker/ScriptCache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only Service Worker CacheStorage, ScriptCache, and Shared Dictionary cache below discovered Edge profiles; cookies, history, passwords, bookmarks, extensions, Local Storage, and IndexedDB are excluded"
+verified_at = "2026-07-27"
+verified_platform = "windows"
+references = ["https://learn.microsoft.com/en-us/deployedge/edge-learnmore-create-user-directory-vars"]

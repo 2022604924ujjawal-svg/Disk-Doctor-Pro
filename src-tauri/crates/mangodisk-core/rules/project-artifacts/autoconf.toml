@@ -1,0 +1,19 @@
+id = "project.autoconf-cache"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["configure.ac", "configure.in"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "autom4te.cache"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://www.gnu.org/software/autoconf/manual/autoconf-2.61/html_node/autom4te_002ecache.html"]
+verified_at = "2026-07-18"

@@ -1,0 +1,43 @@
+# RubyGems installs remain under each version directory. Only the downloaded
+# .gem archive cache below each user repository is selected.
+id = "dev.rubygems-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["bundle", "gem", "ruby"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["gem", "bundle"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${home}/.gem/ruby"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["cache"]
+
+[[roots]]
+template = "${home}/.gem/cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "RubyGems user repositories keep installed gems and downloaded archive caches in distinct directories; only cache suffixes are selected"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = [
+  "https://guides.rubygems.org/command-reference/#gem-environment",
+  "https://github.com/rubygems/rubygems/blob/master/lib/rubygems/defaults.rb",
+]

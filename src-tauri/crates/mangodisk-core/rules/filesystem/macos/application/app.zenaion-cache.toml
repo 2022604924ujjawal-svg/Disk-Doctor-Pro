@@ -1,0 +1,41 @@
+# ZenAion keeps identity, settings, skills, agent state, and WebKit website
+# storage outside these explicit application-maintained cache and log roots.
+id = "app.zenaion-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["ZenAI", "zenai-host"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["bot.zenai", "ZenAion"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${application_support}/bot.zenai/.caches"
+
+[[roots]]
+template = "${application_support}/bot.zenai/logs"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed ZenAion 0.1.2 reproduced separate marketplace/model metadata caches and logs. Identity, auth, settings, skills, agent state, hologram assets, and WebKit website data are excluded"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://zenai.bot/guide/core-features/view-all",
+  "https://developer.apple.com/documentation/webkit/wkwebsitedatastore",
+]

@@ -1,0 +1,34 @@
+id = "dev.npx-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "development"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["node", "npx"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${home}/.npm/_npx"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "npm documents the npm exec and npx cache as separately listable and removable cache entries under the configured npm cache directory"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://docs.npmjs.com/cli/cache/"]

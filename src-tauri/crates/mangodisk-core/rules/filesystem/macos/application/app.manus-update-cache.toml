@@ -1,0 +1,44 @@
+# Manus downloads desktop updates into standard macOS cache directories. Keep
+# this separate from the safe rendering-cache rule because deleting a pending
+# package can require the update to be downloaded again.
+id = "app.manus-update-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "application"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Manus"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["im.manus.desktop", "Manus"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/manus-updater"
+verified_rebuildable = true
+
+[[roots]]
+template = "${user_library}/Caches/im.manus.desktop"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Notarized Manus 1.7.0 retained the downloaded 1.7.0 update archive and pending metadata after installation in standard Library/Caches roots. Tasks, local files, credentials, settings, browser state, and the installed application remain outside the rule"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://help.manus.im/en/articles/14089011-how-to-download-the-manus-desktop-app",
+  "https://developer.apple.com/documentation/foundation/url/cachesdirectory",
+]

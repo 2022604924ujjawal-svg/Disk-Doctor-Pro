@@ -1,0 +1,41 @@
+id = "app.electron-cache"
+schema_version = 3
+rule_version = 9
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Slack.exe", "Teams.exe", "Figma.exe", "Obsidian.exe", "Insomnia.exe", "Claude.exe", "GitHubDesktop.exe"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${roaming_app_data}"
+kind = "childDirectories"
+child_names = ["Slack", "Microsoft Teams", "Figma", "obsidian", "Insomnia", "Claude", "GitHub Desktop"]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache", "logs", "Crashpad/reports"]
+
+[[roots]]
+template = "${local_app_data}"
+kind = "childDirectories"
+child_names = ["Slack", "Microsoft Teams", "Figma", "obsidian", "Insomnia", "Claude", "GitHub Desktop"]
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache", "logs", "Crashpad/reports"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Fixed Electron rendering, report, and log leaves only. Electron user-data boundaries and signed client profiles confirm the selected layouts. Accounts, messages, storage, settings, and downloads are excluded"
+verified_at = "2026-08-10"
+verified_platform = "windows"
+references = [
+  "https://www.electronjs.org/docs/latest/api/app#appgetpathname",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

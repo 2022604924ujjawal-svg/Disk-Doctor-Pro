@@ -1,0 +1,41 @@
+# QQ keeps active hot-update bundles and updater state beside downloaded ZIP
+# archives. Restrict cleanup to old top-level archives so the current bundle,
+# pending extracted versions, rollback state, and updater metadata stay intact.
+id = "app.qq-update-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.tencent.qq", "QQ"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Containers/com.tencent.qq/Data/Library/Application Support/QQ/versions"
+
+[matcher]
+kind = "allOf"
+items = [
+  { kind = "nameGlob", values = ["*.zip"] },
+  { kind = "olderThan", days = 7 },
+  { kind = "maxDepth", depth = 1 },
+]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "QQ 6.9.33 reproduced version-named ZIP downloads beside QQUpdate bundles. The running client did not open old archives; only top-level ZIP files older than seven days are selected, while versions, updater state, accounts, messages, and files stay excluded"
+verified_at = "2026-08-21"
+verified_platform = "macos"
+references = ["https://im.qq.com/macqq/index.shtml"]

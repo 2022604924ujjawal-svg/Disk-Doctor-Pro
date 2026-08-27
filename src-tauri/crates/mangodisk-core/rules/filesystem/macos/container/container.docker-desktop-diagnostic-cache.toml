@@ -1,0 +1,37 @@
+# Docker Desktop documents the VM diagnostic-log tree. Require all Docker
+# owners to stop because current log files share this root with rotated logs;
+# the age gate then retains the latest seven days for support diagnostics.
+id = "container.docker-desktop-diagnostic-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "container"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Docker", "Docker Desktop", "com.docker.backend", "com.docker.virtualization"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.docker.docker", "Docker"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Containers/com.docker.docker/Data/log"
+
+[matcher]
+kind = "olderThan"
+days = 7
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Docker documents its sandbox VM logs, and Desktop 4.55.0 reproduced host and VM rotations in the same tree. Only entries older than seven days are selected after owners stop; settings, VM disks, images, containers, volumes, and recent logs are excluded"
+verified_at = "2026-08-21"
+verified_platform = "macos"
+references = ["https://docs.docker.com/engine/daemon/logs/"]

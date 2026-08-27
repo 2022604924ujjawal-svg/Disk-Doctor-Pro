@@ -1,0 +1,75 @@
+# Postman has both top-level Electron caches and renderer partitions with
+# installation-specific identifiers. Dynamic discovery is limited to direct
+# partitions followed by fixed cache suffixes, never arbitrary descendants.
+id = "app.postman-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Postman"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.postmanlabs.mac", "Postman"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${application_support}/Postman/Cache"
+
+[[roots]]
+template = "${application_support}/Postman/Code Cache"
+
+[[roots]]
+template = "${application_support}/Postman/GPUCache"
+
+[[roots]]
+template = "${application_support}/Postman/DawnCache"
+
+[[roots]]
+template = "${application_support}/Postman/DawnGraphiteCache"
+
+[[roots]]
+template = "${application_support}/Postman/DawnWebGPUCache"
+
+[[roots]]
+template = "${application_support}/Postman/GrShaderCache"
+
+[[roots]]
+template = "${application_support}/Postman/GraphiteDawnCache"
+
+[[roots]]
+template = "${application_support}/Postman/logs"
+
+[[roots]]
+template = "${application_support}/Postman/Shared Dictionary/cache"
+
+# Each direct child is one Postman renderer partition. Storage, IndexedDB,
+# Local Storage, Network, and all other durable partition roots are excluded.
+[[roots]]
+template = "${application_support}/Postman/Partitions"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Postman 12.18.4 reproduced eight renderer partitions. Only fixed Chromium cache suffixes and top-level Electron caches are selected; Storage, cookies, IndexedDB, Local Storage, Network, workspaces, and account state are excluded"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://learning.postman.com/latest-v-12/docs/getting-started/troubleshooting-inapp",
+  "https://www.electronjs.org/docs/latest/api/app#appgetpathname",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

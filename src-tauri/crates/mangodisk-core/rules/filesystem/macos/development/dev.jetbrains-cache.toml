@@ -1,0 +1,47 @@
+# JetBrains keeps indexes and generated IDE models under Library/Caches.
+# LocalHistory, plugins, settings, projects, and Application Support are
+# deliberately excluded even though some of them may also consume space.
+id = "dev.jetbrains-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["IntelliJ IDEA", "Android Studio", "PyCharm", "WebStorm", "GoLand", "RustRover", "PhpStorm"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.jetbrains.intellij", "com.google.android.studio", "IntelliJ IDEA", "Android Studio", "PyCharm", "WebStorm", "GoLand", "RustRover", "PhpStorm"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/JetBrains"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["caches", "index", "tmp", "jcef_cache", "semantic-search", "full-line", "intellij-rust", "vcs-log", "python_stubs", "cpython-cache", "python_packages", "icon-cache", "composer_packages", "web-types"]
+verified_rebuildable = true
+
+[[roots]]
+template = "${user_library}/Caches/Google"
+kind = "childDirectories"
+child_prefixes = ["AndroidStudio"]
+suffixes = ["caches", "index", "tmp", "jcef_cache", "semantic-search", "full-line", "vcs-log", "icon-cache"]
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "JetBrains documents IDE system directories for caches and indexes; the rule selects only generated cache content while user settings, plugins, projects, and Local History remain excluded"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://www.jetbrains.com/help/idea/tuning-the-ide.html#system-directory"]

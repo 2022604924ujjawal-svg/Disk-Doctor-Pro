@@ -1,0 +1,44 @@
+id = "dev.vscode-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "development"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Visual Studio Code", "Code"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${application_support}/Code/Cache"
+
+[[roots]]
+template = "${application_support}/Code/CachedExtensionVSIXs"
+
+[[roots]]
+template = "${application_support}/Code/CachedData"
+
+[[roots]]
+template = "${application_support}/Code/GPUCache"
+
+[[roots]]
+template = "${application_support}/Code/Code Cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "VS Code source identifies CachedExtensionVSIXs as its downloaded extension cache. Only explicit renderer, generated-code, GPU, and extension-package cache leaves are selected; settings, workspaces, extensions, sessions, and backups are excluded"
+verified_at = "2026-08-21"
+verified_platform = "macos"
+references = [
+  "https://github.com/microsoft/vscode/issues/99873",
+  "https://code.visualstudio.com/docs/configure/command-line#_advanced-cli-options",
+]

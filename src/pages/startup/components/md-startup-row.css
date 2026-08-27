@@ -1,0 +1,432 @@
+@reference "@assets/main.css";
+
+.startup-row-line {
+  min-width: 0;
+}
+
+.startup-main {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  min-height: var(--layout-result-group-height);
+  grid-template-columns: minmax(0, 1fr) minmax(48px, auto) minmax(58px, auto) 30px;
+  align-items: center;
+  gap: 14px;
+}
+
+.startup-disclosure {
+  display: grid;
+  min-width: 0;
+  min-height: var(--layout-result-group-height);
+  grid-row: 1;
+  grid-column: 1;
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  border: 0;
+  padding: 4px 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.startup-identity {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.startup-identity strong,
+.startup-identity small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.startup-identity strong {
+  font-size: 13px;
+}
+
+.startup-identity small,
+.startup-item-count,
+.startup-state,
+.startup-native-state {
+  @apply text-muted-foreground;
+  font-size: 11px;
+}
+
+.startup-actions {
+  z-index: 1;
+  display: flex;
+  grid-row: 1;
+  grid-column: 1;
+  justify-self: end;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.14s ease;
+}
+
+.startup-actions.has-cleanup {
+  gap: 2px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.startup-cleanup-action {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  border-radius: 8px;
+  padding: 4px 7px;
+  background: transparent;
+  @apply text-muted-foreground transition-colors;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.startup-cleanup-action:not(:disabled):hover {
+  @apply text-destructive;
+  background: var(--surface-destructive-subtle);
+}
+
+.startup-cleanup-action:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.startup-actions.has-cleanup :deep(.startup-location-action) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.startup-row-line:is(:hover, :has(:focus-visible)) .startup-actions.has-cleanup :deep(.startup-location-action) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.startup-row-line:is(:hover, :has(:focus-visible)) .startup-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.startup-row-line:is(:hover, :has(:focus-visible)) .startup-identity {
+  padding-right: 34px;
+}
+
+.startup-row-line:has(.startup-cleanup-action) .startup-identity {
+  padding-right: 112px;
+}
+
+.startup-item-count,
+.startup-state {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.startup-state[data-state='enabled'] {
+  @apply text-primary;
+}
+
+.startup-switch {
+  position: relative;
+  width: 34px;
+  height: 20px;
+  border: 0;
+  border-radius: 999px;
+  padding: 2px;
+  @apply bg-muted-foreground;
+  cursor: pointer;
+  transition: background 140ms ease;
+}
+
+.startup-switch[data-state='enabled'] {
+  @apply bg-primary;
+}
+
+.startup-switch[data-state='mixed'] {
+  background: var(--surface-primary-subtle);
+  background: color-mix(in oklab, var(--primary) 48%, var(--muted));
+}
+
+.startup-switch:disabled {
+  cursor: default;
+}
+
+.startup-switch[data-state='mixed']:disabled {
+  opacity: 0.58;
+}
+
+.switch-thumb {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 1px 2px var(--shadow-subtle);
+  box-shadow: 0 1px 2px color-mix(in oklab, black 24%, transparent);
+  transform: translate3d(0, 0, 0);
+  transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.startup-switch[data-state='enabled'] .switch-thumb,
+.startup-switch[data-state='mixed'] .switch-thumb {
+  transform: translate3d(14px, 0, 0);
+}
+
+.switch-spinner {
+  position: absolute;
+  inset: 2.5px;
+  width: 11px;
+  height: 11px;
+  border: 1.5px solid var(--border-primary-subtle);
+  border: 1.5px solid color-mix(in oklab, var(--primary) 22%, transparent);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: startup-switch-spin 0.72s linear infinite;
+}
+
+@keyframes startup-switch-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.startup-row-line :deep(.startup-expand) {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  padding: 0;
+  background: transparent;
+}
+
+.startup-row-line :deep(.startup-expand:hover) {
+  @apply bg-muted/70;
+}
+
+.startup-chevron {
+  @apply text-muted-foreground;
+  transition: transform 0.18s ease;
+}
+
+.startup-chevron.expanded {
+  transform: rotate(180deg);
+}
+
+.startup-details {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
+  padding: 2px 14px 10px var(--result-table-hierarchy-indent);
+}
+
+.startup-management-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-width: 1px;
+  border-radius: 9px;
+  padding: 9px 11px;
+  @apply border-border bg-background;
+}
+
+.startup-management-note > span {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+  @apply text-muted-foreground;
+  font-size: 11px;
+}
+
+.startup-management-note button {
+  flex: none;
+}
+
+.startup-native-item {
+  min-width: 0;
+}
+
+.startup-artifact-list:not(.is-grouped) {
+  min-width: 0;
+}
+
+.startup-artifact-list.is-grouped {
+  margin-inline-start: 0;
+}
+
+.startup-native-row {
+  display: grid;
+  min-width: 0;
+  min-height: var(--layout-result-child-row-height);
+  grid-template-columns: 34px minmax(0, 1fr) 30px minmax(52px, auto);
+  align-items: center;
+  gap: 10px;
+  padding-block: 2px;
+}
+
+.startup-native-icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  @apply text-primary;
+}
+
+.startup-native-identity {
+  display: flex;
+  min-width: 0;
+}
+
+.startup-native-identity strong {
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.startup-native-state {
+  min-width: 52px;
+  text-align: right;
+}
+
+.startup-native-actions {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.14s ease;
+}
+
+.startup-native-row:is(:hover, :has(:focus-visible)) .startup-native-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.startup-detail-list {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  margin: 0;
+  padding: 4px 10px 7px;
+}
+
+.startup-group-detail-list {
+  padding-bottom: 2px;
+}
+
+.is-grouped .startup-detail-list {
+  margin: 0 12px 7px 44px;
+  padding-inline: 0;
+}
+
+.startup-detail-row {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: 14px;
+  border-top-width: 1px;
+  padding-block: 7px;
+  @apply border-border/65;
+}
+
+.startup-detail-row:first-child {
+  border-top: 0;
+}
+
+.startup-detail-row dt,
+.startup-detail-row dd {
+  min-width: 0;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.startup-target-value {
+  position: relative;
+  display: block;
+  padding-inline-end: 48px;
+}
+
+.startup-target-text {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.startup-target-actions {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.14s ease;
+}
+
+.startup-detail-row:is(:hover, :has(:focus-visible)) .startup-target-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.startup-target-actions :deep(.icon-action) {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+}
+
+.startup-detail-row dt {
+  @apply text-muted-foreground;
+}
+
+.startup-detail-row dd {
+  margin: 0;
+  color: var(--foreground);
+}
+
+.startup-detail-row.is-warning dd {
+  @apply text-warning;
+}
+
+@container startup (max-width: 720px) {
+  .startup-main {
+    grid-template-columns: minmax(0, 1fr) minmax(54px, auto) 30px;
+    gap: 10px;
+  }
+
+  .startup-item-count {
+    display: none;
+  }
+}
+
+@container startup (max-width: 520px) {
+  .startup-disclosure {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .startup-management-note {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .startup-management-note button {
+    align-self: flex-start;
+  }
+
+  .startup-detail-row {
+    grid-template-columns: 82px minmax(0, 1fr);
+    gap: 10px;
+  }
+}

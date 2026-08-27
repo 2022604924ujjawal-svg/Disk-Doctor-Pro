@@ -1,0 +1,55 @@
+# EA's CEF generation directory is versioned. Expand only its direct version
+# children and append fixed renderer-cache suffixes; game installs, downloads,
+# offline state, browser storage, and ProgramData remain outside every root.
+id = "app.ea-rendering-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["EADesktop.exe", "EACefSubProcess.exe", "EALocalHostSvc.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["EA app", "ElectronicArts.EADesktop"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Electronic Arts/EA Desktop/CEF"
+kind = "childDirectories"
+include_all_children = true
+suffixes = [
+  "EADesktop/BrowserCache/Cache",
+  "EADesktop/BrowserCache/Code Cache",
+  "EADesktop/BrowserCache/GPUCache",
+  "EADesktop/BrowserCache/DawnCache",
+  "EADesktop/BrowserCache/DawnGraphiteCache",
+  "EADesktop/BrowserCache/DawnWebGPUCache",
+  "EADesktop/BrowserCache/GrShaderCache",
+  "EADesktop/BrowserCache/GraphiteDawnCache",
+  "EADesktop/BrowserCache/Shared Dictionary/cache",
+]
+
+[[roots]]
+template = "${local_app_data}/EADesktop/cache/qmlcache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "EA documents App Recovery cache clearing. EA app 13.764.0.6277 on Windows 11 ARM64 reproduced versioned CEF rendering caches and qmlcache. Game data, downloads, offline state, Local Storage, Network, Session Storage, and ProgramData are excluded"
+verified_at = "2026-08-10"
+verified_platform = "windows"
+references = [
+  "https://help.ea.com/en/articles/technical-issues/clear-cache/",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

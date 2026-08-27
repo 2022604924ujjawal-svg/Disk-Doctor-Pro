@@ -1,0 +1,33 @@
+id = "dev.xcode-derived-data"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["Xcode"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["xcodebuild"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Developer/Xcode/DerivedData"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Apple identifies Library/Developer/Xcode/DerivedData as generated build products and indexes and documents removing it as a recovery step; project sources and signing material remain outside the root"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/Xcode-Release-Notes/xcode-26-release-notes"]

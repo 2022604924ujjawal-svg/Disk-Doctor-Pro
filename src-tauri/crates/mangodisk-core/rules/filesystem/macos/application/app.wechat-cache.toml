@@ -1,0 +1,55 @@
+# WeChat chat history, downloaded media, favorites, contacts, and account data
+# live outside this standard bundle cache. The application must be closed so
+# that it cannot replace cache files while cleanup is in progress.
+id = "app.wechat-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["WeChat"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.tencent.xinWeChat", "WeChat"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.tencent.xinWeChat"
+
+# Current WeChat keeps several direct Chromium profiles below its sandbox.
+# History, cookies, mini-program storage, messages, and downloaded files share
+# those profiles, so only fixed rendering-cache suffixes are dynamically owned.
+[[roots]]
+template = "${user_library}/Containers/com.tencent.xinWeChat/Data/Documents/app_data/radium/web/profiles"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache", "Service Worker/CacheStorage"]
+
+# Chromium code cache is stored in a separate sandbox cache profile tree.
+[[roots]]
+template = "${user_library}/Containers/com.tencent.xinWeChat/Data/Library/Caches/profiles"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache", "Service Worker/CacheStorage"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed WeChat 4.1.12 reproduced six sandbox Chromium profiles. Fixed cache suffixes exclude accounts, messages, downloads, history, cookies, Local Storage, IndexedDB, WebStorage, Service Worker databases and scripts"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://weixin.qq.com/",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

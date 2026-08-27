@@ -1,0 +1,67 @@
+# BaiduNetdisk keeps account databases, transfer state, synced-file metadata,
+# and browser storage beside an Electron renderer profile in its sandbox. Only
+# fixed renderer-cache leaves are selected.
+id = "app.baidu-netdisk-rendering-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["BaiduNetdisk"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.baidu.netdisk", "BaiduNetdisk"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Containers/com.baidu.netdisk/Data/Library/Application Support/baidunetdisk/Cache"
+
+[[roots]]
+template = "${user_library}/Containers/com.baidu.netdisk/Data/Library/Application Support/baidunetdisk/Code Cache"
+
+[[roots]]
+template = "${user_library}/Containers/com.baidu.netdisk/Data/Library/Application Support/baidunetdisk/GPUCache"
+
+[[roots]]
+template = "${user_library}/Containers/com.baidu.netdisk/Data/Library/Application Support/baidunetdisk/DawnCache"
+
+[[roots]]
+template = "${user_library}/Containers/com.baidu.netdisk/Data/Library/Application Support/baidunetdisk/DawnGraphiteCache"
+
+[[roots]]
+template = "${user_library}/Containers/com.baidu.netdisk/Data/Library/Application Support/baidunetdisk/DawnWebGPUCache"
+
+[[roots]]
+template = "${user_library}/Containers/com.baidu.netdisk/Data/Library/Application Support/baidunetdisk/GrShaderCache"
+
+[[roots]]
+template = "${user_library}/Containers/com.baidu.netdisk/Data/Library/Application Support/baidunetdisk/GraphiteDawnCache"
+
+[[roots]]
+template = "${user_library}/Containers/com.baidu.netdisk/Data/Library/Application Support/baidunetdisk/Shared Dictionary/cache"
+
+[[roots]]
+template = "${user_library}/Containers/com.baidu.netdisk/Data/Library/Application Support/baidunetdisk/Service Worker/CacheStorage"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed sandboxed BaiduNetdisk 4.53.7 reproduced fixed Electron cache leaves. Files, account and transfer databases, sync metadata, settings, cookies, browser storage, and group-container state are excluded"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://pan.baidu.com/download",
+  "https://www.electronjs.org/docs/latest/api/app#appgetpathname",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

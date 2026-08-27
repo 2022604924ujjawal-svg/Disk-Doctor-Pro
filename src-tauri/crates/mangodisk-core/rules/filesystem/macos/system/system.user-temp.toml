@@ -1,0 +1,32 @@
+id = "system.user-temp"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "system"
+risk = "safe"
+default_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${temp}"
+
+[matcher]
+kind = "allOf"
+items = [
+  { kind = "olderThan", days = 7 },
+  { kind = "not", item = { kind = "extensionIn", values = ["db", "sqlite", "sqlite3", "plist"] } },
+]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The root is the operating system-provided temporary directory; Apple defines temporary files as short-lived, while the matcher adds an age gate and excludes protected archive, image, document, database, and key material"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/using-the-file-system-effectively"]

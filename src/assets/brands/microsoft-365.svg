@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-48 -48 608 608">
+  <radialGradient
+    id="SVGW71XOcaB"
+    cx="-90.407"
+    cy="-6.401"
+    r="11.637"
+    gradientTransform="rotate(110.528 -1582.507 971.976)scale(33.3657 58.1966)"
+    gradientUnits="userSpaceOnUse"
+  >
+    <stop offset=".064" stop-color="#ae7fe2" />
+    <stop offset="1" stop-color="#0078d4" />
+  </radialGradient>
+  <path
+    fill="url(#SVGW71XOcaB)"
+    d="m210.4 11.9-2.6 1.6q-6.3 3.75-11.7 8.4l7.5-5.3h64l11.6 88.1-58.2 58.2-58.2 40.4V250c0 32.6 17 62.8 44.9 79.6l61.3 37.1-129.4 75.5h-25L68.2 414c-27.9-16.9-44.9-47.1-44.9-79.6V177.6c0-32.6 17-62.8 44.9-79.7l139.6-84.5c.9-.5 1.8-1 2.6-1.5"
+  />
+  <linearGradient
+    id="SVGDUKpnxEu"
+    x1="253.639"
+    x2="198.241"
+    y1="653.085"
+    y2="557.27"
+    gradientTransform="translate(0 -278)"
+    gradientUnits="userSpaceOnUse"
+  >
+    <stop offset="0" stop-color="#114a8b" />
+    <stop offset="1" stop-color="#0078d4" stop-opacity="0" />
+  </linearGradient>
+  <path
+    fill="url(#SVGDUKpnxEu)"
+    d="m210.4 11.9-2.6 1.6q-6.3 3.75-11.7 8.4l7.5-5.3h64l11.6 88.1-58.2 58.2-58.2 40.4V250c0 32.6 17 62.8 44.9 79.6l61.3 37.1-129.4 75.5h-25L68.2 414c-27.9-16.9-44.9-47.1-44.9-79.6V177.6c0-32.6 17-62.8 44.9-79.7l139.6-84.5c.9-.5 1.8-1 2.6-1.5"
+  />
+  <radialGradient
+    id="SVGpvOZoepW"
+    cx="-95.09"
+    cy="32.254"
+    r="11.637"
+    gradientTransform="rotate(-8.367 -3217.16 -20322.12)scale(31.0503 20.5108)"
+    gradientUnits="userSpaceOnUse"
+  >
+    <stop offset=".134" stop-color="#d59dff" />
+    <stop offset="1" stop-color="#5e438f" />
+  </radialGradient>
+  <path
+    fill="url(#SVGpvOZoepW)"
+    d="M349.1 197.8v52.1c0 32.6-17 62.8-44.9 79.6L164.6 414c-28.6 17.4-64.1 18-93.2 2l136.4 82.6c29.6 17.9 66.8 17.9 96.4 0L443.8 414c27.9-16.9 44.9-47.1 44.9-79.6v-37.7l-11.6-17.5z"
+  />
+  <linearGradient
+    id="SVGdF2K1dNs"
+    x1="389.732"
+    x2="330.368"
+    y1="510.531"
+    y2="595.653"
+    gradientTransform="translate(0 -278)"
+    gradientUnits="userSpaceOnUse"
+  >
+    <stop offset="0" stop-color="#493474" />
+    <stop offset="1" stop-color="#8c66ba" stop-opacity="0" />
+  </linearGradient>
+  <path
+    fill="url(#SVGdF2K1dNs)"
+    d="M349.1 197.8v52.1c0 32.6-17 62.8-44.9 79.6L164.6 414c-28.6 17.4-64.1 18-93.2 2l136.4 82.6c29.6 17.9 66.8 17.9 96.4 0L443.8 414c27.9-16.9 44.9-47.1 44.9-79.6v-37.7l-11.6-17.5z"
+  />
+  <radialGradient
+    id="SVG31DpxbmO"
+    cx="-123.182"
+    cy="-9.402"
+    r="11.637"
+    gradientTransform="rotate(194.228 -1265.388 -274.62)scale(24.9228 41.9552)"
+    gradientUnits="userSpaceOnUse"
+  >
+    <stop offset=".058" stop-color="#50e6ff" />
+    <stop offset="1" stop-color="#436dcd" />
+  </radialGradient>
+  <path
+    fill="url(#SVG31DpxbmO)"
+    d="M443.8 97.9 304.2 13.4C275.5-4 239.8-4.5 210.6 11.8l-2.8 1.7a93.13 93.13 0 0 0-44.9 79.7v110.4l44.9-27.2c29.6-17.9 66.7-17.9 96.4 0l139.6 84.5c27 16.3 43.8 45.2 44.9 76.6 0-1 .1-2 .1-3.1V177.6c-.1-32.6-17.1-62.8-45-79.7"
+  />
+  <linearGradient
+    id="SVGyetrOcnl"
+    x1="174.261"
+    x2="261.665"
+    y1="446.725"
+    y2="446.725"
+    gradientTransform="translate(0 -278)"
+    gradientUnits="userSpaceOnUse"
+  >
+    <stop offset="0" stop-color="#2d3f80" />
+    <stop offset="1" stop-color="#436dcd" stop-opacity="0" />
+  </linearGradient>
+  <path
+    fill="url(#SVGyetrOcnl)"
+    d="M443.8 97.9 304.2 13.4C275.5-4 239.8-4.5 210.6 11.8l-2.8 1.7a93.13 93.13 0 0 0-44.9 79.7v110.4l44.9-27.2c29.6-17.9 66.7-17.9 96.4 0l139.6 84.5c27 16.3 43.8 45.2 44.9 76.6 0-1 .1-2 .1-3.1V177.6c-.1-32.6-17.1-62.8-45-79.7"
+  />
+</svg>

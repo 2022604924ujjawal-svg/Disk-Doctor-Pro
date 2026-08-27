@@ -1,0 +1,50 @@
+# WPS creates one Chromium Embedded Framework profile per rendered page. The
+# profile also owns cookies and other durable website state, so only the fixed
+# response-cache and compiled-code leaves are selected across every partition.
+id = "app.wps-rendering-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = [
+  "wpsoffice.exe",
+  "wps.exe",
+  "et.exe",
+  "wpp.exe",
+  "wpspdf.exe",
+  "wpscloudsvr.exe",
+  "wpscenter.exe",
+  "promecefpluginhost.exe",
+  "ksomisc.exe",
+  "wpsupdate.exe",
+]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Kingsoft.WPSOffice.CN", "WPS Office", "WPS Office CN"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/Kingsoft/wps/addons/data/win-i386/cef/2"
+
+[matcher]
+kind = "pathSegmentIn"
+values = ["Cache", "Code Cache"]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed WPS Office 12.1.0.28043 reproduced isolated Chromium Embedded Framework response and code caches below a rendered-page partition. Cookies, local storage, databases, sessions, add-ons, documents, and account state are excluded"
+verified_at = "2026-08-11"
+verified_platform = "windows"
+references = [
+  "https://www.wps.cn/product/wpswin",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

@@ -1,0 +1,44 @@
+# electron-updater retains downloaded installers in dedicated per-product
+# staging roots. Application binaries and product data live elsewhere.
+id = "app.electron-updater-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["GoWhisper.exe", "WeFlow.exe", "GitMind.exe"]
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${local_app_data}/gowhisper-updater"
+verified_rebuildable = true
+
+[[roots]]
+template = "${local_app_data}/weflow-updater"
+verified_rebuildable = true
+
+[[roots]]
+template = "${local_app_data}/gitmind-updater"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Three dedicated updater roots reproduced one downloaded installer each. GoWhisper and GitMind packages have valid publisher signatures; installed applications, models, recordings, mind maps, settings, and product data remain outside"
+verified_at = "2026-08-11"
+verified_platform = "windows"
+references = [
+  "https://www.electron.build/auto-update.html",
+  "https://gowhisper.io/",
+  "https://gitmind.com/download",
+]

@@ -1,0 +1,41 @@
+# Composer credentials, configuration, globally installed tools, and project
+# vendor directories are excluded. Both the current macOS cache and the legacy
+# Composer home cache are download/metadata caches.
+id = "dev.composer-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["composer"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/composer"
+
+[[roots]]
+template = "${home}/.composer/cache"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Composer documents its macOS cache directory as package archives, repository metadata, and VCS metadata; the legacy cache root is retained by older installations"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = [
+  "https://getcomposer.org/doc/06-config.md#cache-dir",
+]

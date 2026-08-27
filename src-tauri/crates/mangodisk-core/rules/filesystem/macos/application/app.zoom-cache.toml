@@ -1,0 +1,34 @@
+# Zoom's bundle cache is under the standard macOS Caches directory and does not
+# include recordings, chat files, or configuration.
+id = "app.zoom-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["zoom.us"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["us.zoom.xos", "zoom.us"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/us.zoom.xos"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only Zoom's bundle directory under Library/Caches, which Apple designates for discardable files; recordings, chat files, accounts, settings, and diagnostic logs remain outside the root"
+verified_at = "2026-07-17"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/url/cachesdirectory"]

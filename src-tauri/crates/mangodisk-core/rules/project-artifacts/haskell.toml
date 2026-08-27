@@ -1,0 +1,26 @@
+id = "project.haskell-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["stack.yaml", "cabal.project"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".stack-work"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "dist-newstyle"
+
+[verification]
+lifecycle = "verified"
+evidence = [
+  "https://docs.haskellstack.org/en/stable/topics/stack_work/",
+  "https://cabal.readthedocs.io/en/stable/cabal-project-description-file.html#cmdoption-builddir",
+]
+verified_at = "2026-07-31"

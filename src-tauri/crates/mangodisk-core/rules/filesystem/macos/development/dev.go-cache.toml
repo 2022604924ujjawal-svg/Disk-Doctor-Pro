@@ -1,0 +1,38 @@
+id = "dev.go-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["go"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/go-build"
+
+[[roots]]
+template = "${home}/go/pkg/mod/cache/download"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The Go command documents go-build as the operating-system build cache and GOMODCACHE/cache/download as downloaded module content; both can be repopulated by later builds or module downloads"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = [
+  "https://go.dev/cmd/go/#hdr-Build_and_test_caching",
+  "https://go.dev/ref/mod#module-cache",
+]

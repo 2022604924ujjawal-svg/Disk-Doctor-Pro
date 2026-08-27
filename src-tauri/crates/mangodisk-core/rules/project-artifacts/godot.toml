@@ -1,0 +1,19 @@
+id = "project.godot-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["project.godot"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".godot"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://docs.godotengine.org/en/stable/tutorials/assets_pipeline/import_process.html"]
+verified_at = "2026-07-31"

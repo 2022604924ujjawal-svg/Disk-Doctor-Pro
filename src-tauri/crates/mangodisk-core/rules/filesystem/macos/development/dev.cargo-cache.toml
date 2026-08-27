@@ -1,0 +1,38 @@
+id = "dev.cargo-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["cargo"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${home}/.cargo/registry/cache"
+verified_rebuildable = true
+
+[[roots]]
+template = "${home}/.cargo/git/db"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Cargo documents registry/cache and git/db as downloaded dependency caches and states that cached sources can be restored by extraction, checkout, or redownload; credentials and installed binaries remain outside the roots"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://doc.rust-lang.org/cargo/guide/cargo-home.html"]

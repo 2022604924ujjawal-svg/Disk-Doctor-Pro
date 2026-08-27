@@ -1,0 +1,41 @@
+id = "dev.package-manager-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${local_app_data}/Composer"
+verified_rebuildable = true
+
+[[roots]]
+template = "${local_app_data}/deno"
+verified_rebuildable = true
+
+[[roots]]
+template = "${local_app_data}/vcpkg/archives"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Composer and Deno document their selected roots as downloaded dependency or compiled-artifact caches, and vcpkg documents Local AppData/vcpkg/archives as its default Windows binary cache; configuration and credentials remain outside the roots"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = [
+  "https://getcomposer.org/doc/06-config.md#cache-dir",
+  "https://docs.deno.com/runtime/getting_started/installation/#cache-location",
+  "https://learn.microsoft.com/en-us/vcpkg/users/binarycaching#default-binary-cache",
+]

@@ -1,0 +1,44 @@
+id = "dev.gradle-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["gradle.exe", "java.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["java.exe", "gradle.exe"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${home}/.gradle/caches"
+
+[[roots]]
+template = "${home}/.gradle/daemon"
+verified_rebuildable = true
+
+[[roots]]
+template = "${home}/.gradle/workers"
+verified_rebuildable = true
+
+[[roots]]
+template = "${home}/.gradle/notifications"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Gradle documents caches, daemon state, worker state, and notifications under Gradle User Home and describes automatic cleanup of recreatable or redownloadable entries; init scripts and gradle.properties are excluded"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = ["https://docs.gradle.org/current/userguide/directory_layout.html"]

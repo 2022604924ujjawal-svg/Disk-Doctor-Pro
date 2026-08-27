@@ -1,0 +1,32 @@
+id = "dev.sccache-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = ["sccache"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["sccache"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/Mozilla.sccache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "sccache derives the local disk artifact cache from the platform cache directory while storing configuration under Application Support"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = ["https://github.com/mozilla/sccache/blob/main/docs/Configuration.md"]

@@ -1,0 +1,106 @@
+# GitMind has both Electron and nested WebView2 profiles. Each profile mixes
+# browser state with caches, so only fixed renderer and diagnostic leaves are
+# selected while mind maps, credentials, storage, and network state are kept.
+id = "app.gitmind-rendering-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["GitMind.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["GitMind", "com.wangxutech.gitmind.desktop"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/Code Cache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/GPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/Shared Dictionary/cache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/Service Worker/CacheStorage"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/logs"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/Crashpad/reports"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/component_crx_cache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/extensions_crx_cache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/GPUPersistentCache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/GraphiteDawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/GrShaderCache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/ShaderCache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/Crashpad/reports"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/Default/Cache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/Default/Code Cache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/Default/GPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/Default/DawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/Default/DawnGraphiteCache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/Default/DawnWebGPUCache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/Default/GrShaderCache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/Default/GraphiteDawnCache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/Default/Shared Dictionary/cache"
+
+[[roots]]
+template = "${roaming_app_data}/GitMind/webview/EBWebView/Default/Service Worker/CacheStorage"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Microsoft Store GitMind 1.1.1 with a valid Apowersoft signature reproduced fixed Electron and WebView2 caches. Mind maps, credentials, settings, history, cookies, network data, browser storage, and updater packages are excluded"
+verified_at = "2026-08-11"
+verified_platform = "windows"
+references = [
+  "https://gitmind.com/download",
+  "https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/user-data-folder",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

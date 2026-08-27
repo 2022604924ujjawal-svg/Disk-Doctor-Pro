@@ -1,0 +1,47 @@
+# Sogou Input stores user dictionaries, personalization, backups, models, and
+# configuration beside isolated URL and Chromium Embedded Framework caches.
+# Only two fixed Chromium Embedded Framework cache leaves are selected.
+id = "app.sogou-input-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = [
+  "SGMyInput.exe",
+  "SGTool.exe",
+  "SGWebRender.exe",
+  "SogouCloud.exe",
+  "SogouImeBroker.exe",
+  "SOGOUSmartAssistant.exe",
+]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Sogou.SogouInput", "Sogou Input", "搜狗输入法"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${program_data}/SogouInput/SGCefCache/SGMyInput/CefLocalStorage"
+
+[matcher]
+kind = "pathSegmentIn"
+values = ["Cache", "Code Cache"]
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed Sogou Input 16.2.0.3184 reproduced isolated CEF response and code caches. User dictionaries, backups, personalization, settings, models, components, updates, IndexedDB, Local Storage, and sessions are excluded"
+verified_at = "2026-08-11"
+verified_platform = "windows"
+references = [
+  "https://shurufa.sogou.com/",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

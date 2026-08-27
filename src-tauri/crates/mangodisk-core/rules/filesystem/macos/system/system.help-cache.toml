@@ -1,0 +1,31 @@
+# macOS Help rebuilds these indexes and downloaded caches. The rule only points
+# to application-specific cache directories and excludes Help preferences,
+# user documents, and the full ~/Library/Caches directory.
+id = "system.help-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "system"
+risk = "safe"
+default_selected = true
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${user_library}/Caches/com.apple.helpd"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The rule selects only helpd data under Library/Caches, which Apple designates for discardable files that can be regenerated as needed"
+verified_at = "2026-07-17"
+verified_platform = "macos"
+references = ["https://developer.apple.com/documentation/foundation/url/cachesdirectory"]

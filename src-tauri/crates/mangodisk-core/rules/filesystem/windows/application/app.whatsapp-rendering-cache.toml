@@ -1,0 +1,89 @@
+# The Microsoft Store WhatsApp package stores a mixed-purpose WebView2 profile
+# under LocalCache. Only fixed renderer-cache leaves are selected so account,
+# message, browser-storage, network, and Service Worker script state are kept.
+id = "app.whatsapp-rendering-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["WhatsApp.Root.exe", "WhatsApp.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["5319275A.WhatsAppDesktop", "WhatsApp"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/component_crx_cache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/extensions_crx_cache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/GPUPersistentCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/GraphiteDawnCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/GrShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/ShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/Crashpad/reports"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/Default/Cache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/Default/Code Cache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/Default/GPUCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/Default/DawnCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/Default/DawnGraphiteCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/Default/DawnWebGPUCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/Default/GrShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/Default/GraphiteDawnCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/Default/Shared Dictionary/cache"
+
+[[roots]]
+template = "${local_app_data}/Packages/5319275A.WhatsAppDesktop_cv1g1gvanyjgm/LocalCache/EBWebView/Default/Service Worker/CacheStorage"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Microsoft Store WhatsApp 2.2630.102.0 reproduced these fixed WebView2 caches. Package state, messages, credentials, settings, history, network data, browser storage, Service Worker databases, and script caches are excluded"
+verified_at = "2026-08-11"
+verified_platform = "windows"
+references = [
+  "https://apps.microsoft.com/detail/9nksqgp7f2nh",
+  "https://www.whatsapp.com/download",
+  "https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/user-data-folder",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

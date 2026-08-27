@@ -1,0 +1,62 @@
+id = "dev.user-tool-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${home}/.bun/install/cache"
+
+[[roots]]
+template = "${home}/.cache/node/corepack"
+
+[[roots]]
+template = "${home}/.node-gyp"
+verified_rebuildable = true
+
+[[roots]]
+template = "${home}/.pyenv/pyenv-win/install_cache"
+
+[[roots]]
+template = "${home}/.cache/ruff"
+
+[[roots]]
+template = "${home}/.cache/mypy"
+
+[[roots]]
+template = "${home}/.cache/pre-commit"
+
+[[roots]]
+template = "${home}/.cache/puppeteer"
+
+[[roots]]
+template = "${home}/.cache/selenium"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "The selected roots are documented download, analysis, hook-environment, or browser-runtime caches for Bun, Corepack, node-gyp, Ruff, mypy, pre-commit, Puppeteer, and Selenium; user configuration, source projects, and credentials remain outside the roots"
+verified_at = "2026-07-18"
+verified_platform = "windows"
+references = [
+  "https://bun.sh/docs/pm/global-cache",
+  "https://github.com/nodejs/corepack#environment-variables",
+  "https://github.com/nodejs/node-gyp#command-options",
+  "https://docs.astral.sh/ruff/configuration/#cache-dir",
+  "https://mypy.readthedocs.io/en/stable/command_line.html#cmdoption-mypy-cache-dir",
+  "https://pre-commit.com/#managing-ci-caches",
+  "https://pptr.dev/guides/configuration#changing-the-default-cache-directory",
+  "https://www.selenium.dev/documentation/selenium_manager/#caching",
+]

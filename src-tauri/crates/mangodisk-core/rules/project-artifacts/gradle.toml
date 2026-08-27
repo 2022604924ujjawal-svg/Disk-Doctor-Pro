@@ -1,0 +1,23 @@
+id = "project.gradle-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["build.gradle", "build.gradle.kts"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "build"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".gradle"
+
+[verification]
+lifecycle = "verified"
+evidence = ["https://docs.gradle.org/current/userguide/directory_layout.html#dir:project_root"]
+verified_at = "2026-07-31"

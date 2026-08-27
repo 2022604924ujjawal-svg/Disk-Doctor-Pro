@@ -1,0 +1,55 @@
+# Firefox-compatible products and Thunderbird keep disposable network and
+# startup caches below each profile. Profile databases and user content remain
+# outside the selected suffixes.
+id = "browser.gecko-family-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "browser"
+risk = "safe"
+default_selected = true
+required_stopped_processes = ["floorp.exe", "librewolf.exe", "waterfox.exe", "thunderbird.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Floorp", "LibreWolf", "Waterfox", "Mozilla Thunderbird", "Thunderbird"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Floorp/Profiles"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["cache2", "startupCache", "shader-cache"]
+
+[[roots]]
+template = "${local_app_data}/librewolf/Profiles"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["cache2", "startupCache", "shader-cache"]
+
+[[roots]]
+template = "${local_app_data}/Waterfox/Profiles"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["cache2", "startupCache", "shader-cache"]
+
+[[roots]]
+template = "${local_app_data}/Thunderbird/Profiles"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["cache2", "startupCache", "shader-cache"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Gecko-compatible browser and Thunderbird cache suffixes re-authored from their standard Windows profile layouts"
+verified_at = "2026-07-18"
+verified_platform = "windows"

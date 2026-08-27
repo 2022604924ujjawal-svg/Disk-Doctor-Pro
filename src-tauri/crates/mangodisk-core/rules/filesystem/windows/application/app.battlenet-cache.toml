@@ -1,0 +1,60 @@
+# Battle.net's BrowserCaches children are Chromium profiles containing both
+# cache and session state. Expand only direct profiles and fixed renderer-cache
+# suffixes. CachedData.db, browser storage, account configuration, Agent data,
+# game installs, downloads, and patch state remain outside every root.
+id = "app.battlenet-cache"
+schema_version = 3
+rule_version = 2
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Battle.net.exe", "Agent.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["Battle.net", "Blizzard.BattleNet"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Battle.net/Cache"
+
+[[roots]]
+template = "${local_app_data}/Battle.net/BrowserCaches"
+kind = "childDirectories"
+include_all_children = true
+suffixes = [
+  "Cache",
+  "Code Cache",
+  "GPUCache",
+  "DawnCache",
+  "DawnGraphiteCache",
+  "DawnWebGPUCache",
+  "GrShaderCache",
+  "GraphiteDawnCache",
+  "Shared Dictionary/cache",
+]
+
+[[roots]]
+template = "${local_app_data}/Blizzard Entertainment/Battle.net/Cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Blizzard documents deleting Battle.net caches after stopping its app and Agent. Battle.net 2.52.8.17651 reproduced the selected content and Chromium leaves; account, browser, Agent, install, and patch state are excluded"
+verified_at = "2026-08-10"
+verified_platform = "windows"
+references = [
+  "https://us.support.blizzard.com/en/article/34721",
+  "https://eu.support.blizzard.com/en/article/24123",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

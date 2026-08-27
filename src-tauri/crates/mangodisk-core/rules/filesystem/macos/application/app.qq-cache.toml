@@ -1,0 +1,73 @@
+# QQ conversations, downloaded files, account state, and application versions
+# share its container. The rule reaches only fixed renderer-cache leaves.
+id = "app.qq-cache"
+schema_version = 3
+rule_version = 2
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["QQ"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["com.tencent.qq", "QQ"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${user_library}/Caches/com.tencent.qq"
+
+[[roots]]
+template = "${user_library}/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Cache"
+
+[[roots]]
+template = "${user_library}/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Code Cache"
+
+[[roots]]
+template = "${user_library}/Containers/com.tencent.qq/Data/Library/Application Support/QQ/GPUCache"
+
+[[roots]]
+template = "${user_library}/Containers/com.tencent.qq/Data/Library/Application Support/QQ/DawnCache"
+
+[[roots]]
+template = "${user_library}/Containers/com.tencent.qq/Data/Library/Application Support/QQ/DawnGraphiteCache"
+
+[[roots]]
+template = "${user_library}/Containers/com.tencent.qq/Data/Library/Application Support/QQ/DawnWebGPUCache"
+
+[[roots]]
+template = "${user_library}/Containers/com.tencent.qq/Data/Library/Application Support/QQ/GrShaderCache"
+
+[[roots]]
+template = "${user_library}/Containers/com.tencent.qq/Data/Library/Application Support/QQ/GraphiteDawnCache"
+
+[[roots]]
+template = "${user_library}/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Shared Dictionary/cache"
+
+# QQ partitions mix cookies, IndexedDB, storage, and preferences with renderer
+# caches. Dynamic discovery reaches only fixed cache leaves in direct partitions.
+[[roots]]
+template = "${user_library}/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Partitions"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache", "Service Worker/CacheStorage"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Signed QQ 6.9.33 reproduced four renderer partitions. Fixed cache leaves exclude account roots, messages, databases, versions, packages, cookies, IndexedDB, Local Storage, WebStorage, preferences and downloads"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://im.qq.com/macqq/index.shtml",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

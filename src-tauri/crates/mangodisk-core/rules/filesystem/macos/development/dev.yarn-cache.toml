@@ -1,0 +1,34 @@
+id = "dev.yarn-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+required_stopped_processes = []
+
+[[applicability]]
+kind = "anyRootExists"
+
+[[roots]]
+template = "${user_library}/Caches/Yarn"
+
+[[roots]]
+template = "${home}/.yarn/berry/cache"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = false
+
+[verification]
+lifecycle = "verified"
+evidence = "Yarn documents both classic global cache and modern cacheFolder content as downloaded package archives that can be repopulated; project manifests and configuration remain outside the roots"
+verified_at = "2026-07-18"
+verified_platform = "macos"
+references = [
+  "https://classic.yarnpkg.com/lang/en/docs/cli/cache/",
+  "https://yarnpkg.com/configuration/yarnrc/#cacheFolder",
+]

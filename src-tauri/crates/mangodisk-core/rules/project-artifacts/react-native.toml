@@ -1,0 +1,44 @@
+id = "project.react-native-build-artifacts"
+schema_version = 1
+rule_version = 1
+platforms = ["macos", "windows"]
+category = "development"
+risk = "recoverable"
+default_selected = false
+
+[match]
+file_names_any = ["package.json"]
+relative_paths_any = ["android", "ios"]
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "android/build"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "android/.gradle"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "ios/build"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = "ios/DerivedData"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".expo"
+
+[[artifacts]]
+kind = "relativeDirectory"
+path = ".metro"
+
+[verification]
+lifecycle = "verified"
+evidence = [
+  "https://docs.gradle.org/current/userguide/directory_layout.html#dir:project_root",
+  "https://developer.apple.com/documentation/xcode/customizing-the-build-schemes-for-a-project",
+  "https://docs.expo.dev/troubleshooting/clear-cache-macos-linux/",
+]
+verified_at = "2026-07-31"

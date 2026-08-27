@@ -1,0 +1,12 @@
+allowBuilds:
+  # Vite and Vue I18n resource compilation both use esbuild. Only the exact
+  # versions recorded in the lockfile may run native installation scripts.
+  # A version change remains blocked until it is reviewed explicitly.
+  esbuild@0.25.12: true
+  esbuild@0.27.3: true
+  vue-demi: false
+# pnpm 11 rejects packages published less than 24 hours ago by default.
+# This reviewed lockfile version was temporarily exempted during its release
+# window; all other dependencies keep the default supply-chain protection.
+minimumReleaseAgeExclude:
+  - postcss@8.5.19

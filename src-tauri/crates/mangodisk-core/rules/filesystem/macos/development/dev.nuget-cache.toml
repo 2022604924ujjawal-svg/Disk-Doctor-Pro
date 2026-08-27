@@ -1,0 +1,47 @@
+id = "dev.nuget-cache"
+schema_version = 3
+rule_version = 3
+platform = "macos"
+category = "development"
+risk = "recoverable"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["dotnet", "nuget", "msbuild"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "executableAvailable", names = ["dotnet", "nuget"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${home}/.nuget/packages"
+verified_rebuildable = true
+
+# NuGet has used both locations for its macOS HTTP cache. Keeping the roots
+# exact avoids touching configuration, credentials, or installed SDK state.
+[[roots]]
+template = "${home}/.local/share/NuGet/http-cache"
+verified_rebuildable = true
+
+[[roots]]
+template = "${home}/.local/share/NuGet/v3-cache"
+verified_rebuildable = true
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteWholeRoot"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "NuGet documents the global package store and HTTP request cache as locally managed caches that can be cleared with NuGet tooling; NuGet.Config, credentials, and installed SDK state remain outside the exact roots"
+verified_at = "2026-08-04"
+verified_platform = "macos"
+references = [
+  "https://learn.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders",
+  "https://learn.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-locals",
+]

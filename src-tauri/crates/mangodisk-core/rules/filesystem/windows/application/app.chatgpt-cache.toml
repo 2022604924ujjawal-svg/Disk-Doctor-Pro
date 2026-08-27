@@ -1,0 +1,103 @@
+# The Microsoft Store Codex app keeps a WebView2 profile and diagnostic logs
+# below its package LocalCache. Only fixed cache leaves are selected; projects,
+# conversations, credentials, browser state, downloaded components, and the
+# user-owned .codex directory remain outside the cleanup boundary.
+id = "app.chatgpt-cache"
+schema_version = 3
+rule_version = 1
+platform = "windows"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["ChatGPT.exe"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["OpenAI.Codex", "ChatGPT", "Codex"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Local/Codex/Logs"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/component_crx_cache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/extensions_crx_cache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/GPUPersistentCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/GraphiteDawnCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/GrShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/ShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/Crashpad/reports"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/Default/Cache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/Default/Code Cache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/Default/GPUCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/Default/DawnCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/Default/DawnGraphiteCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/Default/DawnWebGPUCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/Default/GrShaderCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/Default/GraphiteDawnCache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/Default/Shared Dictionary/cache"
+
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/Default/Service Worker/CacheStorage"
+
+# The built-in browser creates dynamic direct-child partitions beside durable
+# preferences, history, login, network, and storage data. Expanding only these
+# fixed suffixes prevents a new partition name from widening the rule.
+[[roots]]
+template = "${local_app_data}/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/web/Codex/Default/Partitions"
+kind = "childDirectories"
+include_all_children = true
+suffixes = ["Cache", "Code Cache", "GPUCache", "DawnCache", "DawnGraphiteCache", "DawnWebGPUCache", "GrShaderCache", "GraphiteDawnCache", "Shared Dictionary/cache", "Service Worker/CacheStorage"]
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Microsoft Store Codex 26.803.5235.0 reproduced fixed WebView2 caches and a Logs root. Projects, conversations, credentials, settings, browser state, components, downloads, and .codex state are excluded"
+verified_at = "2026-08-11"
+verified_platform = "windows"
+references = [
+  "https://openai.com/index/introducing-the-codex-app/",
+  "https://help.openai.com/en/articles/20001276-moving-to-the-new-chatgpt-desktop-app",
+  "https://help.openai.com/en/articles/20001277-using-the-built-in-browser-in-the-chatgpt-desktop-app",
+  "https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/user-data-folder",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]

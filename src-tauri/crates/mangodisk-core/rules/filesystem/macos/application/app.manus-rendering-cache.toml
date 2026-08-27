@@ -1,0 +1,70 @@
+# Manus stores local task state and browser credentials beside Chromium cache
+# directories. Keep this rule static so no application state can enter through
+# directory expansion.
+id = "app.manus-rendering-cache"
+schema_version = 3
+rule_version = 1
+platform = "macos"
+category = "application"
+risk = "safe"
+default_selected = false
+recommended_selected = true
+required_stopped_processes = ["Manus"]
+
+[[applicability]]
+kind = "anyOf"
+items = [
+  { kind = "applicationInstalled", identifiers = ["im.manus.desktop", "Manus"] },
+  { kind = "anyRootExists" },
+]
+
+[[roots]]
+template = "${application_support}/Manus/Cache"
+
+[[roots]]
+template = "${application_support}/Manus/Code Cache"
+
+[[roots]]
+template = "${application_support}/Manus/GPUCache"
+
+[[roots]]
+template = "${application_support}/Manus/DawnCache"
+
+[[roots]]
+template = "${application_support}/Manus/DawnGraphiteCache"
+
+[[roots]]
+template = "${application_support}/Manus/DawnWebGPUCache"
+
+[[roots]]
+template = "${application_support}/Manus/GrShaderCache"
+
+[[roots]]
+template = "${application_support}/Manus/GraphiteDawnCache"
+
+[[roots]]
+template = "${application_support}/Manus/Shared Dictionary/cache"
+
+[[roots]]
+template = "${application_support}/Manus/Service Worker/CacheStorage"
+
+[[roots]]
+template = "${application_support}/Manus/Crashpad/reports"
+
+[matcher]
+kind = "all"
+
+[execution]
+kind = "deleteMatchingContents"
+requires_app_close = true
+
+[verification]
+lifecycle = "verified"
+evidence = "Notarized Manus 1.6.0 reproduced fixed Electron cache leaves. Tasks, local files, credentials, preferences, cookies, IndexedDB, Local and Session Storage, WebStorage, and updater state are excluded"
+verified_at = "2026-08-11"
+verified_platform = "macos"
+references = [
+  "https://manus.im/desktop",
+  "https://www.electronjs.org/docs/latest/api/app#appgetpathname",
+  "https://chromium.googlesource.com/chromium/src/+/main/docs/user_data_dir.md",
+]
