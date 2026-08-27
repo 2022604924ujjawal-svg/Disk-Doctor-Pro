@@ -5,6 +5,8 @@
 <p align="center"> Disk cleanup, storage analysis, and system optimization for macOS and Windows </p>
 
 
+
+
 <p align="center">
   <img
     src="public/Screenshot 2026-08-27 193625.png"
