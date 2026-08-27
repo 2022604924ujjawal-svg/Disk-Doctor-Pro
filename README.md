@@ -106,7 +106,7 @@ Disk Doctor Pro currently supports:
 Install Disk Doctor Pro with Homebrew:
 
 ```sh
-brew install --cask 2022604924ujjawal-svg/tap/disk-doctor-pro
+brew install --cask harry0703/tap/mangodisk
 ```
 
 ### Windows
@@ -114,7 +114,7 @@ brew install --cask 2022604924ujjawal-svg/tap/disk-doctor-pro
 Install Disk Doctor Pro from PowerShell:
 
 ```powershell
-irm "https://get.disk-doctor-pro.app" | iex
+irm "https://get.mangodisk.app" | iex
 ```
 
 Alternatively, download the latest version from the project's GitHub Releases page.
@@ -133,19 +133,19 @@ Alternatively, download the latest version from the project's GitHub Releases pa
 Install the standalone CLI on macOS with Homebrew:
 
 ```sh
-brew install 2022604924ujjawal-svg/tap/disk-doctor-pro-cli
+brew install harry0703/tap/mangodisk-cli
 ```
 
 On Windows, install the latest CLI from PowerShell:
 
 ```powershell
-irm "https://get.disk-doctor-pro.app/cli" | iex
+irm "https://get.mangodisk.app/cli" | iex
 ```
 
 If `disk-doctor-pro` is not immediately available after installation, open a new terminal, then verify the installation:
 
 ```sh
-disk-doctor-pro --version
+mangodisk --version
 ```
 
 The CLI uses the same safety-first cleanup engine as the desktop application.
@@ -153,25 +153,25 @@ The CLI uses the same safety-first cleanup engine as the desktop application.
 ### Scan and Show Cleanable Content
 
 ```sh
-disk-doctor-pro clean
+mangodisk clean
 ```
 
 ### Apply Smart Recommendations
 
 ```sh
-disk-doctor-pro clean --apply
+mangodisk clean --apply
 ```
 
 ### Preview All Selectable Content
 
 ```sh
-disk-doctor-pro clean --apply --selection all --dry-run
+mangodisk clean --apply --selection all --dry-run
 ```
 
 ### Produce Machine-Readable JSON Output
 
 ```sh
-disk-doctor-pro clean --format json --no-progress
+mangodisk clean  --format json --no-progress
 ```
 
 `disk-doctor-pro clean` only scans and never modifies files by default.
@@ -181,7 +181,7 @@ To perform cleanup in a non-interactive environment, you must also pass `--yes` 
 Run the following command for all available options:
 
 ```sh
-disk-doctor-pro clean --help
+mangodisk clean --help
 ```
 
 ## Build from Source
